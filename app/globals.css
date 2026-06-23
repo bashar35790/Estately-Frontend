@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+@theme {
+  --color-primary: #1eac70;
+  --color-secondary: #a3cf16;
+  --color-background: #f0f0f0;
+  --color-text: #333333;
+
+  --font-heading: var(--font-playfair);
+  --font-body: var(--font-manrope);
+}
+
+body p span {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
