@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Form, TextField, Button, Input, FieldError } from "@heroui/react";
 import { Mail, Eye, EyeOff } from "lucide-react";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 export default function GlassLoginForm() {
@@ -24,7 +24,7 @@ export default function GlassLoginForm() {
 
     try {
       const formData = new FormData(e.currentTarget);
-      
+
       // Extract and validate form fields
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;

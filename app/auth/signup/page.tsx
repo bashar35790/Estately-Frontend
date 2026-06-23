@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { User, Mail, Eye, EyeOff, ImageIcon, Loader2, Search, Users, Check } from "lucide-react";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 
 // Types 
