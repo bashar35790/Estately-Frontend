@@ -82,7 +82,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
     const router = useRouter();
     const [isFeatured, setIsFeatured] = useState<boolean>(false);
     const [errors, setErrors] = useState<FormErrors>({});
-    
+
     // Image upload states
     const [images, setImages] = useState<string[]>([]);
     const [imagePreviews, setImagePreviews] = useState<string[]>([]);
@@ -95,7 +95,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
         if (!files || files.length === 0) return;
 
         const file = files[0];
-        
+
         // Validate file size (max 10MB)
         if (file.size > 10 * 1024 * 1024) {
             toast.error("Image size should be less than 10MB");
@@ -232,7 +232,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
 
                     {/* Owner verification tag */}
                     <div className="mt-5 inline-flex items-center gap-2 bg-[#fbfbfb] border border-gray-100 rounded-xl px-4 py-2 text-xs text-gray-600 shadow-sm">
-                        <Person size={14} className="text-primary" />
+                        <Person className="text-primary w-4 h-4" />
                         Listed by: <span className="font-semibold text-text">{owner.name}</span>
                         <span className="text-primary font-semibold bg-[#1eac70]/10 px-2 py-0.5 rounded-md border border-primary/20">{owner.status} Account</span>
                     </div>
@@ -243,12 +243,12 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                         Your owner profile is currently pending approval. You can start creating listings once the admin approves your identity.
                     </div>
                 ) : (
-                    <Form onSubmit={handleSubmit} className="space-y-8" validationErrors={errors} validationBehavior='aria'>
+                    <Form onSubmit={handleSubmit} className="space-y-8" validationBehavior='aria'>
 
                         {/* SECTION 1: Basic Estate Info */}
                         <Fieldset className="space-y-6 w-full">
                             <legend className="text-lg font-heading font-medium text-text border-b border-gray-100 w-full pb-2 mb-2 flex items-center gap-2">
-                                <House className="text-primary" size={18} /> Basic Information
+                                <House className="text-primary w-4 h-4" /> Basic Information
                             </legend>
 
                             <TextField name="title" isInvalid={!!errors.title} className="flex flex-col gap-1.5 w-full">
@@ -271,7 +271,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                         {/* SECTION 2: Pricing & Logistics */}
                         <Fieldset className="space-y-6 w-full">
                             <legend className="text-lg font-heading font-medium text-text border-b border-gray-100 w-full pb-2 mb-2 flex items-center gap-2">
-                                <Thunderbolt className="text-secondary" size={18} /> Pricing & Type
+                                <Thunderbolt className="text-secondary w-4 h-4" /> Pricing & Type
                             </legend>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -377,7 +377,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                         {/* SECTION 3: Specifications */}
                         <Fieldset className="space-y-6 w-full">
                             <legend className="text-lg font-heading font-medium text-text border-b border-gray-100 w-full pb-2 mb-2 flex items-center gap-2">
-                                <FolderPlus className="text-primary" size={18} /> Specifications
+                                <FolderPlus className="text-primary w-4 h-4" /> Specifications
                             </legend>
 
                             <div className="grid grid-cols-3 gap-4">
@@ -410,7 +410,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                         {/* SECTION 4: Property Images */}
                         <Fieldset className="space-y-4 w-full">
                             <legend className="text-lg font-heading font-medium text-text border-b border-gray-100 w-full pb-2 mb-2 flex items-center gap-2">
-                                <Picture className="text-primary" size={18} /> Property Images
+                                <Picture className="text-primary w-4 h-4" /> Property Images
                             </legend>
 
                             {/* Image Upload Area */}
@@ -420,8 +420,8 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                                         flex flex-col items-center justify-center w-full
                                         border-2 border-dashed rounded-xl p-6
                                         transition-all duration-200 cursor-pointer
-                                        ${images.length > 0 
-                                            ? 'border-primary/30 bg-primary/5' 
+                                        ${images.length > 0
+                                            ? 'border-primary/30 bg-primary/5'
                                             : 'border-gray-300 bg-gray-50 hover:border-primary/40 hover:bg-gray-100'
                                         }
                                         ${errors.images ? 'border-danger bg-danger/5' : ''}
@@ -429,7 +429,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                                 >
                                     <div className="flex flex-col items-center justify-center gap-2">
                                         <div className="p-3 rounded-full bg-primary/10">
-                                            <Picture size={24} className="text-primary" />
+                                            <Picture className="text-primary w-4 h-4" />
                                         </div>
                                         <p className="text-sm font-medium text-gray-700">
                                             {isUploading ? 'Uploading...' : 'Click to upload property images'}
@@ -470,11 +470,11 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                                                 onClick={() => removeImage(index)}
                                                 className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600"
                                             >
-                                                <Ban size={14} />
+                                                <Ban className="w-4 h-4" />
                                             </button>
                                             {isUploading && index === imagePreviews.length - 1 && (
                                                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
-                                                    <Ban size={24} className="animate-spin text-white" />
+                                                    <Ban className="animate-spin text-white w-4 h-4" />
                                                 </div>
                                             )}
                                         </div>

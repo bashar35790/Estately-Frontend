@@ -107,60 +107,61 @@ export default function AllPropertiesPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#f0f0f0] text-[#333333] p-6 sm:p-12 font-body">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-amber-500 selection:text-black">
+      <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Luxury Brand Header Block */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-200 pb-8">
-          <div className="space-y-3">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 font-heading">
-              Premium Registries Gallery
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-10">
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-6xl font-light tracking-wide text-white">
+              Exclusive <span className="text-amber-500 font-normal">Estates</span>
             </h1>
-            <p className="text-base text-zinc-600 max-w-2xl">
-              Explore premium architecture, high-end estates, and verified luxury residential developments.
+            <p className="text-sm md:text-base text-zinc-400 max-w-xl font-light leading-relaxed tracking-wide">
+              Discover our curated collection of premium architectural masterpieces. 
+              Extraordinary residences for those who seek the exceptional.
             </p>
           </div>
           
           {/* Real-time Filters */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:max-w-lg">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:max-w-md">
             <div className="relative w-full">
               <input
                 type="text"
-                placeholder="Search by title or location..."
+                placeholder="Search estates or locations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-12 pl-4 pr-10 bg-white border border-zinc-200 text-zinc-800 placeholder-zinc-400 rounded-2xl focus:outline-none focus:border-primary transition-colors text-sm shadow-sm font-body"
+                className="w-full h-12 pl-4 pr-10 bg-zinc-900 border border-white/10 text-white placeholder-zinc-500 rounded-sm focus:outline-none focus:border-amber-500/50 transition-colors text-sm font-light tracking-wide"
               />
               {searchQuery && (
                 <button 
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1.5 bottom-0 my-auto text-zinc-400 hover:text-zinc-600 text-xs"
+                  className="absolute right-3 top-0 bottom-0 my-auto text-zinc-500 hover:text-amber-500 text-xs transition-colors"
                 >
                   ✕
                 </button>
               )}
             </div>
 
-            <div className="relative w-full sm:max-w-[180px]">
+            <div className="relative w-full sm:max-w-[160px]">
               <select
                 aria-label="Filter by property type"
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
-                className="w-full h-12 px-4 bg-white border border-zinc-200 text-zinc-700 rounded-2xl focus:outline-none focus:border-primary transition-colors appearance-none text-sm shadow-sm font-body font-medium cursor-pointer"
+                className="w-full h-12 px-4 bg-zinc-900 border border-white/10 text-zinc-300 rounded-sm focus:outline-none focus:border-amber-500/50 transition-colors appearance-none text-sm font-light tracking-wide cursor-pointer"
               >
-                <option value="all">All Architecture</option>
+                <option value="all">All Properties</option>
                 <option value="villa">Villas</option>
                 <option value="apartment">Apartments</option>
                 <option value="studio">Studios</option>
               </select>
-              <div className="absolute right-4 top-0 bottom-0 my-auto h-2 w-2 border-r-2 border-b-2 border-zinc-400 rotate-45 pointer-events-none" />
+              <div className="absolute right-4 top-0 bottom-0 my-auto h-1.5 w-1.5 border-r border-b border-amber-500 rotate-45 pointer-events-none" />
             </div>
           </div>
         </div>
 
         {/* Dynamic Card Layout Grid */}
         {filteredProperties.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
             {filteredProperties.map((property) => {
               const idString = typeof property._id === "object" ? property._id.$oid : property._id;
               return (
@@ -172,9 +173,11 @@ export default function AllPropertiesPage() {
             })}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center text-center py-24 border border-dashed border-zinc-300 rounded-[32px] bg-white/50 backdrop-blur-sm">
-            <p className="text-zinc-500 font-semibold text-xl font-heading">No properties found</p>
-            <p className="text-zinc-400 text-sm mt-1 max-w-xs">Try modifying your filtering attributes or clear the search query input box.</p>
+          <div className="flex flex-col items-center justify-center text-center py-32 border border-dashed border-white/10 rounded-sm bg-zinc-900/50">
+            <p className="text-amber-500 font-light tracking-widest uppercase text-lg mb-2">No Properties Found</p>
+            <p className="text-zinc-500 text-sm font-light max-w-sm">
+              We couldn't find any estates matching your refined criteria. Please adjust your filters.
+            </p>
           </div>
         )}
 
