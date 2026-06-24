@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { getOwnerProperties } from '@/lib/api/properties';
+import OwnerPropertiesPage from './OwnerPropertiesPage';
 
-function OwnerPropertiesPage() {
-    return (
-        <div>OwnerPropertiesPage</div>
-    )
+
+async function Page() {
+  const ownerId = '1';
+  const properties = await getOwnerProperties(ownerId) || [];
+
+  return <OwnerPropertiesPage initialProperties={properties} />;
 }
 
-export default OwnerPropertiesPage;
+export default Page;

@@ -19,7 +19,6 @@ import {
     CreditCard,
     Users,
     LayoutDashboard,
-    Menu,
     ChevronRight
 } from "lucide-react";
 import { Button, Drawer } from "@heroui/react";
@@ -43,10 +42,8 @@ export function DashboardSidebar() {
         { icon: House, href: "/dashboard/owner", label: "Overview" },
         { icon: MapPin, href: "/dashboard/owner/properties", label: "My Properties" },
         { icon: PlusCircle, href: "/dashboard/owner/properties/new", label: "Post Property" },
-        { icon: Building, href: "/dashboard/owner/company", label: "Company Profile" },
-        { icon: Mail, href: "/messages", label: "Inquiries" },
-        { icon: User, href: "/profile", label: "Profile" },
-        { icon: Settings, href: "/settings", label: "Account Settings" },
+        { icon: Mail, href: "/bookings", label: "Booking Requests" },
+        { icon: CreditCard, href: "/payments", label: "My Earnings" },
     ];
 
     const tenantNavLinks = [

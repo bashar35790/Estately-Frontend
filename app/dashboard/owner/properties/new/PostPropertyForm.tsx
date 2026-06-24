@@ -1,6 +1,6 @@
 "use client";
-
 import React, { useState } from "react";
+import Image from "next/image";
 import {
     Form,
     Fieldset,
@@ -14,10 +14,11 @@ import {
     Switch,
     Button,
 } from "@heroui/react";
-import { House, Globe, Thunderbolt, Person, FolderPlus } from "@gravity-ui/icons";
+import { House, Globe, Thunderbolt, Person, FolderPlus, Picture } from "@gravity-ui/icons";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { addProperties } from "@/lib/action/properties";
+import { Ban } from "lucide-react";
 
 // Strict Interfaces Definition
 interface OwnerInfo {
@@ -42,33 +43,115 @@ interface FormErrors {
     bathrooms?: string;
     size?: string;
     amenities?: string;
+    images?: string;
 }
 
 interface PropertyPayload {
-  title: string;
-  description: string;
-  location: string;
-  propertyType: string;
-  price: number;
-  rentType: string;
-  bedrooms: number;
-  bathrooms: number;
-  size: number;
-  amenities: string[];
-  extraFeatures: string[];
-  isFeatured: boolean;
-  status: string;
-  ownerInfo: {
-    id: string;
-    name: string;
-    email: string;
-  };
+    title: string;
+    description: string;
+    location: string;
+    propertyType: string;
+    price: number;
+    rentType: string;
+    bedrooms: number;
+    bathrooms: number;
+    size: number;
+    amenities: string[];
+    extraFeatures: string[];
+    isFeatured: boolean;
+    status: string;
+    ownerId: string;
+    ownerName: string;
+    ownerEmail: string;
+    images: string[];
 }
+
+interface ImgBBResponse {
+    data: {
+        id: string;
+        url: string;
+        display_url: string;
+    };
+    success: boolean;
+    status: number;
+}
+
+const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
 export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
     const router = useRouter();
     const [isFeatured, setIsFeatured] = useState<boolean>(false);
     const [errors, setErrors] = useState<FormErrors>({});
+    
+    // Image upload states
+    const [images, setImages] = useState<string[]>([]);
+    const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+    const [isUploading, setIsUploading] = useState<boolean>(false);
+    const [uploadError, setUploadError] = useState<string>("");
+
+    // Image upload handler
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+
+        const file = files[0];
+        
+        // Validate file size (max 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            toast.error("Image size should be less than 10MB");
+            return;
+        }
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            toast.error("Please upload a valid image file");
+            return;
+        }
+
+        // Add local preview
+        const previewUrl = URL.createObjectURL(file);
+        setImagePreviews(prev => [...prev, previewUrl]);
+        setIsUploading(true);
+        setUploadError("");
+
+        // Upload to ImgBB
+        const formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData,
+            });
+            const result: ImgBBResponse = await res.json();
+
+            if (result.success && result.data?.url) {
+                setImages(prev => [...prev, result.data.url]);
+                toast.success("Image uploaded successfully!");
+            } else {
+                // Remove preview if upload fails
+                setImagePreviews(prev => prev.slice(0, -1));
+                setUploadError("Failed to upload image. Please try again.");
+                toast.error("Failed to upload image");
+            }
+        } catch {
+            setImagePreviews(prev => prev.slice(0, -1));
+            setUploadError("Network error during upload.");
+            toast.error("Network error during upload");
+        } finally {
+            setIsUploading(false);
+            // Reset input
+            e.target.value = '';
+        }
+    };
+
+    // Remove image handler
+    const removeImage = (index: number) => {
+        setImages(prev => prev.filter((_, i) => i !== index));
+        setImagePreviews(prev => prev.filter((_, i) => i !== index));
+        // Clear the upload error if it exists
+        if (uploadError) setUploadError("");
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -88,6 +171,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
         if (!data.bathrooms) newErrors.bathrooms = "Number of bathrooms is required";
         if (!data.size) newErrors.size = "Property size is required";
         if (!data.amenities) newErrors.amenities = "At least one amenity is required";
+        if (images.length === 0) newErrors.images = "At least one property image is required";
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -95,6 +179,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
         }
 
         setErrors({});
+        setUploadError("");
 
         const payload: PropertyPayload = {
             title: data.title as string,
@@ -109,20 +194,18 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
             amenities: (data.amenities as string).split(",").map(i => i.trim()),
             extraFeatures: data.extraFeatures ? (data.extraFeatures as string).split(",").map(i => i.trim()) : [],
             isFeatured,
-            status: "Pending",
-            ownerInfo: {
-                id: owner._id,
-                name: owner.name,
-                email: owner.email,
-            }
+            status: "pending",
+            ownerId: owner._id,
+            ownerName: owner.name,
+            ownerEmail: owner.email,
+            images: images, // Add the uploaded images
         };
 
-        const res = await addProperties(payload)
+        const res = await addProperties(payload);
         if (res.insertedId) {
             toast.success("Property added successfully!");
             router.push("/dashboard/owner/properties");
             router.refresh();
-
         } else {
             toast.error("Failed to add property");
         }
@@ -324,6 +407,89 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                             </TextField>
                         </Fieldset>
 
+                        {/* SECTION 4: Property Images */}
+                        <Fieldset className="space-y-4 w-full">
+                            <legend className="text-lg font-heading font-medium text-text border-b border-gray-100 w-full pb-2 mb-2 flex items-center gap-2">
+                                <Picture className="text-primary" size={18} /> Property Images
+                            </legend>
+
+                            {/* Image Upload Area */}
+                            <div>
+                                <label
+                                    className={`
+                                        flex flex-col items-center justify-center w-full
+                                        border-2 border-dashed rounded-xl p-6
+                                        transition-all duration-200 cursor-pointer
+                                        ${images.length > 0 
+                                            ? 'border-primary/30 bg-primary/5' 
+                                            : 'border-gray-300 bg-gray-50 hover:border-primary/40 hover:bg-gray-100'
+                                        }
+                                        ${errors.images ? 'border-danger bg-danger/5' : ''}
+                                    `}
+                                >
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                        <div className="p-3 rounded-full bg-primary/10">
+                                            <Picture size={24} className="text-primary" />
+                                        </div>
+                                        <p className="text-sm font-medium text-gray-700">
+                                            {isUploading ? 'Uploading...' : 'Click to upload property images'}
+                                        </p>
+                                        <p className="text-xs text-gray-500">
+                                            PNG, JPG, JPEG up to 10MB
+                                        </p>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        disabled={isUploading}
+                                        className="hidden"
+                                    />
+                                </label>
+                                {errors.images && (
+                                    <p className="text-xs text-danger mt-2">{errors.images}</p>
+                                )}
+                                {uploadError && (
+                                    <p className="text-xs text-danger mt-2">{uploadError}</p>
+                                )}
+                            </div>
+
+                            {/* Image Previews */}
+                            {imagePreviews.length > 0 && (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-3">
+                                    {imagePreviews.map((preview, index) => (
+                                        <div key={index} className="relative group aspect-square">
+                                            <Image
+                                                src={preview}
+                                                alt={`Property image ${index + 1}`}
+                                                fill
+                                                className="object-cover rounded-lg"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => removeImage(index)}
+                                                className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600"
+                                            >
+                                                <Ban size={14} />
+                                            </button>
+                                            {isUploading && index === imagePreviews.length - 1 && (
+                                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
+                                                    <Ban size={24} className="animate-spin text-white" />
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Image count indicator */}
+                            {images.length > 0 && (
+                                <p className="text-xs text-gray-500 mt-2">
+                                    {images.length} image{images.length > 1 ? 's' : ''} uploaded
+                                </p>
+                            )}
+                        </Fieldset>
+
                         {/* Form Actions */}
                         <div className="flex justify-end gap-3 pt-6 border-t border-gray-100 w-full">
                             <Button
@@ -336,9 +502,10 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                             </Button>
                             <Button
                                 type="submit"
-                                className="bg-[#1eac70] text-white font-semibold hover:bg-[#1a9460] rounded-xl px-8 shadow-md shadow-primary/10 transition-all h-12"
+                                disabled={isUploading}
+                                className="bg-[#1eac70] text-white font-semibold hover:bg-[#1a9460] rounded-xl px-8 shadow-md shadow-primary/10 transition-all h-12 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Submit Listing
+                                {isUploading ? 'Uploading Images...' : 'Submit Listing'}
                             </Button>
                         </div>
                     </Form>

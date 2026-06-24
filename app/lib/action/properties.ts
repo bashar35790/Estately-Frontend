@@ -15,11 +15,10 @@ interface PropertyPayload {
     extraFeatures: string[];
     isFeatured: boolean;
     status: string;
-    ownerInfo: {
-        id: string;
-        name: string;
-        email: string;
-    };
+    ownerId: string;
+    ownerName: string;
+    ownerEmail: string;
+    images: string[];
 }
 
 export const addProperties = async (data: PropertyPayload) => {
