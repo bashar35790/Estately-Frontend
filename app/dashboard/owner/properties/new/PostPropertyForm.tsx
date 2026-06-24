@@ -17,6 +17,7 @@ import {
 import { House, Globe, Thunderbolt, Person, FolderPlus } from "@gravity-ui/icons";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { addProperties } from "@/lib/action/properties";
 
 // Strict Interfaces Definition
 interface OwnerInfo {
@@ -41,6 +42,27 @@ interface FormErrors {
     bathrooms?: string;
     size?: string;
     amenities?: string;
+}
+
+interface PropertyPayload {
+  title: string;
+  description: string;
+  location: string;
+  propertyType: string;
+  price: number;
+  rentType: string;
+  bedrooms: number;
+  bathrooms: number;
+  size: number;
+  amenities: string[];
+  extraFeatures: string[];
+  isFeatured: boolean;
+  status: string;
+  ownerInfo: {
+    id: string;
+    name: string;
+    email: string;
+  };
 }
 
 export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
@@ -74,7 +96,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
 
         setErrors({});
 
-        const payload = {
+        const payload: PropertyPayload = {
             title: data.title as string,
             description: data.description as string,
             location: data.location as string,
@@ -95,8 +117,15 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
             }
         };
 
-        console.log("Submitting Luxury Property Payload:", payload);
-        toast.success("Property listing structure validated successfully!");
+        const res = await addProperties(payload)
+        if (res.insertedId) {
+            toast.success("Property added successfully!");
+            router.push("/dashboard/owner/properties");
+            router.refresh();
+
+        } else {
+            toast.error("Failed to add property");
+        }
     };
 
     // Premium UI Custom Styles
