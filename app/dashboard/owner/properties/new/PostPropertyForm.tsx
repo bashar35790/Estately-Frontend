@@ -352,7 +352,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                                 <TextField name="location" isInvalid={!!errors.location} className="flex flex-col gap-1.5 w-full relative">
                                     <Label className="text-gray-600 font-medium text-sm">Location</Label>
                                     <div className="relative flex items-center">
-                                        <Globe size={16} className="absolute left-4 text-gray-400 pointer-events-none z-10" />
+                                        <Globe className="absolute left-4 text-gray-400 pointer-events-none z-10 w-4 h-4" />
                                         <Input
                                             name="location"
                                             placeholder="e.g. Beverly Hills, CA"
@@ -366,9 +366,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                                     <span className="text-sm font-medium text-gray-600">Mark as Featured Listing</span>
                                     <Switch
                                         isSelected={isFeatured}
-                                        onValueChange={setIsFeatured}
-                                        size="sm"
-                                        color="success"
+                                        onChange={(e: any) => setIsFeatured(e.target ? e.target.checked : Boolean(e))}
                                     />
                                 </div>
                             </div>
@@ -494,7 +492,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                         <div className="flex justify-end gap-3 pt-6 border-t border-gray-100 w-full">
                             <Button
                                 type="button"
-                                variant="bordered"
+                                variant="outline"
                                 className="border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl px-6 font-medium h-12 transition-all"
                                 onClick={() => router.back()}
                             >
@@ -502,7 +500,7 @@ export default function AddPropertyForm({ owner }: AddPropertyFormProps) {
                             </Button>
                             <Button
                                 type="submit"
-                                disabled={isUploading}
+                                isDisabled={isUploading}
                                 className="bg-[#1eac70] text-white font-semibold hover:bg-[#1a9460] rounded-xl px-8 shadow-md shadow-primary/10 transition-all h-12 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isUploading ? 'Uploading Images...' : 'Submit Listing'}
