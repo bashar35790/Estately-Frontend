@@ -1,9 +1,9 @@
 "use client";
 
 import type { Selection, SortDescriptor } from "@heroui/react";
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Table, Chip, Button, Checkbox } from "@heroui/react";
-import { Icon } from "@iconify/react";
+import { Eye, Layers, Pencil, TrashBin } from "@gravity-ui/icons";
 
 interface Property {
   _id: string;
@@ -96,7 +96,7 @@ export default function OwnerPropertiesPage({ initialProperties = [] }: OwnerPro
                   </Checkbox.Content>
                 </Checkbox>
               </Table.Column>
-              
+
               <Table.Column allowsSorting isRowHeader id="title">
                 {({ sortDirection }) => (
                   <Table.SortableColumnHeader sortDirection={sortDirection}>
@@ -153,8 +153,8 @@ export default function OwnerPropertiesPage({ initialProperties = [] }: OwnerPro
                           {property.title}
                         </span>
                         {property.isFeatured && (
-                          <Chip 
-                            size="sm" 
+                          <Chip
+                            size="sm"
                             variant="primary"
                             className="bg-primary/10 text-primary border border-primary/20 text-[10px] font-bold tracking-widest uppercase px-1 h-5"
                           >
@@ -172,18 +172,18 @@ export default function OwnerPropertiesPage({ initialProperties = [] }: OwnerPro
                   <Table.Cell className="min-w-52">
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-1.5 capitalize text-xs font-semibold text-secondary">
-                        <Icon className="size-3.5" icon="gravity-ui:home" />
+                        <Layers className="size-3.5" />
                         <span className="font-body">{property.propertyType}</span>
                       </div>
                       <div className="flex items-center gap-3 text-xs text-default-400 mt-0.5 font-body">
                         <span className="flex items-center gap-1">
-                          <Icon className="size-3.5" icon="gravity-ui:layers-3" /> {property.bedrooms} Bed
+                          <Layers className="size-3.5" /> {property.bedrooms} Bed
                         </span>
                         <span className="flex items-center gap-1">
-                          <Icon className="size-3.5" icon="gravity-ui:circle-dashed" /> {property.bathrooms} Bath
+                          <Layers className="size-3.5" /> {property.bathrooms} Bath
                         </span>
                         <span className="flex items-center gap-1">
-                          <Icon className="size-3.5" icon="gravity-ui:square-dashed" /> {property.size} m²
+                          <Layers className="size-3.5" /> {property.size} m²
                         </span>
                       </div>
                     </div>
@@ -203,9 +203,9 @@ export default function OwnerPropertiesPage({ initialProperties = [] }: OwnerPro
 
                   {/* 4. Status Alignment */}
                   <Table.Cell className="min-w-25">
-                    <Chip 
-                      color={statusColorMap[property.status.toLowerCase()] || "default"} 
-                      size="sm" 
+                    <Chip
+                      color={statusColorMap[property.status.toLowerCase()] || "default"}
+                      size="sm"
                       variant="soft"
                       className="capitalize font-body font-semibold text-[11px]"
                     >
@@ -216,14 +216,14 @@ export default function OwnerPropertiesPage({ initialProperties = [] }: OwnerPro
                   {/* 5. Pure HeroUI v3 Actions Panel with Inspect, Edit, and Delete buttons */}
                   <Table.Cell>
                     <div className="flex items-center justify-end gap-1">
-                      <Button isIconOnly size="sm" variant="tertiary" aria-label="Inspect public property listing">
-                        <Icon className="size-4" icon="gravity-ui:eye" />
+                      <Button size="sm" variant="tertiary" aria-label="Inspect public property listing">
+                        <Eye className="size-4" />
                       </Button>
-                      <Button isIconOnly size="sm" variant="tertiary" aria-label="Modify listing details">
-                        <Icon className="size-4 text-default-500 hover:text-primary transition-colors" icon="gravity-ui:pencil" />
+                      <Button size="sm" variant="tertiary" aria-label="Modify listing details">
+                        <Pencil className="size-4 text-default-500 hover:text-primary transition-colors" />
                       </Button>
-                      <Button isIconOnly size="sm" variant="danger-soft" aria-label="Delist asset from registry">
-                        <Icon className="size-4" icon="gravity-ui:trash-bin" />
+                      <Button size="sm" variant="danger-soft" aria-label="Delist asset from registry">
+                        <TrashBin className="size-4" />
                       </Button>
                     </div>
                   </Table.Cell>
