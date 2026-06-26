@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Card, Link } from "@heroui/react";
+import { useState } from "react";
+import { Link } from "@heroui/react";
 import { MapPin, ArrowRight } from "@gravity-ui/icons";
 import Image from "next/image";
 
@@ -31,8 +31,6 @@ interface PropertyCardProps {
 }
 
 export default function PropertyCard({ property }: PropertyCardProps) {
-    if (!property) return null;
-
     // Premium fallback estate image
     const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop";
 
@@ -42,7 +40,13 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         : FALLBACK_IMAGE;
 
     // State to track if the current image breaks at runtime
-    const [imgSrc, setImgSrc] = useState<string>(initialImage);
+    const [imgSrc, setImgSrc] = useState(initialImage);
+
+    if (!property) return null;
+
+
+
+
 
     const formatPrice = (amount: number) => {
         if (!amount) return "0";
@@ -142,7 +146,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     </div>
 
                     <Link
-                        href={`/properties/${propertyId}`}
+                        href={`/all-properties/${propertyId}`}
                         className="group/btn flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-amber-500 hover:text-white transition-colors duration-300"
                     >
                         View Details

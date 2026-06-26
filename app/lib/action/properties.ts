@@ -1,4 +1,7 @@
 "use server"
+
+import { serverMutation } from "../core/server";
+
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface PropertyPayload {
@@ -37,3 +40,14 @@ export const addProperties = async (data: PropertyPayload) => {
         console.error(error);
     }
 }
+
+export const addReview = async (data: ReviewPayload) => {
+    try {
+        const response = await serverMutation("/api/add-review", "POST", data)
+        return response;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+

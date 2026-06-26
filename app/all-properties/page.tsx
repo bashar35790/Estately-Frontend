@@ -25,7 +25,6 @@ export interface Property {
 export default async function AllPropertiesPage() {
 
   const properties: Property[] = await getProperty();
-  console.log(properties);
   return (
     <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-amber-500 selection:text-black">
       <div className="max-w-7xl mx-auto space-y-16">
