@@ -13,7 +13,7 @@ import {
     DollarSign,
     FileText,
 } from "lucide-react";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { addBooking } from "@/lib/action/properties";
 import { toast } from "react-toastify";
 
@@ -45,7 +45,7 @@ interface BookingModalProps {
 }
 
 export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
-    const { data: session } = useSession();
+    const { data: session } = authClient.useSession();
     const [step, setStep] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);

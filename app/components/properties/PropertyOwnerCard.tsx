@@ -4,18 +4,31 @@ import { motion } from "framer-motion";
 import { Mail, MessageSquare } from "lucide-react";
 import { Button } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 
-interface PropertyOwnerCardProps {
-    property: {
-        ownerName: string;
-        ownerEmail: string;
-        ownerId: string;
-        ownerImage?: string;
-    };
+interface Property {
+    _id: string;
+    title: string;
+    description: string;
+    location: string;
+    propertyType: string;
+    price: number;
+    rentType: "monthly" | "yearly" | "weekly" | "daily";
+    bedrooms: number;
+    bathrooms: number;
+    size: number;
+    amenities: string[];
+    extraFeatures: string[];
+    isFeatured: boolean;
+    status: "pending" | "approved" | "rejected";
+    ownerId: string;
+    ownerName: string;
+    ownerEmail: string;
+    images: string[];
 }
 
-export function PropertyOwnerCard({ property }: PropertyOwnerCardProps) {
-    const avatarSrc = property.ownerImage || `https://api.dicebear.com/7.x/initials/svg?seed=${property.ownerName}`;
+export function PropertyOwnerCard({ property }: { property: Property }) {
+    const avatarSrc = property.images[0] || `https://api.dicebear.com/7.x/initials/svg?seed=${property.ownerName}`;
 
     return (
         <motion.div
@@ -51,13 +64,13 @@ export function PropertyOwnerCard({ property }: PropertyOwnerCardProps) {
                             <Mail size={18} className="mr-2" />
                             {property.ownerEmail}
                         </Button>
-                        <Button
-                            fullWidth
-                            className="font-bold text-white shadow-lg bg-primary hover:opacity-90 h-12 rounded-xl"
+                        <Link
+                            href={`mailto:${property.ownerEmail}`}
+                            className="font-bold text-white shadow-lg bg-primary hover:opacity-90 h-12 rounded-xl w-full flex items-center justify-center"
                         >
                             <MessageSquare size={18} className="mr-2" />
                             Send Message
-                        </Button>
+                        </Link>
                     </div>
                 </div>
             </div>
