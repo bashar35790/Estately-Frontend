@@ -51,3 +51,13 @@ export const addReview = async (data: ReviewPayload) => {
     }
 }
 
+export const addBooking = async (data: BookingPayload) => {
+    try {
+        const response = await serverMutation("/api/bookings", "POST", data)
+        return response;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+

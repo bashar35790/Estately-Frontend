@@ -7,24 +7,33 @@ import { useState } from "react";
 import { BookingModal } from "./BookingModal";
 import { FavoriteButton } from "./FavoriteButton";
 
-interface PropertyBookingCardProps {
-    property: {
-        _id: string | { $oid: string };
-        title: string;
-        price: number;
-        rentType: string;
-    };
+interface Property {
+    _id: string;
+    title: string;
+    description: string;
+    location: string;
+    propertyType: string;
+    price: number;
+    rentType: "monthly" | "yearly" | "weekly" | "daily";
+    bedrooms: number;
+    bathrooms: number;
+    size: number;
+    amenities: string[];
+    extraFeatures: string[];
+    isFeatured: boolean;
+    status: "pending" | "approved" | "rejected";
+    ownerId: string;
+    ownerName: string;
+    ownerEmail: string;
+    images: string[];
 }
 
-export function PropertyBookingCard({ property }: PropertyBookingCardProps) {
+export function PropertyBookingCard({ property }: { property: Property }) {
     const [isBookingOpen, setIsBookingOpen] = useState(false);
-
-    const propertyId = typeof property._id === "object" && "$oid" in property._id
-        ? property._id.$oid
-        : property._id as string;
+    const propertyId = property?._id;
 
     return (
-        <div className="sticky top-28 space-y-6">
+        <div className="space-y-6">
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -72,7 +81,7 @@ export function PropertyBookingCard({ property }: PropertyBookingCardProps) {
 
                     <div className="flex items-center justify-center gap-2 text-default-400 text-xs font-medium font-body uppercase tracking-wider">
                         <ShieldCheck size={14} />
-                        <span>100% Secure & Guaranteed</span>
+                        <span>100% Secure &amp; Guaranteed</span>
                     </div>
                 </div>
             </motion.div>

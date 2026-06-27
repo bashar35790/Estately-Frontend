@@ -89,7 +89,15 @@ export default async function PropertyDetailsPage({
                     </div>
 
                     {/* Right Column: Sticky Booking & Owner */}
-                    <div className="space-y-8">
+                    <div
+                        className="sticky top-28 space-y-8 overflow-y-auto pb-4"
+                        style={{
+                            maxHeight: "calc(100vh - 8rem)",
+                            scrollbarWidth: "none",
+                            msOverflowStyle: "none",
+                        }}
+                    >
+                        <style>{`.sticky-right-col::-webkit-scrollbar { display: none; }`}</style>
                         <PropertyBookingCard property={property} />
                         <PropertyOwnerCard property={property} />
                     </div>
