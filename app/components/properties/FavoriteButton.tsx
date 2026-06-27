@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button, Spinner } from "@heroui/react";
 import { Heart } from "lucide-react";
+import { addReview } from "@/lib/action/properties";
+import { authClient } from "@/lib/auth-client";
 
 interface FavoriteButtonProps {
     propertyId: string;
@@ -14,28 +16,29 @@ export function FavoriteButton({
     propertyId,
     initialFavorite = false,
 }: FavoriteButtonProps) {
+    const { data: session } = authClient.useSession();
     const [isFavorite, setIsFavorite] = useState(initialFavorite);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleFavorite = async () => {
-        if (isLoading) return;
+        if (isLoading || !session?.user) return;
 
         const previous = isFavorite;
+
+        const data = {
+            _id: session.user.id,
+            propertyId,
+            isFavorite: !previous,
+            tenantId: session.user?.id,
+
+        }
 
         // Optimistic UI
         setIsFavorite(!previous);
         setIsLoading(true);
 
         try {
-            const res = await fetch("/api/favorites", {
-                method: previous ? "DELETE" : "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    propertyId,
-                }),
-            });
+            const res = await addReview(data);
 
             if (!res.ok) {
                 throw new Error("Request failed");
@@ -62,8 +65,8 @@ export function FavoriteButton({
             <Button
                 onPress={handleFavorite}
                 className={`w-full h-14 rounded-2xl font-bold flex items-center justify-center gap-2 border-2 transition-all ${isFavorite
-                        ? "bg-rose-50 border-rose-100 text-rose-500"
-                        : "bg-default-100 border-transparent text-default-600 hover:bg-default-200"
+                    ? "bg-rose-50 border-rose-100 text-rose-500"
+                    : "bg-default-100 border-transparent text-default-600 hover:bg-default-200"
                     }`}
             >
                 {isLoading ? (

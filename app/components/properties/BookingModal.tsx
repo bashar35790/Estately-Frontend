@@ -16,6 +16,7 @@ import {
 import { authClient, useSession } from "@/lib/auth-client";
 import { addBooking } from "@/lib/action/properties";
 import { toast } from "react-toastify";
+import { BookingPayloadType } from "@/types/booking";
 
 interface Property {
     _id: string;
@@ -77,7 +78,7 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
         setError(null);
 
         try {
-            const bookingPayload = {
+            const bookingPayload: BookingPayloadType = {
                 propertyId: property._id,
                 tenantId: session?.user?.id ?? "",
                 ownerId: property.ownerId,
@@ -90,18 +91,12 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                 transactionId: `txn_${Date.now()}`,
             };
 
-            const res = await addBooking(bookingPayload);
+            await addBooking(bookingPayload);
             toast.success("Booking created successfully");
 
-            if (!res.ok) {
-                toast.error("Failed to create booking");
-                return;
-            }
 
-            window.location.href = `/api/checkout_sessions?propertyTitle=${encodeURIComponent(property.title)}&amount=${totalAmount}`;
         } catch (err: unknown) {
-            const message = err instanceof Error ? err.message : "Something went wrong.";
-            setError(message);
+            toast.error("Failed to create booking");
         } finally {
             setIsSubmitting(false);
         }
