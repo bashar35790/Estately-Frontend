@@ -1,20 +1,38 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
-import { ArrowRight } from "lucide-react";
+import { Search, MapPin, Home, DollarSign } from "lucide-react";
 
 export default function HeroSection() {
+    const router = useRouter();
+    const [searchData, setSearchData] = useState({
+        location: "",
+        propertyType: "",
+        minPrice: "",
+        maxPrice: ""
+    });
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        const params = new URLSearchParams();
+        if (searchData.location) params.append("location", searchData.location);
+        if (searchData.propertyType) params.append("propertyType", searchData.propertyType);
+        if (searchData.minPrice) params.append("minPrice", searchData.minPrice);
+        if (searchData.maxPrice) params.append("maxPrice", searchData.maxPrice);
+        
+        router.push(`/all-properties?${params.toString()}`);
+    };
+
     return (
-        <section className="relative min-h-screen w-full overflow-hidden bg-gray-900 text-white">
+        <section className="relative min-h-screen w-full overflow-hidden bg-gray-900 text-white flex flex-col justify-center">
             {/* Background Video Layer */}
             <div
                 className="absolute inset-0 z-0 h-full w-full pointer-events-none overflow-hidden bg-cover bg-center bg-no-repeat"
                 style={{
-                    // This serves as your poster image while the iframe loads
                     backgroundImage: `url('https://images.unsplash.com/photo-1602941525421-8f8b81d3edbb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
                 }}
-
             >
                 <iframe
                     src="https://player.vimeo.com/video/1203055512?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1&playsinline=1"
@@ -24,38 +42,99 @@ export default function HeroSection() {
                     allowFullScreen
                     title="Hero Background Video"
                 />
-
-                {/* Subtle dark overlay to keep the white text readable over video scenes */}
+                {/* Subtle dark overlay */}
                 <div className="absolute inset-0 bg-black/50 z-10" />
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 flex min-h-screen flex-col justify-between container mx-auto px-4">
-
+            <div className="relative z-10 flex flex-col items-center justify-center container mx-auto px-4 mt-16 md:mt-0 text-center">
                 {/* Main Hero Body */}
-                <div className="my-auto max-w-4xl pt-20 md:pt-0">
-                    <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-                        Find Your Perfect Home, <span className=" italic text-primary text-shadow-2xl">Anywhere .</span>
+                <div className="max-w-4xl mx-auto w-full">
+                    <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-2xl">
+                        Find Your Perfect Home, <span className="italic text-primary">Anywhere.</span>
                     </h1>
-                    <p className="text-lg text-slate-50 md:text-xl max-w-2xl mt-6">
+                    <p className="text-lg text-slate-200 md:text-xl max-w-2xl mx-auto mt-6 drop-shadow-md">
                         Discover premium villas, sky-high penthouses, and storied estates from the world&apos;s most thoughtful hosts.
                     </p>
 
-                    {/* Main Action Button */}
-                    <div className="mt-8 md:mt-12">
-                        <Link href="/properties">
-                        <Button
-                            size="lg"
-                            className="bg-white text-black font-medium rounded-full shadow-lg hover:bg-gray-100 px-6 py-6 text-sm md:text-base inline-flex items-center gap-2"
-                        >
-                            Available Properties <ArrowRight className="h-4 w-4 text-black" />
-                        </Button>
-                        </Link>
+                    {/* Search Bar Container */}
+                    <div className="mt-12 bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 p-2 md:p-3 rounded-3xl shadow-2xl mx-auto max-w-5xl transition-all">
+                        <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
+                            
+                            {/* Location */}
+                            <div className="flex-1 bg-white dark:bg-zinc-900 rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 group transition-colors">
+                                <MapPin className="text-primary mr-3 w-5 h-5 shrink-0" />
+                                <div className="w-full text-left">
+                                    <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block">Location</label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Where do you want to live?" 
+                                        className="w-full bg-transparent text-black dark:text-white placeholder:text-gray-400 text-sm focus:outline-none font-medium"
+                                        value={searchData.location}
+                                        onChange={(e) => setSearchData({...searchData, location: e.target.value})}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Property Type */}
+                            <div className="flex-1 bg-white dark:bg-zinc-900 rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 transition-colors relative">
+                                <Home className="text-primary mr-3 w-5 h-5 shrink-0" />
+                                <div className="w-full text-left">
+                                    <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block">Property Type</label>
+                                    <select 
+                                        className="w-full bg-transparent text-black dark:text-white placeholder:text-gray-400 text-sm focus:outline-none font-medium appearance-none cursor-pointer"
+                                        value={searchData.propertyType}
+                                        onChange={(e) => setSearchData({...searchData, propertyType: e.target.value})}
+                                    >
+                                        <option value="">All Types</option>
+                                        <option value="villa">Villa</option>
+                                        <option value="apartment">Apartment</option>
+                                        <option value="house">House</option>
+                                        <option value="penthouse">Penthouse</option>
+                                        <option value="studio">Studio</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {/* Price Range */}
+                            <div className="flex-1 bg-white dark:bg-zinc-900 rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 transition-colors">
+                                <DollarSign className="text-primary mr-3 w-5 h-5 shrink-0" />
+                                <div className="w-full text-left flex items-center gap-2">
+                                    <div className="flex-1">
+                                        <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block">Min Price</label>
+                                        <input 
+                                            type="number" 
+                                            placeholder="$0" 
+                                            className="w-full bg-transparent text-black dark:text-white placeholder:text-gray-400 text-sm focus:outline-none font-medium"
+                                            value={searchData.minPrice}
+                                            onChange={(e) => setSearchData({...searchData, minPrice: e.target.value})}
+                                        />
+                                    </div>
+                                    <div className="w-[1px] h-8 bg-gray-200"></div>
+                                    <div className="flex-1 pl-2">
+                                        <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block">Max Price</label>
+                                        <input 
+                                            type="number" 
+                                            placeholder="Any" 
+                                            className="w-full bg-transparent text-black dark:text-white placeholder:text-gray-400 text-sm focus:outline-none font-medium"
+                                            value={searchData.maxPrice}
+                                            onChange={(e) => setSearchData({...searchData, maxPrice: e.target.value})}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Submit Button */}
+                            <button 
+                                type="submit"
+                                className="h-14 md:h-16 bg-primary hover:bg-primary/90 text-white font-bold px-8 rounded-2xl transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 shrink-0 md:min-w-[140px]"
+                            >
+                                <Search className="w-5 h-5" />
+                                <span>Search</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
-
-                {/* Empty bottom spacing element to perfectly balance the flex layout */}
-                <div className="hidden md:block h-8" />
             </div>
         </section>
     );

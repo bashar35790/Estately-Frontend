@@ -13,9 +13,19 @@ export const getOwnerProperties = async (ownerId: string, status = "pending") =>
     }
 }
 
-export const getProperty = async () => {
-    return serverAction(`/api/properties`);
-
+export const getProperty = async (searchParams?: Record<string, string | string[] | undefined>) => {
+    let query = "";
+    if (searchParams) {
+        const params = new URLSearchParams();
+        Object.entries(searchParams).forEach(([key, value]) => {
+            if (typeof value === "string") {
+                params.append(key, value);
+            }
+        });
+        const queryStr = params.toString();
+        if (queryStr) query = `?${queryStr}`;
+    }
+    return serverAction(`/api/properties${query}`);
 }
 
 export const getPropertyById = async (id: string) => {

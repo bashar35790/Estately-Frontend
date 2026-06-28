@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link } from "@heroui/react";
 import { MapPin, ArrowRight } from "@gravity-ui/icons";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 interface Property {
     _id: string | { $oid: string };
@@ -31,6 +32,8 @@ interface PropertyCardProps {
 }
 
 export default function PropertyCard({ property }: PropertyCardProps) {
+    const { data: session } = authClient.useSession();
+
     // Premium fallback estate image
     const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop";
 
@@ -44,10 +47,6 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
     if (!property) return null;
 
-
-
-
-
     const formatPrice = (amount: number) => {
         if (!amount) return "0";
         return new Intl.NumberFormat("en-US", {
@@ -60,6 +59,8 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     const propertyId = typeof property._id === "object" && "$oid" in property._id
         ? property._id.$oid
         : property._id as string;
+
+    const detailsHref = session?.user ? `/all-properties/${propertyId}` : "/auth/sign-in";
 
     return (
         <div className="group relative w-full max-w-[420px] bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-amber-500/50 transition-all duration-500 ease-out flex flex-col shadow-2xl">
@@ -146,7 +147,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     </div>
 
                     <Link
-                        href={`/all-properties/${propertyId}`}
+                        href={detailsHref}
                         className="group/btn flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-amber-500 hover:text-white transition-colors duration-300"
                     >
                         View Details
