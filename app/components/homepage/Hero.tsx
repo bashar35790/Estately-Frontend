@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
 import { Search, MapPin, Home, DollarSign } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function HeroSection() {
     const router = useRouter();
@@ -23,6 +24,27 @@ export default function HeroSection() {
         if (searchData.maxPrice) params.append("maxPrice", searchData.maxPrice);
         
         router.push(`/all-properties?${params.toString()}`);
+    };
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: { 
+            opacity: 1, 
+            y: 0, 
+            transition: { 
+                type: "spring", stiffness: 50, damping: 20 
+            } 
+        }
     };
 
     return (
@@ -49,16 +71,21 @@ export default function HeroSection() {
             {/* Content Container */}
             <div className="relative z-10 flex flex-col items-center justify-center container mx-auto px-4 mt-16 md:mt-0 text-center">
                 {/* Main Hero Body */}
-                <div className="max-w-4xl mx-auto w-full">
-                    <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-2xl">
+                <motion.div 
+                    className="max-w-4xl mx-auto w-full"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    <motion.h1 variants={itemVariants} className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-2xl">
                         Find Your Perfect Home, <span className="italic text-primary">Anywhere.</span>
-                    </h1>
-                    <p className="text-lg text-slate-200 md:text-xl max-w-2xl mx-auto mt-6 drop-shadow-md">
+                    </motion.h1>
+                    <motion.p variants={itemVariants} className="text-lg text-slate-200 md:text-xl max-w-2xl mx-auto mt-6 drop-shadow-md">
                         Discover premium villas, sky-high penthouses, and storied estates from the world&apos;s most thoughtful hosts.
-                    </p>
+                    </motion.p>
 
                     {/* Search Bar Container */}
-                    <div className="mt-12 bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 p-2 md:p-3 rounded-3xl shadow-2xl mx-auto max-w-5xl transition-all">
+                    <motion.div variants={itemVariants} className="mt-12 bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 p-2 md:p-3 rounded-3xl shadow-2xl mx-auto max-w-5xl transition-all">
                         <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
                             
                             {/* Location */}
@@ -133,8 +160,8 @@ export default function HeroSection() {
                                 <span>Search</span>
                             </button>
                         </form>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );

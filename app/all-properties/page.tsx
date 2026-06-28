@@ -54,7 +54,7 @@ export default async function AllPropertiesPage({
         {properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
             {properties.map((property) => {
-              const idString = typeof property._id === "object" ? property._id.$oid : property._id;
+              const idString = typeof property._id === "object" ? property._id : property._id;
               return (
                 <PropertyCard
                   key={idString}
