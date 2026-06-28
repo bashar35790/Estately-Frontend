@@ -78,25 +78,38 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
         setError(null);
 
         try {
-            const bookingPayload: BookingPayloadType = {
-                propertyId: property._id,
-                tenantId: session?.user?.id ?? "",
-                ownerId: property.ownerId,
-                moveInDate: formData.moveInDate,
-                contactNumber: formData.contactNumber,
-                notes: formData.notes,
-                amount: totalAmount,
-                bookingStatus: "pending",
-                paymentStatus: "paid",
-                transactionId: `txn_${Date.now()}`,
-            };
+            const response = await fetch("/api/booking_checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    propertyId: property._id,
+                    tenantId: session?.user?.id || "",
+                    email: session?.user?.email || "",
+                    moveInDate: formData.moveInDate,
+                    contactNumber: formData.contactNumber,
+                    notes: formData.notes,
+                }),
+            });
 
-            await addBooking(bookingPayload);
-            toast.success("Booking created successfully");
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || "Failed to create checkout session");
+            }
 
-
-        } catch (err: unknown) {
-            toast.error("Failed to create booking");
+            const data = await response.json();
+            
+            if (data.url) {
+                // Redirect to Stripe checkout
+                window.location.href = data.url;
+            } else {
+                throw new Error("No checkout URL returned");
+            }
+        } catch (err: any) {
+            console.error("Booking error:", err);
+            toast.error(err.message || "Failed to process payment");
+            setError(err.message || "An error occurred during checkout.");
         } finally {
             setIsSubmitting(false);
         }
@@ -462,26 +475,28 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                 {/* Footer */}
                                 <div className="px-8 py-6">
                                     {step === 1 ? (
-                                        <button
-                                            onClick={handleNext}
-                                            className="w-full h-14 flex items-center justify-center gap-2 rounded-2xl font-bold text-base transition-all duration-200"
-                                            style={{
-                                                background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
-                                                color: "#ffffff",
-                                                boxShadow: "0 8px 32px rgba(124,58,237,0.4), 0 0 0 1px rgba(124,58,237,0.3)",
-                                            }}
-                                            onMouseEnter={(e) => {
-                                                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 12px 40px rgba(124,58,237,0.6), 0 0 0 1px rgba(124,58,237,0.4)";
-                                                (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 32px rgba(124,58,237,0.4), 0 0 0 1px rgba(124,58,237,0.3)";
-                                                (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
-                                            }}
-                                        >
-                                            Proceed to Summary
-                                            <ChevronRight size={18} />
-                                        </button>
+                                        <div className="w-full">
+                                            <button 
+                                                onClick={handleNext}
+                                                className="w-full h-14 flex items-center justify-center gap-2 rounded-2xl font-bold text-base transition-all duration-200"
+                                                style={{
+                                                    background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
+                                                    color: "#ffffff",
+                                                    boxShadow: "0 8px 32px rgba(124,58,237,0.4), 0 0 0 1px rgba(124,58,237,0.3)",
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 12px 40px rgba(124,58,237,0.6), 0 0 0 1px rgba(124,58,237,0.4)";
+                                                    (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 32px rgba(124,58,237,0.4), 0 0 0 1px rgba(124,58,237,0.3)";
+                                                    (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+                                                }}
+                                            >
+                                                Proceed to Summary
+                                                <ChevronRight size={18} />
+                                            </button>
+                                        </div>
                                     ) : (
                                         <div className="flex gap-4">
                                             <button
