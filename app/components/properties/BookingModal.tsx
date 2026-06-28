@@ -13,10 +13,8 @@ import {
     DollarSign,
     FileText,
 } from "lucide-react";
-import { authClient, useSession } from "@/lib/auth-client";
-import { addBooking } from "@/lib/action/properties";
+import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
-import { BookingPayloadType } from "@/types/booking";
 
 interface Property {
     _id: string;
@@ -99,7 +97,7 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
             }
 
             const data = await response.json();
-            
+
             if (data.url) {
                 // Redirect to Stripe checkout
                 window.location.href = data.url;
@@ -476,7 +474,7 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                 <div className="px-8 py-6">
                                     {step === 1 ? (
                                         <div className="w-full">
-                                            <button 
+                                            <button
                                                 onClick={handleNext}
                                                 className="w-full h-14 flex items-center justify-center gap-2 rounded-2xl font-bold text-base transition-all duration-200"
                                                 style={{

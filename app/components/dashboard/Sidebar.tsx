@@ -50,7 +50,7 @@ export function DashboardSidebar() {
     const tenantNavLinks = [
         { icon: LayoutDashboard, href: "/dashboard/tenant", label: "Dashboard" },
         { icon: MapPin, href: "/dashboard/tenant/properties", label: "Explore Homes" },
-        { icon: Bookmark, href: "/dashboard/tenant/saved-properties", label: "Saved List" },
+        { icon: Bookmark, href: "/dashboard/tenant/favorites", label: "My Favorites" },
         { icon: FileText, href: "/dashboard/tenant/applications", label: "Applications" },
         { icon: CreditCard, href: "/dashboard/tenant/billing", label: "Payments" },
         { icon: Settings, href: "/settings", label: "Account Settings" },
