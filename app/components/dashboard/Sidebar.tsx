@@ -22,7 +22,7 @@ import {
     ChevronRight
 } from "lucide-react";
 import { Button, Drawer } from "@heroui/react";
-import { LayoutSideContentLeft } from "@gravity-ui/icons";
+import { LayoutSideContentLeft, Person } from "@gravity-ui/icons";
 import Logo from "../../utility/Logo";
 
 /**
@@ -43,7 +43,8 @@ export function DashboardSidebar() {
         { icon: MapPin, href: "/dashboard/owner/properties", label: "My Properties" },
         { icon: PlusCircle, href: "/dashboard/owner/properties/new", label: "Post Property" },
         { icon: Mail, href: "/bookings", label: "Booking Requests" },
-        { icon: CreditCard, href: "/payments", label: "My Earnings" },
+        { icon: Person, href: "/dashboard/profile", label: "Profile" }
+
     ];
 
     const tenantNavLinks = [
