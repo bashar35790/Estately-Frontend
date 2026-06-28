@@ -63,7 +63,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     const detailsHref = session?.user ? `/all-properties/${propertyId}` : "/auth/sign-in";
 
     return (
-        <div className="group relative w-full max-w-[420px] bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-amber-500/50 transition-all duration-500 ease-out flex flex-col shadow-2xl">
+        <div className="group relative w-full max-w-[420px] bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-500 ease-out flex flex-col shadow-2xl">
             {/* Image Section */}
             <div className="w-full h-72 relative overflow-hidden bg-zinc-900 block" style={{ minHeight: '288px' }}>
                 {imgSrc && (
@@ -87,11 +87,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
                 {/* Top Badges */}
                 <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-20 pointer-events-none">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-amber-500 font-semibold bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-sm border border-amber-500/30">
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-semibold bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-sm border border-primary/30">
                         {property.propertyType}
                     </span>
                     {property.isFeatured && (
-                        <span className="text-[10px] uppercase tracking-[0.2em] text-white font-semibold bg-amber-500/90 px-3 py-1.5 rounded-sm shadow-lg">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-white font-semibold bg-primary/90 px-3 py-1.5 rounded-sm shadow-lg">
                             Featured
                         </span>
                     )}
@@ -99,7 +99,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
                 {/* Price Display */}
                 <div className="absolute bottom-4 left-4 z-20 pointer-events-none">
-                    <div className="text-amber-500 text-2xl font-light tracking-wide">
+                    <div className="text-primary text-2xl font-light tracking-wide">
                         {formatPrice(property.price)}
                         <span className="text-zinc-400 text-sm font-normal ml-1">/ {property.rentType || "mo"}</span>
                     </div>
@@ -108,20 +108,20 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
             {/* Content Section */}
             <div className="p-6 flex flex-col flex-grow z-20 bg-zinc-950">
-                <h2 className="text-xl font-light tracking-wide text-white leading-snug group-hover:text-amber-500 transition-colors duration-300 line-clamp-1 mb-2">
+                <h2 className="text-xl font-light tracking-wide text-white leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-1 mb-2">
                     {property.title}
                 </h2>
 
                 {property.location && (
                     <div className="flex items-center gap-2 text-zinc-400 mb-4">
-                        <MapPin className="w-4 h-4 text-amber-500" />
+                        <MapPin className="w-4 h-4 text-primary" />
                         <span className="text-sm font-light tracking-wider line-clamp-1">
                             {property.location}
                         </span>
                     </div>
                 )}
 
-                <div className="w-8 h-[1px] bg-amber-500/30 mb-4" />
+                <div className="w-8 h-[1px] bg-primary/30 mb-4" />
 
                 {/* Features Grid */}
                 <div className="grid grid-cols-3 gap-4 mb-6">
@@ -142,13 +142,13 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                 {/* Footer Action */}
                 <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <div className={`w-1.5 h-1.5 rounded-full ${property.status === "active" ? "bg-amber-500" : "bg-zinc-600"}`} />
+                        <div className={`w-1.5 h-1.5 rounded-full ${property.status === "active" ? "bg-primary" : "bg-zinc-600"}`} />
                         <span className="text-xs text-zinc-400 uppercase tracking-wider">{property.status}</span>
                     </div>
 
                     <Link
                         href={detailsHref}
-                        className="group/btn flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-amber-500 hover:text-white transition-colors duration-300"
+                        className="group/btn flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-primary hover:text-white transition-colors duration-300"
                     >
                         View Details
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />

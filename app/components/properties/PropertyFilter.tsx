@@ -63,14 +63,14 @@ export default function PropertyFilter() {
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="Search estates or locations..."
-                    className="w-full h-12 pl-4 pr-10 bg-zinc-900 border border-white/10 text-white placeholder-zinc-500 rounded-sm focus:outline-none focus:border-amber-500/50 transition-colors text-sm font-light tracking-wide"
+                    className="w-full h-12 pl-4 pr-10 bg-zinc-900 border border-white/10 text-white placeholder-zinc-500 rounded-sm focus:outline-none focus:border-primary/50 transition-colors text-sm font-light tracking-wide"
                 />
 
                 {location && (
                     <button
                         type="button"
                         onClick={handleClear}
-                        className="absolute right-3 top-0 bottom-0 my-auto text-zinc-500 hover:text-amber-500 text-xs transition-colors"
+                        className="absolute right-3 top-0 bottom-0 my-auto text-zinc-500 hover:text-primary text-xs transition-colors"
                     >
                         ✕
                     </button>
@@ -82,7 +82,7 @@ export default function PropertyFilter() {
                     aria-label="Filter by property type"
                     value={propertyType}
                     onChange={handleTypeChange}
-                    className="w-full h-12 px-4 bg-zinc-900 border border-white/10 text-zinc-300 rounded-sm focus:outline-none focus:border-amber-500/50 transition-colors appearance-none text-sm font-light tracking-wide cursor-pointer"
+                    className="w-full h-12 px-4 bg-zinc-900 border border-white/10 text-zinc-300 rounded-sm focus:outline-none focus:border-primary/50 transition-colors appearance-none text-sm font-light tracking-wide cursor-pointer"
                 >
                     <option value="all">All Properties</option>
                     <option value="villa">Villas</option>
@@ -91,7 +91,7 @@ export default function PropertyFilter() {
                     <option value="penthouse">Penthouses</option>
                     <option value="studio">Studios</option>
                 </select>
-                <div className="absolute right-4 top-0 bottom-0 my-auto h-1.5 w-1.5 border-r border-b border-amber-500 rotate-45 pointer-events-none" />
+                <div className="absolute right-4 top-0 bottom-0 my-auto h-1.5 w-1.5 border-r border-b border-primary rotate-45 pointer-events-none" />
             </div>
             {/* Hidden submit button to allow enter to submit */}
             <button type="submit" className="hidden">Search</button>

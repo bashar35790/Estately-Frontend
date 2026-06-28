@@ -31,14 +31,14 @@ export default async function AllPropertiesPage({
   const resolvedParams = await searchParams;
   const properties: Property[] = await getProperty(resolvedParams);
   return (
-    <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-amber-500 selection:text-black">
+    <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-primary selection:text-black">
       <div className="max-w-7xl mx-auto space-y-16">
 
         {/* Luxury Brand Header Block */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-10">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-light tracking-wide text-white">
-              Exclusive <span className="text-amber-500 font-normal">Estates</span>
+              Exclusive <span className="text-primary font-normal">Estates</span>
             </h1>
             <p className="text-sm md:text-base text-zinc-400 max-w-xl font-light leading-relaxed tracking-wide">
               Discover our curated collection of premium architectural masterpieces.
@@ -65,7 +65,7 @@ export default async function AllPropertiesPage({
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center py-32 border border-dashed border-white/10 rounded-sm bg-zinc-900/50">
-            <p className="text-amber-500 font-light tracking-widest uppercase text-lg mb-2">No Properties Found</p>
+            <p className="text-primary font-light tracking-widest uppercase text-lg mb-2">No Properties Found</p>
             <p className="text-zinc-500 text-sm font-light max-w-sm">
               We couldn&apos;t find any estates matching your refined criteria. Please adjust your filters.
             </p>
