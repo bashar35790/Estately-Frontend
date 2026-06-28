@@ -2,7 +2,9 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const serverAction = async (path: string) => {
     try {
-        const res = await fetch(`${baseUrl}${path}`);
+        const res = await fetch(`${baseUrl}${path}`, {
+            cache: 'no-store'
+        });
         //handle 401, 404, 403
         return res.json();
 

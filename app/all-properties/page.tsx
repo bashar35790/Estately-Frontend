@@ -1,4 +1,5 @@
 import PropertyCard from "@/components/properties/PropertiesCard";
+import PropertyFilter from "@/components/properties/PropertyFilter";
 import { getProperty } from "@/lib/api/properties";
 
 export interface Property {
@@ -46,34 +47,7 @@ export default async function AllPropertiesPage({
           </div>
 
           {/* Real-time Filters */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:max-w-md">
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Search estates or locations..."
-                className="w-full h-12 pl-4 pr-10 bg-zinc-900 border border-white/10 text-white placeholder-zinc-500 rounded-sm focus:outline-none focus:border-amber-500/50 transition-colors text-sm font-light tracking-wide"
-              />
-
-              <button
-                className="absolute right-3 top-0 bottom-0 my-auto text-zinc-500 hover:text-amber-500 text-xs transition-colors"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="relative w-full sm:max-w-[160px]">
-              <select
-                aria-label="Filter by property type"
-                className="w-full h-12 px-4 bg-zinc-900 border border-white/10 text-zinc-300 rounded-sm focus:outline-none focus:border-amber-500/50 transition-colors appearance-none text-sm font-light tracking-wide cursor-pointer"
-              >
-                <option value="all">All Properties</option>
-                <option value="villa">Villas</option>
-                <option value="apartment">Apartments</option>
-                <option value="studio">Studios</option>
-              </select>
-              <div className="absolute right-4 top-0 bottom-0 my-auto h-1.5 w-1.5 border-r border-b border-amber-500 rotate-45 pointer-events-none" />
-            </div>
-          </div>
+          <PropertyFilter />
         </div>
 
         {/* Dynamic Card Layout Grid */}
