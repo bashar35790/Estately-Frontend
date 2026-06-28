@@ -4,6 +4,7 @@ import WhyChooseUs from "./components/homepage/WhyChooseUs";
 import TopLocations from "./components/homepage/TopLocations";
 import RentalStatistics from "./components/homepage/RentalStatistics";
 import ClientReviews from "./components/homepage/Review";
+import Footer from "./components/footer/Footer";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <WhyChooseUs />
       <RentalStatistics />
       <ClientReviews />
+      <Footer></Footer>
     </div>
   );
 }
