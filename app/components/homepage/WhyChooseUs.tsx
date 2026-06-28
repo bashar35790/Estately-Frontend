@@ -40,17 +40,17 @@ export default function WhyChooseUs() {
 
     const cardVariants = {
         hidden: { opacity: 0, y: 40 },
-        visible: { 
-            opacity: 1, 
+        visible: {
+            opacity: 1,
             y: 0,
             transition: { type: "spring", stiffness: 60, damping: 20 }
         }
     };
 
     return (
-        <section className="bg-zinc-50 dark:bg-black py-24 px-6 sm:px-12 w-full">
+        <section className="bg-whaite py-24 px-6 sm:px-12 w-full">
             <div className="max-w-7xl mx-auto space-y-16">
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
@@ -65,7 +65,7 @@ export default function WhyChooseUs() {
                     </p>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
@@ -73,8 +73,8 @@ export default function WhyChooseUs() {
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
                 >
                     {features.map((feature, index) => (
-                        <motion.div 
-                            key={index} 
+                        <motion.div
+                            key={index}
                             variants={cardVariants}
                             whileHover={{ y: -10, transition: { duration: 0.2 } }}
                             className="bg-white dark:bg-zinc-900 p-8 rounded-2xl border border-zinc-100 dark:border-white/5 shadow-xl shadow-zinc-200/20 dark:shadow-none flex flex-col items-center text-center group transition-colors hover:border-primary/50"
