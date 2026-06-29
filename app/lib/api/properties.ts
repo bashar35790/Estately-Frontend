@@ -2,13 +2,26 @@ import { serverAction } from "../core/server";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const getOwnerProperties = async (ownerId: string, status = "pending") => {
+export const getOwnerProperties = async (ownerId: string, status = "") => {
     try {
-        const res = await fetch(`${baseUrl}/api/properties?ownerId=${ownerId}&status=${status}`)
+        const statusQuery = status ? `&status=${status}` : "";
+        const res = await fetch(`${baseUrl}/api/properties?ownerId=${ownerId}${statusQuery}`, { cache: 'no-store' });
         return res.json();
 
     } catch (error) {
         console.log("Error fetching properties", error);
+        return null;
+    }
+}
+
+export const deleteProperty = async (propertyId: string) => {
+    try {
+        const res = await fetch(`${baseUrl}/api/properties/${propertyId}`, {
+            method: 'DELETE',
+        });
+        return res.json();
+    } catch (error) {
+        console.log("Error deleting property", error);
         return null;
     }
 }

@@ -42,7 +42,7 @@ export function DashboardSidebar() {
         { icon: House, href: "/dashboard/owner", label: "Overview" },
         { icon: MapPin, href: "/dashboard/owner/properties", label: "My Properties" },
         { icon: PlusCircle, href: "/dashboard/owner/properties/new", label: "Post Property" },
-        { icon: Mail, href: "/bookings", label: "Booking Requests" },
+        { icon: Mail, href: "/dashboard/owner/bookings", label: "Booking Requests" },
         { icon: Person, href: "/dashboard/profile", label: "Profile" }
 
     ];

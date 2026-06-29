@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSession } from "@/lib/auth-client";
-import { Briefcase, Persons, Thunderbolt, CircleCheck } from '@gravity-ui/icons';
+import { Briefcase, Thunderbolt, CircleCheck } from '@gravity-ui/icons';
 import DashboardStatistic, { StatItem } from '@/components/dashboard/DashboardStatistic';
 import { getOwnerStats } from '@/lib/api/owner';
 import {
@@ -16,9 +16,37 @@ import {
   Legend
 } from 'recharts';
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+interface OwnerStats {
+    totalEarnings: number;
+    totalProperties: number;
+    totalBookings: number;
+    monthlyEarnings: { name: string; total: number }[];
+}
+
+const DEFAULT_STATS: OwnerStats = {
+    totalEarnings: 0,
+    totalProperties: 0,
+    totalBookings: 0,
+    monthlyEarnings: [],
+};
+
+// ─── Component ────────────────────────────────────────────────────────────────
 const OwnerDashboard: React.FC = () => {
-    // Better Auth client session type handling
     const { data: session, isPending } = useSession();
+    const [stats, setStats] = useState<OwnerStats>(DEFAULT_STATS);
+
+    const user = session?.user;
+
+    useEffect(() => {
+        if (user?.id) {
+            getOwnerStats(user.id).then((data: OwnerStats | null) => {
+                if (data) {
+                    setStats(data);
+                }
+            });
+        }
+    }, [user?.id]);
 
     if (isPending) {
         return (
@@ -29,32 +57,6 @@ const OwnerDashboard: React.FC = () => {
             </div>
         );
     }
-
-interface OwnerStats {
-    totalEarnings: number;
-    totalProperties: number;
-    totalBookings: number;
-    monthlyEarnings: { name: string; total: number }[];
-}
-
-    const [stats, setStats] = useState<OwnerStats>({
-        totalEarnings: 0,
-        totalProperties: 0,
-        totalBookings: 0,
-        monthlyEarnings: []
-    });
-
-    const user = session?.user;
-
-    useEffect(() => {
-        if (user?.id) {
-            getOwnerStats(user.id).then((data: any) => {
-                if (data) {
-                    setStats(data);
-                }
-            });
-        }
-    }, [user?.id]);
 
     const propertyOwnerStats: StatItem[] = [
         { title: "Total Earnings", value: `$${stats.totalEarnings.toLocaleString()}`, icon: Thunderbolt },
@@ -87,38 +89,33 @@ interface OwnerStats {
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart
                                 data={stats.monthlyEarnings}
-                                margin={{
-                                    top: 5,
-                                    right: 30,
-                                    left: 20,
-                                    bottom: 5,
-                                }}
+                                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                             >
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                                <XAxis 
-                                    dataKey="name" 
+                                <XAxis
+                                    dataKey="name"
                                     axisLine={false}
                                     tickLine={false}
                                     tick={{ fill: '#6B7280', fontSize: 12 }}
                                     dy={10}
                                 />
-                                <YAxis 
+                                <YAxis
                                     axisLine={false}
                                     tickLine={false}
                                     tick={{ fill: '#6B7280', fontSize: 12 }}
-                                    tickFormatter={(value) => `$${value}`}
+                                    tickFormatter={(value: number) => `$${value}`}
                                     dx={-10}
                                 />
-                                <Tooltip 
+                                <Tooltip
                                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
-                                    formatter={(value) => [`$${value}`, 'Earnings']}
+                                    formatter={(value: number) => [`$${value}`, 'Earnings']}
                                 />
                                 <Legend wrapperStyle={{ paddingTop: '20px' }} />
-                                <Line 
-                                    type="monotone" 
-                                    dataKey="total" 
+                                <Line
+                                    type="monotone"
+                                    dataKey="total"
                                     name="Earnings"
-                                    stroke="#A3CF16" 
+                                    stroke="#A3CF16"
                                     strokeWidth={3}
                                     dot={{ fill: '#A3CF16', strokeWidth: 2, r: 4 }}
                                     activeDot={{ r: 6, strokeWidth: 0 }}

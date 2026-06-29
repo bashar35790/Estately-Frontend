@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import { getOwnerPropertiesApi } from "@/lib/api/owner";
-import OwnerPropertiesPage from "./OwnerPropertiesPage";
+import { getOwnerBookingsApi } from "@/lib/api/owner";
+import OwnerBookingsPage from "./OwnerBookingsPage";
 
 export const dynamic = "force-dynamic";
 
@@ -11,9 +11,9 @@ async function Page() {
     });
 
     const ownerId = session?.user?.id || "";
-    const properties = await getOwnerPropertiesApi(ownerId);
+    const bookings = await getOwnerBookingsApi(ownerId);
 
-    return <OwnerPropertiesPage initialProperties={properties} />;
+    return <OwnerBookingsPage initialBookings={bookings} />;
 }
 
 export default Page;
