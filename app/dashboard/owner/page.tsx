@@ -1,9 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSession } from "@/lib/auth-client";
 import { Briefcase, Persons, Thunderbolt, CircleCheck } from '@gravity-ui/icons';
 import DashboardStatistic, { StatItem } from '@/components/dashboard/DashboardStatistic';
+import { getOwnerStats } from '@/lib/api/owner';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend
+} from 'recharts';
 
 const OwnerDashboard: React.FC = () => {
     // Better Auth client session type handling
@@ -19,15 +30,37 @@ const OwnerDashboard: React.FC = () => {
         );
     }
 
-    // টাইপসেফ প্রপার্টি ওনার স্ট্যাটস ডাটা array
-    const propertyOwnerStats: StatItem[] = [
-        { title: "Total Properties", value: "24", icon: Briefcase },
-        { title: "Monthly Revenue", value: "$45,280", icon: Persons },
-        { title: "Occupancy Rate", value: "92%", icon: Thunderbolt },
-        { title: "Maintenance Requests", value: "3", icon: CircleCheck },
-    ];
+interface OwnerStats {
+    totalEarnings: number;
+    totalProperties: number;
+    totalBookings: number;
+    monthlyEarnings: { name: string; total: number }[];
+}
+
+    const [stats, setStats] = useState<OwnerStats>({
+        totalEarnings: 0,
+        totalProperties: 0,
+        totalBookings: 0,
+        monthlyEarnings: []
+    });
 
     const user = session?.user;
+
+    useEffect(() => {
+        if (user?.id) {
+            getOwnerStats(user.id).then((data: any) => {
+                if (data) {
+                    setStats(data);
+                }
+            });
+        }
+    }, [user?.id]);
+
+    const propertyOwnerStats: StatItem[] = [
+        { title: "Total Earnings", value: `$${stats.totalEarnings.toLocaleString()}`, icon: Thunderbolt },
+        { title: "Total Properties", value: stats.totalProperties.toString(), icon: Briefcase },
+        { title: "Total Bookings", value: stats.totalBookings.toString(), icon: CircleCheck },
+    ];
 
     return (
         <div className="min-h-screen bg-[#f0f0f0] px-6 py-10 font-body text-text">
@@ -44,6 +77,56 @@ const OwnerDashboard: React.FC = () => {
 
                 {/* Statistics Component */}
                 <DashboardStatistic statsData={propertyOwnerStats} />
+
+                {/* Monthly Earnings Chart */}
+                <div className="mt-12 rounded-xl bg-white p-6 shadow-sm">
+                    <h3 className="mb-6 font-heading text-xl font-semibold text-text">
+                        Monthly Earnings
+                    </h3>
+                    <div className="h-[400px] w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart
+                                data={stats.monthlyEarnings}
+                                margin={{
+                                    top: 5,
+                                    right: 30,
+                                    left: 20,
+                                    bottom: 5,
+                                }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                                <XAxis 
+                                    dataKey="name" 
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#6B7280', fontSize: 12 }}
+                                    dy={10}
+                                />
+                                <YAxis 
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#6B7280', fontSize: 12 }}
+                                    tickFormatter={(value) => `$${value}`}
+                                    dx={-10}
+                                />
+                                <Tooltip 
+                                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                                    formatter={(value) => [`$${value}`, 'Earnings']}
+                                />
+                                <Legend wrapperStyle={{ paddingTop: '20px' }} />
+                                <Line 
+                                    type="monotone" 
+                                    dataKey="total" 
+                                    name="Earnings"
+                                    stroke="#A3CF16" 
+                                    strokeWidth={3}
+                                    dot={{ fill: '#A3CF16', strokeWidth: 2, r: 4 }}
+                                    activeDot={{ r: 6, strokeWidth: 0 }}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
             </div>
         </div>
     );

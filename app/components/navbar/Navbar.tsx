@@ -166,14 +166,14 @@ export function Navbar({
                         <LayoutDashboard size={15} className="opacity-70" /> Dashboard
                       </Link>
                       <Link
-                        href="/profile"
+                        href="/dashboard/profile"
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-slate-300 transition hover:bg-white/5 hover:text-[#A3CF16]"
                         onClick={() => setIsProfileOpen(false)}
                       >
                         <User size={15} className="opacity-70" /> Profile Details
                       </Link>
                       <Link
-                        href="/settings"
+                        href="/"
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-slate-300 transition hover:bg-white/5 hover:text-[#A3CF16]"
                         onClick={() => setIsProfileOpen(false)}
                       >

@@ -24,7 +24,7 @@ export function FavoriteButton({
         >
             <Button
                 onPress={toggleFavorite}
-                disabled={isLoading || isChecking}
+                isDisabled={isLoading || isChecking}
                 className={`w-full h-14 rounded-2xl font-bold flex items-center justify-center gap-2 border-2 transition-all ${isFavorite
                     ? "bg-rose-50 border-rose-100 text-rose-500"
                     : "bg-default-100 border-transparent text-default-600 hover:bg-default-200"
