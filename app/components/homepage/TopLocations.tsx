@@ -1,26 +1,34 @@
 "use client";
 
-import { motion } from "framer-motion";
+// Explicitly import the Variants type from framer-motion
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+interface LocationItem {
+    name: string;
+    properties: number;
+    image: string;
+}
+
 export default function TopLocations() {
-    const locations = [
+    // Upgraded high-end luxury architectural and cityscape photography from Unsplash
+    const locations: LocationItem[] = [
         {
             name: "Los Angeles",
             properties: 124,
-            image: "https://images.unsplash.com/photo-1580659324479-7c8df293c6be?q=80&w=2072&auto=format&fit=crop"
+            image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
         },
         {
             name: "New York",
             properties: 98,
-            image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070&auto=format&fit=crop"
+            image: "https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=2070&auto=format&fit=crop"
         },
         {
             name: "Miami",
             properties: 156,
-            image: "https://images.unsplash.com/photo-1533222481259-ce20eda1e20b?q=80&w=2070&auto=format&fit=crop"
+            image: "https://images.unsplash.com/photo-1506970845246-18f21d533b20?q=80&w=2070&auto=format&fit=crop"
         },
         {
             name: "Dubai",
@@ -29,7 +37,8 @@ export default function TopLocations() {
         }
     ];
 
-    const containerVariants = {
+    // Explicitly typed as Variants to fix TypeScript compilation errors
+    const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
@@ -39,7 +48,8 @@ export default function TopLocations() {
         }
     };
 
-    const cardVariants = {
+    // Explicitly typed as Variants to ensure type-safety for spring parameters
+    const cardVariants: Variants = {
         hidden: { opacity: 0, scale: 0.95 },
         visible: { 
             opacity: 1, 
@@ -95,13 +105,14 @@ export default function TopLocations() {
                             variants={cardVariants}
                             className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer"
                         >
-                            <Link href={`/all-properties?location=${location.name}`}>
+                            <Link href={`/all-properties?location=${encodeURIComponent(location.name)}`}>
                                 <Image
                                     src={location.image}
                                     alt={location.name}
                                     fill
                                     className="object-cover transition-transform duration-1000 group-hover:scale-110"
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                                    priority={index === 0}
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-90" />
                                 

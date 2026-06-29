@@ -3,7 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import { Star, Quote } from "lucide-react";
-import { motion } from "framer-motion";
+// Import Variants type from framer-motion
+import { motion, Variants } from "framer-motion";
 
 /**
  * Review Interface for Type Safety
@@ -53,7 +54,8 @@ const PLACEHOLDER_REVIEWS: Review[] = [
  * Follows the glassmorphism design language of the signup page.
  */
 export default function ClientReviews() {
-  const containerVariants = {
+  // Explicitly type container variants
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -63,7 +65,8 @@ export default function ClientReviews() {
     }
   };
 
-  const itemVariants = {
+  // Explicitly type item variants to satisfy Framer Motion requirements
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
@@ -110,7 +113,7 @@ export default function ClientReviews() {
                 relative w-full group flex flex-col
                 rounded-[28px] border border-zinc-200/60 dark:border-white/10
                 bg-white/70 dark:bg-white/5 p-8 sm:p-10
-                shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_48px_rgba(0,0,0,0.35)]
+                shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_48_rgba(0,0,0,0.35)]
                 backdrop-blur-[22px]
                 transition-all duration-500 hover:translate-y-[-8px] hover:border-primary/30 dark:hover:border-primary/30
               "
