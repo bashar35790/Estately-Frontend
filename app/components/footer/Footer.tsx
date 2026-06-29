@@ -6,12 +6,16 @@ import {
 
 } from "lucide-react";
 import { LogoFacebook, LogoLinkedin } from "@gravity-ui/icons";
+import { headers } from "next/headers";
 
-export default function Footer() {
+export default async function Footer() {
+    const pathname = (await headers()).get("x-pathname");
+    console.log(pathname)
+
+
     return (
-        <footer className="bg-white border-t border-gray-200">
-            <div className="mx-auto max-w-7xl px-6 py-16">
-
+        <footer className="bg-white border-t border-gray-200 w-full">
+            <div className="mx-auto container px-6 py-16">
                 <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
 
                     {/* Brand */}
