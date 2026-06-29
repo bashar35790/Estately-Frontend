@@ -6,6 +6,8 @@ import { Form, TextField, Button, Input, FieldError } from "@heroui/react";
 import { Mail, Eye, EyeOff } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { Icon } from "@iconify/react";
+import { toast } from "react-toastify";
 
 export default function GlassLoginForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,10 +15,20 @@ export default function GlassLoginForm() {
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
 
-  // Re-creating the visibility toggle action from your reference image concept
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  // Form Submission handler (adapted from your provided concept)
+  const socialSignin = async (provider: "google") => {
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
+      });
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "An unexpected error occurred.");
+      toast.error("Login failed. Please try again.");
+    }
+  };
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitError("");
@@ -24,8 +36,6 @@ export default function GlassLoginForm() {
 
     try {
       const formData = new FormData(e.currentTarget);
-
-      // Extract and validate form fields
       const email = formData.get("email") as string;
       const password = formData.get("password") as string;
 
@@ -58,21 +68,17 @@ export default function GlassLoginForm() {
   };
 
   return (
-    // FULL-PAGE CONTAINER with Landscape Background
     <div
       className="relative flex min-h-screen w-full items-center justify-center p-4"
       style={{
-        // Replace with your actual background image path
         backgroundImage: `url('https://images.unsplash.com/photo-1602941525421-8f8b81d3edbb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* Background Overlay - Adds depth and ensures readability */}
       <div className="absolute inset-0 z-0 bg-black/10" />
 
-      {/* GLASSMORPHISM LOGIN FORM / CARD */}
       <Form
         onSubmit={onSubmit}
         className="
@@ -80,7 +86,7 @@ export default function GlassLoginForm() {
           z-10
           flex
           w-full
-          max-w-120
+          max-w-[480px]
           flex-col
           gap-7
           rounded-[32px]
@@ -93,8 +99,6 @@ export default function GlassLoginForm() {
           sm:w-[90%]
         "
       >
-
-        {/* Header Text Section */}
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
             Login
@@ -104,15 +108,10 @@ export default function GlassLoginForm() {
           </p>
         </div>
 
-        {/* --- FORM FIELDS --- */}
         <div className="flex flex-col gap-5">
-
-          {/* Email Input Field (styled to look like "User Name" in image) */}
+          {/* Email Field */}
           <TextField
             isRequired
-            name="email"
-            type="email"
-            // Reusing your concept validation
             validate={(value) => {
               if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
                 return "Please enter a valid email address";
@@ -121,7 +120,11 @@ export default function GlassLoginForm() {
             }}
           >
             <div className="relative">
+              {/* FIX: Changed 'isRequired' to native 'required' */}
               <Input
+                required
+                name="email"
+                type="email"
                 placeholder="Email Address"
                 aria-label="Email Address"
                 className="
@@ -148,12 +151,9 @@ export default function GlassLoginForm() {
             <FieldError className="mt-1.5 px-2 text-sm text-rose-300" />
           </TextField>
 
-          {/* Password Input Field with Toggle */}
+          {/* Password Field */}
           <TextField
             isRequired
-            name="password"
-            type={isVisible ? "text" : "password"}
-            minLength={8}
             validate={(value) => {
               if (value.length < 8) return "Password must be at least 8 characters";
               if (!/[A-Z]/.test(value)) return "Need one uppercase letter";
@@ -162,7 +162,11 @@ export default function GlassLoginForm() {
             }}
           >
             <div className="relative">
+              {/* FIX: Changed 'isRequired' to 'required', removed 'minLength' from here since TextField handles it */}
               <Input
+                required
+                name="password"
+                type={isVisible ? "text" : "password"}
                 placeholder="Password"
                 aria-label="Password"
                 className="
@@ -184,7 +188,6 @@ export default function GlassLoginForm() {
                   focus:ring-white/30
                 "
               />
-              {/* Password visibility toggle button inside the field */}
               <button
                 type="button"
                 onClick={toggleVisibility}
@@ -197,7 +200,6 @@ export default function GlassLoginForm() {
           </TextField>
         </div>
 
-        {/* --- FORM ACTIONS --- */}
         <div className="flex flex-col gap-6">
           {submitError && (
             <div className="rounded-3xl border border-rose-400/50 bg-rose-500/10 px-4 py-3 text-sm text-rose-300 backdrop-blur-sm">
@@ -205,7 +207,6 @@ export default function GlassLoginForm() {
             </div>
           )}
 
-          {/* Main Login Submit Button (using the design gradient) */}
           <Button
             type="submit"
             isDisabled={isSubmitting}
@@ -227,15 +228,24 @@ export default function GlassLoginForm() {
             {isSubmitting ? "Logging in..." : "Login"}
           </Button>
 
-          {/* Footer Navigation Link */}
+          {/* FIX: Changed variant to "outline" to match allowed theme options */}
+          <Button
+            type="button"
+            className="w-full border border-white/20 text-white hover:bg-white/10"
+            variant="outline"
+            onClick={() => socialSignin("google")}
+          >
+            <Icon icon="devicon:google" />
+            Sign in with Google
+          </Button>
+
           <div className="text-center text-base text-white/90">
-            Dont have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/auth/signup" className="font-semibold text-white hover:underline">
               Signup
             </Link>
           </div>
         </div>
-
       </Form>
     </div>
   );

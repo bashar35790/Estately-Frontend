@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { User, Mail, Eye, EyeOff, ImageIcon, Loader2, Search, Users, Check } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
+import { Icon } from "@iconify/react";
 
 // Types 
 
@@ -123,6 +124,20 @@ function GlassInput({ icon, rightElement, className, ...props }: GlassInputProps
 
 export default function SignupForm() {
   const router = useRouter();
+
+  // Google OAuth signup
+  const socialSignup = async (provider: "google") => {
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
+      });
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Google sign-up failed. Please try again."
+      );
+    }
+  };
 
   // Form values
   const [name, setName] = useState("");
@@ -477,6 +492,31 @@ export default function SignupForm() {
           "
         >
           {isSubmitting ? "Creating account…" : "Create account"}
+        </button>
+
+        {/* Divider */}
+        <div className="mt-4 flex items-center gap-3">
+          <div className="h-px flex-1 bg-white/10" />
+          <span className="text-[12px] text-white/35">or</span>
+          <div className="h-px flex-1 bg-white/10" />
+        </div>
+
+        {/* Google Sign-Up */}
+        <button
+          type="button"
+          onClick={() => socialSignup("google")}
+          className="
+            flex w-full items-center justify-center gap-2.5
+            rounded-[14px] border border-white/15
+            bg-white/[0.07] py-3.5
+            text-[14px] font-medium text-white/80
+            transition-all duration-200
+            hover:border-white/30 hover:bg-white/[0.12] hover:text-white
+            active:scale-[0.99]
+          "
+        >
+          <Icon icon="devicon:google" className="h-4 w-4 shrink-0" />
+          Continue with Google
         </button>
 
         {/* Footer */}
