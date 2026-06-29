@@ -16,7 +16,7 @@ import {
   Legend
 } from 'recharts';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+//  Types 
 interface OwnerStats {
     totalEarnings: number;
     totalProperties: number;
@@ -31,7 +31,7 @@ const DEFAULT_STATS: OwnerStats = {
     monthlyEarnings: [],
 };
 
-// ─── Component ────────────────────────────────────────────────────────────────
+//  Component 
 const OwnerDashboard: React.FC = () => {
     const { data: session, isPending } = useSession();
     const [stats, setStats] = useState<OwnerStats>(DEFAULT_STATS);
@@ -108,7 +108,11 @@ const OwnerDashboard: React.FC = () => {
                                 />
                                 <Tooltip
                                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
-                                    formatter={(value: number) => [`$${value}`, 'Earnings']}
+                                    // Fixed type issue by accepting generic type values and fallback handling
+                                    formatter={(value: any) => {
+                                        const numValue = typeof value === 'number' ? value : Number(value) || 0;
+                                        return [`$${numValue.toLocaleString()}`, 'Earnings'];
+                                    }}
                                 />
                                 <Legend wrapperStyle={{ paddingTop: '20px' }} />
                                 <Line

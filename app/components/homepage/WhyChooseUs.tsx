@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+// Explicitly import the Variants type from framer-motion
+import { motion, Variants } from "framer-motion";
 import { Shield, Home, Clock, Star } from "lucide-react";
 
 export default function WhyChooseUs() {
@@ -27,7 +28,8 @@ export default function WhyChooseUs() {
         }
     ];
 
-    const containerVariants = {
+    // Explicitly typed as Variants to prevent staggering animation errors
+    const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
@@ -38,7 +40,8 @@ export default function WhyChooseUs() {
         }
     };
 
-    const cardVariants = {
+    // Explicitly typed as Variants to resolve the strict string vs spring transition error
+    const cardVariants: Variants = {
         hidden: { opacity: 0, y: 40 },
         visible: {
             opacity: 1,
@@ -48,7 +51,8 @@ export default function WhyChooseUs() {
     };
 
     return (
-        <section className="bg-whaite py-24 px-6 sm:px-12 w-full">
+        // Fixed typo: changed "bg-whaite" to "bg-white"
+        <section className="bg-white dark:bg-zinc-950 py-24 px-6 sm:px-12 w-full">
             <div className="max-w-7xl mx-auto space-y-16">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
