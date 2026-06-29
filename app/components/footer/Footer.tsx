@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import {
     MapPin,
@@ -6,12 +8,13 @@ import {
 
 } from "lucide-react";
 import { LogoFacebook, LogoLinkedin } from "@gravity-ui/icons";
-import { headers } from "next/headers";
+import { usePathname } from "next/navigation";
 
-export default async function Footer() {
-    const pathname = (await headers()).get("x-pathname");
-    console.log(pathname)
-
+export default function Footer() {
+    const pathname = usePathname()
+    if (pathname.includes("dashboard")) {
+        return null;
+    }
 
     return (
         <footer className="bg-white border-t border-gray-200 w-full">
