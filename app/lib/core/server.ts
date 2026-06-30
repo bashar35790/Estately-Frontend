@@ -31,4 +31,3 @@ export const serverMutation = async (path: string, method: string, body: any) =>
         return null;
     }
 }
-

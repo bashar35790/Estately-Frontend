@@ -1,6 +1,5 @@
 import { DashboardSidebar } from "../components/dashboard/Sidebar";
 
-
 function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
