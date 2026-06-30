@@ -101,10 +101,10 @@ export default async function BookingSuccessPage({
                         Properties
                     </Link>
                     <Link 
-                        href="/dashboard"
+                        href="/"
                         className="flex-1 py-3 px-4 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-colors shadow-lg shadow-primary/25"
                     >
-                        Go to Dashboard
+                        Go to Home
                     </Link>
                 </div>
             </div>
