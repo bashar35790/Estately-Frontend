@@ -21,6 +21,7 @@ export interface OwnerProperty {
     ownerName: string;
     ownerEmail: string;
     images?: string[];
+    rejectionFeedback?: string;
 }
 
 export interface OwnerBooking {

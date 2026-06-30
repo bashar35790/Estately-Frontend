@@ -33,8 +33,20 @@ interface NavItem {
 interface NavContentProps {
     navItems: NavItem[];
     pathname: string;
-    session: any; // Ideally replace with your explicit session type
+    session: {
+        user?: {
+            name?: string | null;
+            image?: string | null;
+            userRole?: string | null;
+        };
+    } | null;
     userRole: string;
+}
+
+interface SessionUserWithRole {
+    name?: string | null;
+    image?: string | null;
+    userRole?: string | null;
 }
 
 /**
@@ -125,10 +137,8 @@ const NavContent = ({ navItems, pathname, session, userRole }: NavContentProps) 
 export function DashboardSidebar() {
     const pathname = usePathname();
     const { data: session } = authClient.useSession();
-
-    // Correctly access userRole (using cast to any for custom field access)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const userRole = (session?.user as any)?.userRole || "tenant";
+    const sessionUser = session?.user as SessionUserWithRole | undefined;
+    const userRole = sessionUser?.userRole || "tenant";
 
     // Navigation links for different roles
     const ownerNavLinks: NavItem[] = [
@@ -150,7 +160,8 @@ export function DashboardSidebar() {
         { icon: House, href: "/dashboard/admin", label: "Admin Panel" },
         { icon: Users, href: "/dashboard/admin/users", label: "User Control" },
         { icon: Building, href: "/dashboard/admin/properties", label: "Properties" },
-        { icon: CreditCard, href: "/dashboard/admin/payments", label: "Booking Management" },
+        { icon: Mail, href: "/dashboard/admin/bookings", label: "Bookings" },
+        { icon: CreditCard, href: "/dashboard/admin/transactions", label: "Transactions" },
         { icon: Settings, href: "/dashboard/profile", label: "Profile Settings" },
     ];
 
