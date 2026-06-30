@@ -30,12 +30,10 @@ export const requireRole = async (role: string): Promise<User> => {
         redirect('/auth/signin');
     }
     
-    if (user.role !== role) {
+    if (user?.userRole !== role) {
         redirect('/unauthorized');
     }
     
     return user;
 }
 
-console.log("sessin", getUserSession());
-console.log("token", getUserToken());

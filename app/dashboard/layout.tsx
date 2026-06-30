@@ -1,6 +1,7 @@
 import { DashboardSidebar } from "../components/dashboard/Sidebar";
 
-function DashboardLayout({ children }: { children: React.ReactNode }) {
+async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  
     return (
         <>
             <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
