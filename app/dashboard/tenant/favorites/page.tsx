@@ -9,9 +9,19 @@ import { toast } from "react-toastify";
 import { HeartOff, MapPin, DollarSign, Home, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface FavoriteProperty {
+    _id: string;
+    title: string;
+    location: string;
+    propertyType: string;
+    price: number;
+    rentType: string;
+    images?: string[];
+}
+
 export default function TenantFavoritesPage() {
     const { data: session, isPending } = authClient.useSession();
-    const [favorites, setFavorites] = useState<any[]>([]);
+    const [favorites, setFavorites] = useState<FavoriteProperty[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
