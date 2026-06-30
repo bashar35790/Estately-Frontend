@@ -7,12 +7,12 @@ import { Home, AlertTriangle } from "lucide-react";
 export default function NotFound() {
   return (
     <div className="min-h-screen relative overflow-hidden bg-slate-950 flex items-center justify-center px-6">
-      <div className="relative max-w-xl w-full rounded-[32px] backdrop-blur-xl bg-white/[0.02] border border-white/5 p-10 md:p-14 text-center">
+      <div className="relative max-w-xl w-full rounded-[32px] backdrop-blur-xl bg-white/20 border border-white/5 p-10 md:p-14 text-center">
         <div className="mx-auto w-fit p-4 rounded-2xl bg-secondary/5 border border-secondary/20 mb-8">
           <AlertTriangle className="h-10 w-10 text-secondary animate-bounce" />
         </div>
 
-        <h1 className="text-7xl md:text-9xl font-black tracking-tighter bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent font-heading">
+        <h1 className="text-7xl md:text-9xl font-black tracking-tighter bg-linear-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent font-heading">
           404
         </h1>
 
