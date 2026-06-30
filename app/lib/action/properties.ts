@@ -64,6 +64,17 @@ export const getReviews = async (propertyId: string) => {
     }
 }
 
+export const getAllReviews = async () => {
+    try {
+        const response = await serverAction(`/api/all-reviews`)
+        return response;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+
 export const addReview = async (data: ReviewPayload) => {
     try {
         const response = await serverMutation("/api/add-review", "POST", data)
