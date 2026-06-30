@@ -1,59 +1,16 @@
-"use client";
-
-import React from "react";
+"use client"
 import Image from "next/image";
 import { Star, Quote } from "lucide-react";
 // Import Variants type from framer-motion
 import { motion, Variants } from "framer-motion";
+import { ReviewPayload } from "@/types/review";
 
-/**
- * Review Interface for Type Safety
- */
-interface Review {
-  id: string;
-  name: string;
-  role: string;
-  avatar: string;
-  content: string;
-  rating: number;
-}
 
-/**
- * Placeholder Data
- * In the future, this will come from a database.
- */
-const PLACEHOLDER_REVIEWS: Review[] = [
-  {
-    id: "1",
-    name: "Sarah Johnson",
-    role: "Property Owner",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop",
-    content: "Estately has completely transformed how I manage my rental properties. The interface is intuitive and the support is top-notch.",
-    rating: 5,
-  },
-  {
-    id: "2",
-    name: "Michael Chen",
-    role: "Tenant",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
-    content: "Finding my dream home was so easy with Estately. The filters and communication tools are better than any other platform I've used.",
-    rating: 5,
-  },
-  {
-    id: "3",
-    name: "Emily Rodriguez",
-    role: "Real Estate Agent",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop",
-    content: "As an agent, I need reliability and speed. Estately delivers both. My clients love the transparency of the whole process.",
-    rating: 4,
-  },
-];
 
-/**
- * ClientReviews Component
- * Follows the glassmorphism design language of the signup page.
- */
-export default function ClientReviews() {
+export default function ClientReviews({reviews}: { reviews: ReviewPayload[] }) {
+
+console.log("ClientReviews received reviews:", reviews); // Debugging line
+
   // Explicitly type container variants
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -105,17 +62,17 @@ export default function ClientReviews() {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {PLACEHOLDER_REVIEWS.map((review) => (
+          {reviews.map((review: ReviewPayload) => (
             <motion.div
               variants={itemVariants}
-              key={review.id}
+              key={review._id}
               className="
                 relative w-full group flex flex-col
                 rounded-[28px] border border-zinc-200/60 dark:border-white/10
                 bg-white/70 dark:bg-white/5 p-8 sm:p-10
                 shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_48_rgba(0,0,0,0.35)]
                 backdrop-blur-[22px]
-                transition-all duration-500 hover:translate-y-[-8px] hover:border-primary/30 dark:hover:border-primary/30
+                transition-all duration-500 hover:-translate-y-2 hover:border-primary/30 dark:hover:border-primary/30
               "
             >
               {/* Quote Icon Background */}
@@ -141,7 +98,7 @@ export default function ClientReviews() {
               {/* Review Content */}
               <blockquote className="flex-1">
                 <p className="text-zinc-700 dark:text-white/80 text-[17px] leading-[1.6] italic font-medium relative z-10">
-                  &quot;{review.content}&quot;
+                  &quot;{review.comment}&quot;
                 </p>
               </blockquote>
 
@@ -154,8 +111,8 @@ export default function ClientReviews() {
                   <div className="absolute inset-0 rounded-full bg-primary opacity-20 blur-sm" />
                   <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white dark:border-white/10 shadow-sm bg-zinc-100 dark:bg-zinc-800">
                     <Image
-                      src={review.avatar}
-                      alt={review.name}
+                      src={review.userMeta?.image || "/default-avatar.png"}
+                      alt={review.userMeta?.name || "User Avatar"}
                       fill
                       sizes="56px"
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -164,10 +121,10 @@ export default function ClientReviews() {
                 </div>
                 <div>
                   <h4 className="font-bold text-zinc-900 dark:text-white text-lg leading-tight mb-1">
-                    {review.name}
+                    {review.userMeta?.name || "User"}
                   </h4>
                   <p className="text-[11px] text-zinc-500 dark:text-white/50 uppercase tracking-[0.15em] font-bold">
-                    {review.role}
+                    {review.createdAt ? new Date(review.createdAt).toLocaleDateString() : "Unknown Date"}
                   </p>
                 </div>
               </div>
