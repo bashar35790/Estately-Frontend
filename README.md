@@ -8,7 +8,7 @@ Estately is a comprehensive property rental management system that connects prop
 
 ## Live URL
 
-[https://estately-rental-platform.vercel.app](https://estately-rental-platform.vercel.app) *(Replace with your actual live URL)*
+[https://estately-frontend.vercel.app](https://estately-frontend.vercel.app) 
 
 ## Key Features
 
