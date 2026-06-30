@@ -3,14 +3,9 @@ import FeaturedProperties from "./components/homepage/FeaturedProperties";
 import WhyChooseUs from "./components/homepage/WhyChooseUs";
 import TopLocations from "./components/homepage/TopLocations";
 import RentalStatistics from "./components/homepage/RentalStatistics";
-import ClientReviews from "./components/homepage/Review";
-import { getAllReviews } from "./lib/action/properties";
-import { ReviewPayload } from "./types/review";
+import LoadReviewData from "./components/homepage/LoadeReviewData";
 
-export default async function Home() {
-  // Fetch data directly on the server
-  const reviews: ReviewPayload[] = await getAllReviews();
-  console.log("Fetched reviews:", reviews); // Debugging line
+export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black w-full">
       <HeroSection />
@@ -18,7 +13,7 @@ export default async function Home() {
       <FeaturedProperties />
       <WhyChooseUs />
       <RentalStatistics />
-      <ClientReviews reviews={reviews} />
+      <LoadReviewData />
     </div>
   );
 }

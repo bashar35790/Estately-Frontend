@@ -1,28 +1,25 @@
 "use client"
 import Image from "next/image";
 import { Star, Quote } from "lucide-react";
-// Import Variants type from framer-motion
 import { motion, Variants } from "framer-motion";
 import { ReviewPayload } from "@/types/review";
 
+// 1. Define Props interface accepting the reviews array
+interface ClientReviewsProps {
+  reviews: ReviewPayload[];
+}
 
-
-export default function ClientReviews({reviews}: { reviews: ReviewPayload[] }) {
-
-console.log("ClientReviews received reviews:", reviews); // Debugging line
-
-  // Explicitly type container variants
+// 2. Accept reviews as a prop
+export default function ClientReviews({ reviews }: ClientReviewsProps) {
+  
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
+      transition: { staggerChildren: 0.15 }
     }
   };
 
-  // Explicitly type item variants to satisfy Framer Motion requirements
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { 
@@ -62,57 +59,41 @@ console.log("ClientReviews received reviews:", reviews); // Debugging line
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {reviews.map((review: ReviewPayload) => (
+          {reviews.map((review) => (
             <motion.div
               variants={itemVariants}
               key={review._id}
-              className="
-                relative w-full group flex flex-col
-                rounded-[28px] border border-zinc-200/60 dark:border-white/10
-                bg-white/70 dark:bg-white/5 p-8 sm:p-10
-                shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_48_rgba(0,0,0,0.35)]
-                backdrop-blur-[22px]
-                transition-all duration-500 hover:-translate-y-2 hover:border-primary/30 dark:hover:border-primary/30
-              "
+              className="relative w-full group flex flex-col rounded-[28px] border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 p-8 sm:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_48_rgba(0,0,0,0.35)] backdrop-blur-[22px] transition-all duration-500 hover:translate-y-[-8px] hover:border-primary/30 dark:hover:border-primary/30"
             >
-              {/* Quote Icon Background */}
               <div className="absolute top-8 right-10 text-zinc-100 dark:text-white/5 group-hover:text-primary/10 transition-colors duration-500">
                 <Quote size={80} fill="currentColor" strokeWidth={0} />
               </div>
 
-              {/* Rating Stars */}
               <div className="flex gap-1 mb-8">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
                     size={18}
-                    className={
-                      i < review.rating 
-                        ? "text-primary fill-primary" 
-                        : "text-zinc-200 dark:text-white/10"
-                    }
+                    className={i < review.rating ? "text-primary fill-primary" : "text-zinc-200 dark:text-white/10"}
                   />
                 ))}
               </div>
 
-              {/* Review Content */}
               <blockquote className="flex-1">
                 <p className="text-zinc-700 dark:text-white/80 text-[17px] leading-[1.6] italic font-medium relative z-10">
-                  &quot;{review.comment}&quot;
+                  &quot;{review?.comment}&quot;
                 </p>
               </blockquote>
 
-              {/* Divider */}
               <div className="my-8 h-px w-full bg-zinc-100 dark:bg-white/10" />
 
-              {/* Author Information */}
               <div className="flex items-center gap-5">
                 <div className="relative h-14 w-14 shrink-0">
                   <div className="absolute inset-0 rounded-full bg-primary opacity-20 blur-sm" />
                   <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white dark:border-white/10 shadow-sm bg-zinc-100 dark:bg-zinc-800">
                     <Image
-                      src={review.userMeta?.image || "/default-avatar.png"}
-                      alt={review.userMeta?.name || "User Avatar"}
+                      src={review?.userMeta?.image || "/images/placeholder.jpg"}
+                      alt={review?.userMeta?.name || "User Image"}
                       fill
                       sizes="56px"
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -121,10 +102,10 @@ console.log("ClientReviews received reviews:", reviews); // Debugging line
                 </div>
                 <div>
                   <h4 className="font-bold text-zinc-900 dark:text-white text-lg leading-tight mb-1">
-                    {review.userMeta?.name || "User"}
+                    {review?.userMeta?.name || "User"}
                   </h4>
                   <p className="text-[11px] text-zinc-500 dark:text-white/50 uppercase tracking-[0.15em] font-bold">
-                    {review.createdAt ? new Date(review.createdAt).toLocaleDateString() : "Unknown Date"}
+                    {review?.createdAt ? new Date(review.createdAt).toLocaleDateString() : "Date Unknown"}
                   </p>
                 </div>
               </div>
