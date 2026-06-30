@@ -125,7 +125,7 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-999 bg-black/75 backdrop-blur-md min-h-screen"
+                        className="fixed inset-0 z-999 bg-black/40 backdrop-blur-md min-h-screen"
                     />
 
                     {/* Modal Container — click outside to close */}
@@ -143,21 +143,26 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                 onClick={(e) => e.stopPropagation()}
                                 className="relative w-full max-w-2xl flex flex-col rounded-[2rem] overflow-hidden"
                                 style={{
-                                    background: "linear-gradient(145deg, #0f0f1a 0%, #13131f 50%, #0d0d17 100%)",
-                                    border: "1px solid rgba(255,255,255,0.08)",
-                                    boxShadow: "0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(139,92,246,0.15), inset 0 1px 0 rgba(255,255,255,0.05)",
+                                    background: "#ffffff",
+                                    border: "1px solid rgba(51,51,51,0.08)",
+                                    boxShadow: "0 32px 80px rgba(30,172,112,0.18), 0 0 0 1px rgba(30,172,112,0.08), inset 0 1px 0 rgba(255,255,255,0.6)",
+                                    fontFamily: "var(--font-body, 'Manrope', sans-serif)",
                                 }}
                             >
                                 {/* Glow accent top */}
                                 <div
-                                    className="absolute inset-x-0 top-0 h-px"
-                                    style={{ background: "linear-gradient(90deg, transparent, rgba(139,92,246,0.6), rgba(59,130,246,0.6), transparent)" }}
+                                    className="absolute inset-x-0 top-0 h-1"
+                                    style={{ background: "linear-gradient(90deg, var(--color-primary, #1eac70), var(--color-secondary, #a3cf16))" }}
                                 />
 
-                                {/* Purple glow blob */}
+                                {/* Brand glow blob */}
                                 <div
                                     className="absolute -top-24 -right-24 w-72 h-72 rounded-full pointer-events-none"
-                                    style={{ background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)" }}
+                                    style={{ background: "radial-gradient(circle, rgba(30,172,112,0.10) 0%, transparent 70%)" }}
+                                />
+                                <div
+                                    className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full pointer-events-none"
+                                    style={{ background: "radial-gradient(circle, rgba(163,207,22,0.08) 0%, transparent 70%)" }}
                                 />
 
                                 {/* Close Button */}
@@ -165,17 +170,17 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                     onClick={onClose}
                                     className="absolute top-5 right-5 z-10 flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200"
                                     style={{
-                                        background: "rgba(255,255,255,0.06)",
-                                        border: "1px solid rgba(255,255,255,0.08)",
-                                        color: "rgba(255,255,255,0.5)",
+                                        background: "rgba(51,51,51,0.05)",
+                                        border: "1px solid rgba(51,51,51,0.08)",
+                                        color: "rgba(51,51,51,0.5)",
                                     }}
                                     onMouseEnter={(e) => {
-                                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.12)";
-                                        (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.9)";
+                                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(30,172,112,0.12)";
+                                        (e.currentTarget as HTMLButtonElement).style.color = "#1eac70";
                                     }}
                                     onMouseLeave={(e) => {
-                                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.06)";
-                                        (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)";
+                                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(51,51,51,0.05)";
+                                        (e.currentTarget as HTMLButtonElement).style.color = "rgba(51,51,51,0.5)";
                                     }}
                                     aria-label="Close modal"
                                 >
@@ -183,15 +188,15 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                 </button>
 
                                 {/* Header */}
-                                <div className="px-8 pt-8 pb-6">
+                                <div className="px-8 pt-8 pb-6 relative">
                                     {/* Step pill */}
                                     <div className="flex items-center gap-3 mb-4">
                                         <span
                                             className="text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full"
                                             style={{
-                                                background: "rgba(139,92,246,0.15)",
-                                                color: "#a78bfa",
-                                                border: "1px solid rgba(139,92,246,0.25)",
+                                                background: "rgba(30,172,112,0.1)",
+                                                color: "#1eac70",
+                                                border: "1px solid rgba(30,172,112,0.25)",
                                             }}
                                         >
                                             Step {step} of 2
@@ -200,28 +205,28 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                         <div className="flex gap-1.5 ml-1">
                                             <div
                                                 className="h-1 w-12 rounded-full transition-all duration-500"
-                                                style={{ background: step >= 1 ? "rgba(139,92,246,0.8)" : "rgba(255,255,255,0.1)" }}
+                                                style={{ background: step >= 1 ? "#1eac70" : "rgba(51,51,51,0.1)" }}
                                             />
                                             <div
                                                 className="h-1 w-12 rounded-full transition-all duration-500"
-                                                style={{ background: step >= 2 ? "rgba(139,92,246,0.8)" : "rgba(255,255,255,0.1)" }}
+                                                style={{ background: step >= 2 ? "#1eac70" : "rgba(51,51,51,0.1)" }}
                                             />
                                         </div>
                                     </div>
 
                                     <h2
                                         className="text-2xl sm:text-3xl font-bold tracking-tight mb-1"
-                                        style={{ color: "#ffffff", fontFamily: "var(--font-heading, inherit)" }}
+                                        style={{ color: "#333333", fontFamily: "var(--font-heading, 'Playfair Display', serif)" }}
                                     >
                                         Book This Property
                                     </h2>
-                                    <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.875rem" }}>
+                                    <p style={{ color: "rgba(51,51,51,0.55)", fontSize: "0.875rem" }}>
                                         {property.title} &bull; {property.location}
                                     </p>
                                 </div>
 
                                 {/* Divider */}
-                                <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", margin: "0 2rem" }} />
+                                <div style={{ height: "1px", background: "rgba(51,51,51,0.08)", margin: "0 2rem" }} />
 
                                 {/* Body */}
                                 <div
@@ -244,10 +249,10 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                     <div>
                                                         <label
                                                             className="text-xs font-semibold uppercase tracking-widest mb-2 flex items-center gap-1.5"
-                                                            style={{ color: "rgba(255,255,255,0.55)" }}
+                                                            style={{ color: "rgba(51,51,51,0.6)" }}
                                                         >
                                                             <Calendar size={12} />
-                                                            Move-in Date <span style={{ color: "#f87171" }}>*</span>
+                                                            Move-in Date <span style={{ color: "#dc2626" }}>*</span>
                                                         </label>
                                                         <div className="relative">
                                                             <input
@@ -256,23 +261,23 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                                 onChange={(e) => setFormData({ ...formData, moveInDate: e.target.value })}
                                                                 className="w-full px-4 py-3.5 rounded-xl text-sm outline-none transition-all duration-200"
                                                                 style={{
-                                                                    background: "rgba(255,255,255,0.05)",
+                                                                    background: "#f0f0f0",
                                                                     border: formData.moveInDate
-                                                                        ? "1px solid rgba(139,92,246,0.5)"
-                                                                        : "1px solid rgba(255,255,255,0.08)",
-                                                                    color: "#ffffff",
-                                                                    colorScheme: "dark",
+                                                                        ? "1px solid rgba(30,172,112,0.55)"
+                                                                        : "1px solid rgba(51,51,51,0.12)",
+                                                                    color: "#333333",
+                                                                    colorScheme: "light",
                                                                 }}
                                                                 onFocus={(e) => {
-                                                                    e.currentTarget.style.border = "1px solid rgba(139,92,246,0.6)";
-                                                                    e.currentTarget.style.background = "rgba(139,92,246,0.06)";
-                                                                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(139,92,246,0.12)";
+                                                                    e.currentTarget.style.border = "1px solid #1eac70";
+                                                                    e.currentTarget.style.background = "#ffffff";
+                                                                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(30,172,112,0.14)";
                                                                 }}
                                                                 onBlur={(e) => {
                                                                     e.currentTarget.style.border = formData.moveInDate
-                                                                        ? "1px solid rgba(139,92,246,0.5)"
-                                                                        : "1px solid rgba(255,255,255,0.08)";
-                                                                    e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                                                                        ? "1px solid rgba(30,172,112,0.55)"
+                                                                        : "1px solid rgba(51,51,51,0.12)";
+                                                                    e.currentTarget.style.background = "#f0f0f0";
                                                                     e.currentTarget.style.boxShadow = "none";
                                                                 }}
                                                             />
@@ -283,10 +288,10 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                     <div>
                                                         <label
                                                             className="text-xs font-semibold uppercase tracking-widest mb-2 flex items-center gap-1.5"
-                                                            style={{ color: "rgba(255,255,255,0.55)" }}
+                                                            style={{ color: "rgba(51,51,51,0.6)" }}
                                                         >
                                                             <Phone size={12} />
-                                                            Contact Number <span style={{ color: "#f87171" }}>*</span>
+                                                            Contact Number <span style={{ color: "#dc2626" }}>*</span>
                                                         </label>
                                                         <div className="relative">
                                                             <input
@@ -296,22 +301,22 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                                 onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
                                                                 className="w-full px-4 py-3.5 rounded-xl text-sm outline-none transition-all duration-200"
                                                                 style={{
-                                                                    background: "rgba(255,255,255,0.05)",
+                                                                    background: "#f0f0f0",
                                                                     border: formData.contactNumber
-                                                                        ? "1px solid rgba(139,92,246,0.5)"
-                                                                        : "1px solid rgba(255,255,255,0.08)",
-                                                                    color: "#ffffff",
+                                                                        ? "1px solid rgba(30,172,112,0.55)"
+                                                                        : "1px solid rgba(51,51,51,0.12)",
+                                                                    color: "#333333",
                                                                 }}
                                                                 onFocus={(e) => {
-                                                                    e.currentTarget.style.border = "1px solid rgba(139,92,246,0.6)";
-                                                                    e.currentTarget.style.background = "rgba(139,92,246,0.06)";
-                                                                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(139,92,246,0.12)";
+                                                                    e.currentTarget.style.border = "1px solid #1eac70";
+                                                                    e.currentTarget.style.background = "#ffffff";
+                                                                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(30,172,112,0.14)";
                                                                 }}
                                                                 onBlur={(e) => {
                                                                     e.currentTarget.style.border = formData.contactNumber
-                                                                        ? "1px solid rgba(139,92,246,0.5)"
-                                                                        : "1px solid rgba(255,255,255,0.08)";
-                                                                    e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                                                                        ? "1px solid rgba(30,172,112,0.55)"
+                                                                        : "1px solid rgba(51,51,51,0.12)";
+                                                                    e.currentTarget.style.background = "#f0f0f0";
                                                                     e.currentTarget.style.boxShadow = "none";
                                                                 }}
                                                             />
@@ -323,7 +328,7 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                 <div>
                                                     <label
                                                         className="text-xs font-semibold uppercase tracking-widest mb-2 flex items-center gap-1.5"
-                                                        style={{ color: "rgba(255,255,255,0.55)" }}
+                                                        style={{ color: "rgba(51,51,51,0.6)" }}
                                                     >
                                                         <FileText size={12} />
                                                         Additional Notes
@@ -335,18 +340,18 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                                                         className="w-full px-4 py-3.5 rounded-xl text-sm outline-none transition-all duration-200 resize-none"
                                                         style={{
-                                                            background: "rgba(255,255,255,0.05)",
-                                                            border: "1px solid rgba(255,255,255,0.08)",
-                                                            color: "#ffffff",
+                                                            background: "#f0f0f0",
+                                                            border: "1px solid rgba(51,51,51,0.12)",
+                                                            color: "#333333",
                                                         }}
                                                         onFocus={(e) => {
-                                                            e.currentTarget.style.border = "1px solid rgba(139,92,246,0.6)";
-                                                            e.currentTarget.style.background = "rgba(139,92,246,0.06)";
-                                                            e.currentTarget.style.boxShadow = "0 0 0 3px rgba(139,92,246,0.12)";
+                                                            e.currentTarget.style.border = "1px solid #1eac70";
+                                                            e.currentTarget.style.background = "#ffffff";
+                                                            e.currentTarget.style.boxShadow = "0 0 0 3px rgba(30,172,112,0.14)";
                                                         }}
                                                         onBlur={(e) => {
-                                                            e.currentTarget.style.border = "1px solid rgba(255,255,255,0.08)";
-                                                            e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                                                            e.currentTarget.style.border = "1px solid rgba(51,51,51,0.12)";
+                                                            e.currentTarget.style.background = "#f0f0f0";
                                                             e.currentTarget.style.boxShadow = "none";
                                                         }}
                                                     />
@@ -354,19 +359,19 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
 
                                                 {/* Error */}
                                                 {error && (
-                                                    <p className="text-sm" style={{ color: "#f87171" }}>{error}</p>
+                                                    <p className="text-sm" style={{ color: "#dc2626" }}>{error}</p>
                                                 )}
 
                                                 {/* Info bar */}
                                                 <div
                                                     className="flex gap-3 p-4 rounded-2xl"
                                                     style={{
-                                                        background: "rgba(139,92,246,0.07)",
-                                                        border: "1px solid rgba(139,92,246,0.15)",
+                                                        background: "rgba(163,207,22,0.10)",
+                                                        border: "1px solid rgba(163,207,22,0.3)",
                                                     }}
                                                 >
-                                                    <Info size={18} className="shrink-0 mt-0.5" style={{ color: "#a78bfa" }} />
-                                                    <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
+                                                    <Info size={18} className="shrink-0 mt-0.5" style={{ color: "#1eac70" }} />
+                                                    <p className="text-sm leading-relaxed" style={{ color: "rgba(51,51,51,0.7)" }}>
                                                         Your booking will be sent to the owner for approval after successful payment.
                                                     </p>
                                                 </div>
@@ -384,11 +389,14 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                 <div
                                                     className="rounded-2xl p-6 space-y-4"
                                                     style={{
-                                                        background: "rgba(255,255,255,0.04)",
-                                                        border: "1px solid rgba(255,255,255,0.08)",
+                                                        background: "#f0f0f0",
+                                                        border: "1px solid rgba(51,51,51,0.08)",
                                                     }}
                                                 >
-                                                    <h3 className="text-lg font-bold mb-4" style={{ color: "#ffffff" }}>
+                                                    <h3
+                                                        className="text-lg font-bold mb-4"
+                                                        style={{ color: "#333333", fontFamily: "var(--font-heading, 'Playfair Display', serif)" }}
+                                                    >
                                                         Booking Summary
                                                     </h3>
 
@@ -405,13 +413,13 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                         <div
                                                             key={i}
                                                             className="flex items-center justify-between py-3"
-                                                            style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+                                                            style={{ borderBottom: "1px solid rgba(51,51,51,0.08)" }}
                                                         >
-                                                            <div className="flex items-center gap-2" style={{ color: "rgba(255,255,255,0.4)" }}>
+                                                            <div className="flex items-center gap-2" style={{ color: "rgba(51,51,51,0.5)" }}>
                                                                 {row.icon}
                                                                 <span className="text-sm">{row.label}</span>
                                                             </div>
-                                                            <span className="text-sm font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>
+                                                            <span className="text-sm font-semibold" style={{ color: "#333333" }}>
                                                                 {row.value}
                                                             </span>
                                                         </div>
@@ -420,24 +428,24 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                     {/* Service Fee */}
                                                     <div
                                                         className="flex items-center justify-between py-3"
-                                                        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+                                                        style={{ borderBottom: "1px solid rgba(51,51,51,0.08)" }}
                                                     >
-                                                        <span className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+                                                        <span className="text-sm" style={{ color: "rgba(51,51,51,0.5)" }}>
                                                             Service Fee
                                                         </span>
-                                                        <span className="text-sm font-semibold" style={{ color: "#a78bfa" }}>
+                                                        <span className="text-sm font-semibold" style={{ color: "#1eac70" }}>
                                                             $99.00
                                                         </span>
                                                     </div>
 
                                                     {/* Total */}
                                                     <div className="flex items-center justify-between pt-2">
-                                                        <span className="text-base font-bold" style={{ color: "#ffffff" }}>
+                                                        <span className="text-base font-bold" style={{ color: "#333333" }}>
                                                             Total Amount
                                                         </span>
                                                         <span
                                                             className="text-xl font-bold"
-                                                            style={{ background: "linear-gradient(90deg, #a78bfa, #60a5fa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+                                                            style={{ background: "linear-gradient(90deg, #1eac70, #a3cf16)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
                                                         >
                                                             ${totalAmount.toLocaleString()}
                                                         </span>
@@ -446,19 +454,19 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
 
                                                 {/* Error */}
                                                 {error && (
-                                                    <p className="text-sm" style={{ color: "#f87171" }}>{error}</p>
+                                                    <p className="text-sm" style={{ color: "#dc2626" }}>{error}</p>
                                                 )}
 
                                                 {/* Secure badge */}
                                                 <div
                                                     className="flex items-center gap-3 p-4 rounded-2xl"
                                                     style={{
-                                                        background: "rgba(34,197,94,0.07)",
-                                                        border: "1px solid rgba(34,197,94,0.15)",
+                                                        background: "rgba(30,172,112,0.08)",
+                                                        border: "1px solid rgba(30,172,112,0.2)",
                                                     }}
                                                 >
-                                                    <ShieldCheck size={20} style={{ color: "#4ade80" }} />
-                                                    <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.7)" }}>
+                                                    <ShieldCheck size={20} style={{ color: "#1eac70" }} />
+                                                    <span className="text-sm font-medium" style={{ color: "rgba(51,51,51,0.75)" }}>
                                                         Secure payment powered by Stripe
                                                     </span>
                                                 </div>
@@ -468,7 +476,7 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                 </div>
 
                                 {/* Divider */}
-                                <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", margin: "0 2rem" }} />
+                                <div style={{ height: "1px", background: "rgba(51,51,51,0.08)", margin: "0 2rem" }} />
 
                                 {/* Footer */}
                                 <div className="px-8 py-6">
@@ -478,16 +486,16 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                 onClick={handleNext}
                                                 className="w-full h-14 flex items-center justify-center gap-2 rounded-2xl font-bold text-base transition-all duration-200"
                                                 style={{
-                                                    background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
+                                                    background: "linear-gradient(135deg, #1eac70 0%, #169c63 100%)",
                                                     color: "#ffffff",
-                                                    boxShadow: "0 8px 32px rgba(124,58,237,0.4), 0 0 0 1px rgba(124,58,237,0.3)",
+                                                    boxShadow: "0 8px 32px rgba(30,172,112,0.35), 0 0 0 1px rgba(30,172,112,0.25)",
                                                 }}
                                                 onMouseEnter={(e) => {
-                                                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 12px 40px rgba(124,58,237,0.6), 0 0 0 1px rgba(124,58,237,0.4)";
+                                                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 12px 40px rgba(30,172,112,0.5), 0 0 0 1px rgba(30,172,112,0.35)";
                                                     (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
                                                 }}
                                                 onMouseLeave={(e) => {
-                                                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 32px rgba(124,58,237,0.4), 0 0 0 1px rgba(124,58,237,0.3)";
+                                                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 32px rgba(30,172,112,0.35), 0 0 0 1px rgba(30,172,112,0.25)";
                                                     (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
                                                 }}
                                             >
@@ -501,17 +509,17 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                 onClick={handleBack}
                                                 className="px-8 h-14 rounded-2xl font-medium text-sm transition-all duration-200"
                                                 style={{
-                                                    background: "rgba(255,255,255,0.06)",
-                                                    border: "1px solid rgba(255,255,255,0.1)",
-                                                    color: "rgba(255,255,255,0.7)",
+                                                    background: "rgba(51,51,51,0.05)",
+                                                    border: "1px solid rgba(51,51,51,0.12)",
+                                                    color: "rgba(51,51,51,0.7)",
                                                 }}
                                                 onMouseEnter={(e) => {
-                                                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)";
-                                                    (e.currentTarget as HTMLButtonElement).style.color = "#ffffff";
+                                                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(51,51,51,0.1)";
+                                                    (e.currentTarget as HTMLButtonElement).style.color = "#333333";
                                                 }}
                                                 onMouseLeave={(e) => {
-                                                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.06)";
-                                                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)";
+                                                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(51,51,51,0.05)";
+                                                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(51,51,51,0.7)";
                                                 }}
                                             >
                                                 Back
@@ -521,18 +529,18 @@ export function BookingModal({ isOpen, onClose, property }: BookingModalProps) {
                                                 disabled={isSubmitting}
                                                 className="flex-1 h-14 flex items-center justify-center gap-2 rounded-2xl font-bold text-base transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
                                                 style={{
-                                                    background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
+                                                    background: "linear-gradient(135deg, #1eac70 0%, #169c63 100%)",
                                                     color: "#ffffff",
-                                                    boxShadow: "0 8px 32px rgba(124,58,237,0.4)",
+                                                    boxShadow: "0 8px 32px rgba(30,172,112,0.35)",
                                                 }}
                                                 onMouseEnter={(e) => {
                                                     if (!isSubmitting) {
-                                                        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 12px 40px rgba(124,58,237,0.6)";
+                                                        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 12px 40px rgba(30,172,112,0.5)";
                                                         (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
                                                     }
                                                 }}
                                                 onMouseLeave={(e) => {
-                                                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 32px rgba(124,58,237,0.4)";
+                                                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 32px rgba(30,172,112,0.35)";
                                                     (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
                                                 }}
                                             >
