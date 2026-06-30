@@ -1,8 +1,6 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@heroui/react";
 import { Search, MapPin, Home, DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -137,7 +135,7 @@ export default function HeroSection() {
                                             onChange={(e) => setSearchData({...searchData, minPrice: e.target.value})}
                                         />
                                     </div>
-                                    <div className="w-[1px] h-8 bg-gray-200"></div>
+                                    <div className="w-px h-8 bg-gray-200"></div>
                                     <div className="flex-1 pl-2">
                                         <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block">Max Price</label>
                                         <input 
