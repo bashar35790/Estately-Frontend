@@ -105,7 +105,7 @@ export default function TopLocations() {
                             variants={cardVariants}
                             className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer"
                         >
-                            <Link href={`/all-properties?location=${encodeURIComponent(location.name)}`}>
+                            <Link href={`/all-properties?location=${encodeURIComponent(location.name)}`} className="absolute inset-0 w-full h-full">
                                 <Image
                                     src={location.image}
                                     alt={location.name}

@@ -65,7 +65,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     return (
         <div className="group relative w-full max-w-[420px] bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-500 ease-out flex flex-col shadow-2xl">
             {/* Image Section */}
-            <div className="w-full h-72 relative overflow-hidden bg-zinc-900 block" style={{ minHeight: '288px' }}>
+            <div className="relative w-full h-72 relative overflow-hidden bg-zinc-900 block" style={{ minHeight: '288px' }}>
                 {imgSrc && (
                     <Image
                         src={imgSrc || FALLBACK_IMAGE}

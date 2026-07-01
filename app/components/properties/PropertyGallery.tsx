@@ -46,7 +46,7 @@ export function PropertyGallery({ images }: Props) {
                 </div>
             </motion.div>
 
-            <div className="grid grid-cols-5 gap-4">
+            <div className="grid grid-cols-5 gap-4 relative">
                 {images.map((image, index) => (
                     <motion.button
                         key={index}
