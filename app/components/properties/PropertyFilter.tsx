@@ -1,62 +1,63 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function PropertyFilter() {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const initialLocation = searchParams.get("location") || "";
-    const initialType = searchParams.get("propertyType") || "";
+    const [location, setLocation] = useState(
+        () => searchParams.get("location") ?? ""
+    );
 
-    const [location, setLocation] = useState(initialLocation);
-    const [propertyType, setPropertyType] = useState(initialType);
+    const [propertyType, setPropertyType] = useState(
+        () => searchParams.get("propertyType") ?? "all"
+    );
 
-    // Sync state if URL changes from outside
-    useEffect(() => {
-        setLocation(searchParams.get("location") || "");
-        setPropertyType(searchParams.get("propertyType") || "");
-    }, [searchParams]);
+    const updateUrl = (loc: string, type: string) => {
+        const params = new URLSearchParams(searchParams.toString());
 
-    const handleSearch = (e: React.FormEvent) => {
+        if (loc.trim()) {
+            params.set("location", loc.trim());
+        } else {
+            params.delete("location");
+        }
+
+        if (type !== "all") {
+            params.set("propertyType", type);
+        } else {
+            params.delete("propertyType");
+        }
+
+        const query = params.toString();
+
+        router.push(query ? `${pathname}?${query}` : pathname);
+    };
+
+    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         updateUrl(location, propertyType);
     };
 
     const handleClear = () => {
         setLocation("");
-        setPropertyType("");
-        updateUrl("", "");
+        setPropertyType("all");
+        updateUrl("", "all");
     };
 
     const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const newType = e.target.value;
-        setPropertyType(newType);
-        updateUrl(location, newType);
-    };
-
-    const updateUrl = (loc: string, type: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        
-        if (loc) {
-            params.set("location", loc);
-        } else {
-            params.delete("location");
-        }
-
-        if (type && type !== "all") {
-            params.set("propertyType", type);
-        } else {
-            params.delete("propertyType");
-        }
-
-        router.push(`${pathname}?${params.toString()}`);
+        const value = e.target.value;
+        setPropertyType(value);
+        updateUrl(location, value);
     };
 
     return (
-        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-center gap-4 w-full md:max-w-md">
+        <form
+            onSubmit={handleSearch}
+            className="flex flex-col sm:flex-row items-center gap-4 w-full md:max-w-md"
+        >
             <div className="relative w-full">
                 <input
                     type="text"
@@ -79,7 +80,6 @@ export default function PropertyFilter() {
 
             <div className="relative w-full sm:max-w-[160px]">
                 <select
-                    aria-label="Filter by property type"
                     value={propertyType}
                     onChange={handleTypeChange}
                     className="w-full h-12 px-4 bg-zinc-900 border border-white/10 text-zinc-300 rounded-sm focus:outline-none focus:border-primary/50 transition-colors appearance-none text-sm font-light tracking-wide cursor-pointer"
@@ -91,10 +91,13 @@ export default function PropertyFilter() {
                     <option value="penthouse">Penthouses</option>
                     <option value="studio">Studios</option>
                 </select>
+
                 <div className="absolute right-4 top-0 bottom-0 my-auto h-1.5 w-1.5 border-r border-b border-primary rotate-45 pointer-events-none" />
             </div>
-            {/* Hidden submit button to allow enter to submit */}
-            <button type="submit" className="hidden">Search</button>
+
+            <button type="submit" className="hidden">
+                Search
+            </button>
         </form>
     );
 }

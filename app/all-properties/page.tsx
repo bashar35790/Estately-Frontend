@@ -47,7 +47,9 @@ export default async function AllPropertiesPage({
           </div>
 
           {/* Real-time Filters */}
-          <PropertyFilter />
+          <PropertyFilter key={
+            `${resolvedParams.location ?? ""}-${resolvedParams.propertyType ?? ""}`
+          } />
         </div>
 
         {/* Dynamic Card Layout Grid */}
