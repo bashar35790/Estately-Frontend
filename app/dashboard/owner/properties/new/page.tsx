@@ -1,13 +1,7 @@
 import PostPropertyForm from './PostPropertyForm'
-
-function AddPropertyPage() {
-    const owner = {
-        _id: "1",
-        name: "John Doe",
-        email: "[EMAIL_ADDRESS]",
-        status: "Approved",
-    };
-
+import { getCurrentUser } from '@/lib/api/bookings'
+async function AddPropertyPage() {
+    const owner = await getCurrentUser()
     return (
         <div>
             <PostPropertyForm owner={owner} />
