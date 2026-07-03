@@ -299,7 +299,7 @@ export function DashboardSidebar() {
         { icon: LayoutDashboard, href: "/dashboard/tenant", label: "Dashboard" },
         { icon: MapPin, href: "/dashboard/tenant/properties", label: "My Bookings" },
         { icon: Bookmark, href: "/dashboard/tenant/favorites", label: "My Favorites" },
-        { icon: Settings, href: "/settings", label: "Account Settings" },
+        { icon: Settings, href: "/dashboard/profile", label: "Profile" },
     ];
 
     const adminNavLinks: NavItem[] = [
