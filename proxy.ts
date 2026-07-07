@@ -8,14 +8,6 @@ export async function proxy(request: NextRequest) {
       headers: request.headers,
     });
 
-    // if (session?.user?.userRole === "tenant" && session?.user?.plan === "free") {
-    //   return NextResponse.redirect(new URL("/plan", request.url));
-    // }
-
-    // if (session?.user?.userRole === "owner" && session?.user?.plan === "free") {
-    //   return NextResponse.redirect(new URL("/plan", request.url));
-    // }
-
     if (!session) {
       return NextResponse.redirect(new URL("/auth/login", request.url));
     }
@@ -28,5 +20,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/all-properties/:id"],
 };

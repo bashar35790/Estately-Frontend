@@ -30,6 +30,7 @@ export default async function AllPropertiesPage({
 }) {
   const resolvedParams = await searchParams;
   const properties: Property[] = await getProperty(resolvedParams);
+  console.log(properties, "properties");
   return (
     <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-primary selection:text-black">
       <div className="max-w-7xl mx-auto space-y-16">
@@ -54,16 +55,15 @@ export default async function AllPropertiesPage({
 
         {/* Dynamic Card Layout Grid */}
         {properties.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
-            {properties.map((property) => {
-              const idString = typeof property._id === "object" ? property._id : property._id;
-              return (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
+            {properties
+              .filter((property) => property.status === "approved")
+              .map((property) => (
                 <PropertyCard
-                  key={idString}
+                  key={property._id}
                   property={property}
                 />
-              );
-            })}
+              ))}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center py-32 border border-dashed border-white/10 rounded-sm bg-zinc-900/50">

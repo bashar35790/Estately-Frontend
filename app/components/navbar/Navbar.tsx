@@ -138,7 +138,7 @@ export function Navbar({
                   alt={session.user.name}
                   fill
                   sizes="36px"
-                  className="object-cover"
+                  className="object-cover cursor-pointer"
                 />
               </button>
 
@@ -184,7 +184,7 @@ export function Navbar({
 
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-rose-400 transition hover:bg-rose-500/10"
+                        className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-rose-400 transition hover:bg-rose-500/10 cursor-pointer"
                       >
                         <LogOut size={15} className="opacity-80" /> Sign Out
                       </button>

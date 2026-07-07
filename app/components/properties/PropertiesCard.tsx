@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Link } from "@heroui/react";
 import { MapPin, ArrowRight } from "@gravity-ui/icons";
 import Image from "next/image";
-import { authClient } from "@/lib/auth-client";
 
 interface Property {
     _id: string | { $oid: string };
@@ -32,7 +31,6 @@ interface PropertyCardProps {
 }
 
 export default function PropertyCard({ property }: PropertyCardProps) {
-    const { data: session } = authClient.useSession();
 
     // Premium fallback estate image
     const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop";
@@ -60,12 +58,12 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         ? property._id.$oid
         : property._id as string;
 
-    const detailsHref = session?.user ? `/all-properties/${propertyId}` : "/auth/sign-in";
+    const detailsHref = `/all-properties/${propertyId}`;
 
     return (
-        <div className="group relative w-full max-w-[420px] bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-500 ease-out flex flex-col shadow-2xl">
+        <div className="group relative w-full min-w-105 bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-500 ease-out flex flex-col shadow-2xl">
             {/* Image Section */}
-            <div className="relative w-full h-72 relative overflow-hidden bg-zinc-900 block" style={{ minHeight: '288px' }}>
+            <div className="w-full h-72 relative overflow-hidden bg-zinc-900 block" style={{ minHeight: '288px' }}>
                 {imgSrc && (
                     <Image
                         src={imgSrc || FALLBACK_IMAGE}
@@ -107,7 +105,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             </div>
 
             {/* Content Section */}
-            <div className="p-6 flex flex-col flex-grow z-20 bg-zinc-950">
+            <div className="p-6 flex flex-col grow z-20 bg-zinc-950">
                 <h2 className="text-xl font-light tracking-wide text-white leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-1 mb-2">
                     {property.title}
                 </h2>
