@@ -1,29 +1,12 @@
-import { serverAction } from "../core/server";
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { serverAction, serverMutation } from "../core/server";
 
 export const getOwnerProperties = async (ownerId: string, status = "") => {
-    try {
-        const statusQuery = status ? `&status=${status}` : "";
-        const res = await fetch(`${baseUrl}/api/properties?ownerId=${ownerId}${statusQuery}`, { cache: 'no-store' });
-        return res.json();
-
-    } catch (error) {
-        console.log("Error fetching properties", error);
-        return null;
-    }
+    const statusQuery = status ? `&status=${status}` : "";
+    return await serverAction(`/api/properties?ownerId=${ownerId}${statusQuery}`);
 }
 
 export const deleteProperty = async (propertyId: string) => {
-    try {
-        const res = await fetch(`${baseUrl}/api/properties/${propertyId}`, {
-            method: 'DELETE',
-        });
-        return res.json();
-    } catch (error) {
-        console.log("Error deleting property", error);
-        return null;
-    }
+    return await serverMutation(`/api/properties/${propertyId}`, 'DELETE', null);
 }
 
 export const getProperty = async (searchParams?: Record<string, string | string[] | undefined>) => {
@@ -42,14 +25,6 @@ export const getProperty = async (searchParams?: Record<string, string | string[
 }
 
 export const getPropertyById = async (id: string) => {
-    try {
-        const res = await fetch(`${baseUrl}/api/properties/${id}`)
-        return res.json();
-
-    } catch (error) {
-        console.log("Error fetching property", error);
-        return null;
-    }
-
+    return await serverAction(`/api/properties/${id}`);
 }
 

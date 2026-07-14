@@ -65,12 +65,5 @@ export const getOwnerBookingsApi = async (ownerId: string): Promise<OwnerBooking
  * Get owner analytics stats
  */
 export const getOwnerStats = async (ownerId: string) => {
-    try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-        const res = await fetch(`${baseUrl}/api/owner-stats?ownerId=${ownerId}`);
-        return res.json();
-    } catch (error) {
-        console.log("Error fetching owner stats", error);
-        return null;
-    }
+    return await serverAction(`/api/owner-stats?ownerId=${ownerId}`);
 };

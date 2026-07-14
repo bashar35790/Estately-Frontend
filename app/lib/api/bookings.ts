@@ -2,37 +2,17 @@
 import { auth } from "../auth";
 import { headers } from "next/headers";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { serverAction, serverMutation } from "../core/server";
 
 export const getOwnerBookings = async (ownerId: string) => {
-  try {
-    const res = await fetch(`${baseUrl}/api/bookings?ownerId=${ownerId}`, {
-      cache: "no-store",
-    });
-    return res.json();
-  } catch (error) {
-    console.log("Error fetching owner bookings", error);
-    return [];
-  }
+  return await serverAction(`/api/bookings?ownerId=${ownerId}`);
 };
 
 export const updateBookingStatus = async (
   bookingId: string,
   status: string,
 ) => {
-  try {
-    const res = await fetch(`${baseUrl}/api/bookings/${bookingId}/status`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status }),
-    });
-    return res.json();
-  } catch (error) {
-    console.log("Error updating booking status", error);
-    return null;
-  }
+  return await serverMutation(`/api/bookings/${bookingId}/status`, 'PATCH', { status });
 };
 
 export const getCurrentUser = async () => {
