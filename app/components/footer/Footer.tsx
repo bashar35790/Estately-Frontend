@@ -64,11 +64,11 @@ export default function Footer() {
 
                             <Link href="/">Home</Link>
 
-                            <Link href="/properties">All Properties</Link>
+                            <Link href="/">All Properties</Link>
 
-                            <Link href="/about">About</Link>
+                            <Link href="/">About</Link>
 
-                            <Link href="/contact">Contact</Link>
+                            <Link href="/">Contact</Link>
 
                         </div>
                     </div>
@@ -82,13 +82,13 @@ export default function Footer() {
 
                         <div className="mt-5 flex flex-col gap-3 text-sm">
 
-                            <Link href="#">Apartments</Link>
+                            <Link href="/">Apartments</Link>
 
-                            <Link href="#">Villas</Link>
+                            <Link href="/">Villas</Link>
 
-                            <Link href="#">Family Homes</Link>
+                            <Link href="/">Family Homes</Link>
 
-                            <Link href="#">Luxury Rentals</Link>
+                            <Link href="/">Luxury Rentals</Link>
 
                         </div>
                     </div>

@@ -61,7 +61,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     const detailsHref = `/all-properties/${propertyId}`;
 
     return (
-        <div className="group relative w-full min-w-105 bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-500 ease-out flex flex-col shadow-2xl">
+        <div className="group relative w-full  bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-500 ease-out flex flex-col shadow-2xl">
             {/* Image Section */}
             <div className="w-full h-72 relative overflow-hidden bg-zinc-900 block" style={{ minHeight: '288px' }}>
                 {imgSrc && (
@@ -81,7 +81,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                 )}
 
                 {/* Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-black/40 z-10 pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-transparent to-black/40 z-10 pointer-events-none" />
 
                 {/* Top Badges */}
                 <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-20 pointer-events-none">
@@ -105,7 +105,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             </div>
 
             {/* Content Section */}
-            <div className="p-6 flex flex-col grow z-20 bg-zinc-950">
+            <div className="p-6 flex flex-col grow z-20 bg-primary/5 backdrop-blur-sm">
                 <h2 className="text-xl font-light tracking-wide text-white leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-1 mb-2">
                     {property.title}
                 </h2>

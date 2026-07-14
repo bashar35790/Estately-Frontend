@@ -30,10 +30,10 @@ export default async function AllPropertiesPage({
 }) {
   const resolvedParams = await searchParams;
   const properties: Property[] = await getProperty(resolvedParams);
-  console.log(properties, "properties");
+
   return (
     <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-primary selection:text-black">
-      <div className="max-w-7xl mx-auto space-y-16">
+      <div className="container mx-auto space-y-16">
 
         {/* Luxury Brand Header Block */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-10">
