@@ -8,18 +8,9 @@ import { User, Mail, Eye, EyeOff, ImageIcon, Loader2, Search, Users, Check } fro
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 import { Icon } from "@iconify/react";
+import { uploadImage } from "@/actions/upload";
 
 // Types 
-
-interface ImgBBResponse {
-  data: {
-    id: string;
-    url: string;
-    display_url: string;
-  };
-  success: boolean;
-  status: number;
-}
 
 type Role = "tenant" | "owner";
 
@@ -29,8 +20,6 @@ interface PasswordStrength {
 }
 
 // Helpers 
-
-const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
 function getPasswordStrength(password: string): PasswordStrength {
   if (!password) return { score: 0, label: "" };
@@ -193,17 +182,13 @@ export default function SignupForm() {
     formData.append("image", file);
 
     try {
-      const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-        method: "POST",
-        body: formData,
-      });
-      const result: ImgBBResponse = await res.json();
+      const result = await uploadImage(formData);
 
-      if (result.success && result.data?.url) {
-        setPhotoUrl(result.data.url);
+      if (result.success && result.url) {
+        setPhotoUrl(result.url);
       } else {
         setPhotoPreview("");
-        setErrors((prev) => ({ ...prev, photo: "Upload failed — please try again." }));
+        setErrors((prev) => ({ ...prev, photo: result.error || "Upload failed — please try again." }));
       }
     } catch {
       setPhotoPreview("");
