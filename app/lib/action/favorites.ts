@@ -25,7 +25,7 @@ export const removeFavorite = async (propertyId: string, userId: string) => {
 export const checkFavoriteStatus = async (propertyId: string, userId: string) => {
     try {
         const response = await serverAction(`/api/favorites/check/${propertyId}?userId=${userId}`);
-        return response;
+        return response ?? { isFavorite: false };
     } catch (error) {
         console.error(error);
         return { isFavorite: false };
@@ -35,7 +35,7 @@ export const checkFavoriteStatus = async (propertyId: string, userId: string) =>
 export const getUserFavorites = async (userId: string) => {
     try {
         const response = await serverAction(`/api/favorites?userId=${userId}`);
-        return response;
+        return Array.isArray(response) ? response : [];
     } catch (error) {
         console.error(error);
         return [];

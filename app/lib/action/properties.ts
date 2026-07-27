@@ -47,16 +47,17 @@ export const getReviews = async (propertyId: string) => {
     const response = await serverAction(
       `/api/reviews?propertyId=${propertyId}`,
     );
-    return response;
+    return Array.isArray(response) ? response : [];
   } catch (error) {
     console.error(error);
+    return [];
   }
 };
 
 export const getAllReviews = async () => {
   try {
     const response = await serverAction(`/api/all-reviews`);
-    return response;
+    return Array.isArray(response) ? response : [];
   } catch (error) {
     console.error("Get all reviews error:", error);
     return [];

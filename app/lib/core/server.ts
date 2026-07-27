@@ -36,13 +36,13 @@ export const serverAction = async (path: string) => {
 
     if (!res.ok) {
       console.error(`API Error (${res.status}) on URL:`, fullUrl);
-      return [];
+      return null;
     }
 
     return await res.json();
   } catch (error) {
     console.error(`Error fetching data from ${fullUrl}:`, error);
-    return [];
+    return null;
   }
 };
 
