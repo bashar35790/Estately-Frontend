@@ -1,6 +1,7 @@
+import { getUserToken } from "./session";
+
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-// Helper function to safely join baseUrl and path without breaking slashes
 const buildUrl = (path: string): string => {
   if (!baseUrl) {
     console.error(
@@ -8,21 +9,31 @@ const buildUrl = (path: string): string => {
     );
     return path;
   }
-  // Remove trailing slash from base, remove leading slash from path, join with single slash
   const cleanBase = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
   const cleanPath = path.startsWith("/") ? path.slice(1) : path;
   return `${cleanBase}/${cleanPath}`;
 };
 
+const getAuthHeaders = async (): Promise<Record<string, string>> => {
+  const token = await getUserToken();
+  if (token) {
+    return { "x-session-token": token };
+  }
+  return {};
+};
+
 export const serverAction = async (path: string) => {
   const fullUrl = buildUrl(path);
+  const authHeaders = await getAuthHeaders();
 
   try {
     const res = await fetch(fullUrl, {
       cache: "no-store",
+      headers: {
+        ...authHeaders,
+      },
     });
 
-    // handle HTTP errors
     if (!res.ok) {
       console.error(`API Error (${res.status}) on URL:`, fullUrl);
       return [];
@@ -41,12 +52,14 @@ export const serverMutation = async (
   body: any,
 ) => {
   const fullUrl = buildUrl(path);
+  const authHeaders = await getAuthHeaders();
 
   try {
     const res = await fetch(fullUrl, {
       method,
       headers: {
         "Content-Type": "application/json",
+        ...authHeaders,
       },
       body: JSON.stringify(body),
     });

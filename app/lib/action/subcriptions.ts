@@ -1,18 +1,11 @@
 'use server';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { serverMutation } from "../core/server";
 
 export const createSubscription = async (subInfo: any) => {
     try {
-        const response = await fetch(`${baseUrl}/api/subscriptions`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(subInfo),
-        });
-
-        return response.json();
+        const response = await serverMutation("/api/subscriptions", "POST", subInfo);
+        return response;
     } catch (error) {
         console.error(error);
     }

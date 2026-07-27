@@ -18,6 +18,7 @@ import { House, Globe, Thunderbolt, Person, FolderPlus, Picture } from "@gravity
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { addProperties } from "@/lib/action/properties";
+import { uploadImage } from "@/app/actions/upload";
 import { Ban } from "lucide-react";
 
 // Strict Interfaces Definition
@@ -56,20 +57,6 @@ interface PropertyPayload {
     images: string[];
 }
 
-interface ImgBBResponse {
-    data: {
-        id: string;
-        url: string;
-        display_url: string;
-    };
-    success: boolean;
-    status: number;
-}
-
-const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
-
-
-
 
 export default function AddPropertyForm({ owner }: any) {
     console.log(owner?.id);
@@ -83,61 +70,55 @@ export default function AddPropertyForm({ owner }: any) {
     const [isUploading, setIsUploading] = useState<boolean>(false);
     const [uploadError, setUploadError] = useState<string>("");
 
-    // Image upload handler
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if (!files || files.length === 0) return;
+// Image upload handler
+const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
-        const file = files[0];
+    const file = files[0];
 
-        // Validate file size (max 10MB)
-        if (file.size > 10 * 1024 * 1024) {
-            toast.error("Image size should be less than 10MB");
-            return;
-        }
+    // Validate file size (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+        toast.error("Image size should be less than 10MB");
+        return;
+    }
 
-        // Validate file type
-        if (!file.type.startsWith('image/')) {
-            toast.error("Please upload a valid image file");
-            return;
-        }
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+        toast.error("Please upload a valid image file");
+        return;
+    }
 
-        // Add local preview
-        const previewUrl = URL.createObjectURL(file);
-        setImagePreviews(prev => [...prev, previewUrl]);
-        setIsUploading(true);
-        setUploadError("");
+    // Add local preview
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreviews(prev => [...prev, previewUrl]);
+    setIsUploading(true);
+    setUploadError("");
 
-        // Upload to ImgBB
-        const formData = new FormData();
-        formData.append("image", file);
+    // Upload to ImgBB via server action
+    const formData = new FormData();
+    formData.append("image", file);
 
-        try {
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                method: "POST",
-                body: formData,
-            });
-            const result: ImgBBResponse = await res.json();
+    try {
+        const result = await uploadImage(formData);
 
-            if (result.success && result.data?.url) {
-                setImages(prev => [...prev, result.data.url]);
-                toast.success("Image uploaded successfully!");
-            } else {
-                // Remove preview if upload fails
-                setImagePreviews(prev => prev.slice(0, -1));
-                setUploadError("Failed to upload image. Please try again.");
-                toast.error("Failed to upload image");
-            }
-        } catch {
+        if (result.success && result.url) {
+            setImages(prev => [...prev, result.url!]);
+            toast.success("Image uploaded successfully!");
+        } else {
             setImagePreviews(prev => prev.slice(0, -1));
-            setUploadError("Network error during upload.");
-            toast.error("Network error during upload");
-        } finally {
-            setIsUploading(false);
-            // Reset input
-            e.target.value = '';
+            setUploadError("Failed to upload image. Please try again.");
+            toast.error("Failed to upload image");
         }
-    };
+    } catch {
+        setImagePreviews(prev => prev.slice(0, -1));
+        setUploadError("Network error during upload.");
+        toast.error("Network error during upload");
+    } finally {
+        setIsUploading(false);
+        e.target.value = '';
+    }
+};
 
     // Remove image handler
     const removeImage = (index: number) => {

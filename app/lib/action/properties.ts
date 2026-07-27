@@ -4,8 +4,6 @@ import { BookingPayloadType } from "@/types/booking";
 import { serverAction, serverMutation } from "../core/server";
 import { ReviewPayload } from "@/types/review";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
 interface PropertyPayload {
   title: string;
   description: string;
@@ -28,15 +26,8 @@ interface PropertyPayload {
 
 export const addProperties = async (data: PropertyPayload) => {
   try {
-    const response = await fetch(`${baseUrl}/api/add-properties`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    return response.json();
+    const response = await serverMutation("/api/add-properties", "POST", data);
+    return response;
   } catch (error) {
     console.error(error);
   }

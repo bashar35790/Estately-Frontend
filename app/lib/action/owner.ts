@@ -1,19 +1,13 @@
 "use server";
 
-import { serverMutation } from "../core/server";
+import { serverAction, serverMutation } from "../core/server";
 import { revalidatePath } from "next/cache";
 
-/**
- * Delete a property by ID
- */
 export const deletePropertyAction = async (propertyId: string) => {
     try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-        const res = await fetch(`${baseUrl}/api/properties/${propertyId}`, {
-            method: "DELETE",
-        });
+        const result = await serverMutation(`/api/properties/${propertyId}`, "DELETE", {});
         revalidatePath("/dashboard/owner/properties");
-        return res.json();
+        return result;
     } catch (error) {
         console.error("Error deleting property:", error);
         return null;
