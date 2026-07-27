@@ -2,7 +2,7 @@ import { stripe } from "@/lib/stripe";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Home, CalendarCheck } from "lucide-react";
-import { serverAction, serverMutation } from "@/lib/core/server";
+import { serverMutation } from "@/lib/core/server";
 import { BookingStatus, PaymentStatus } from "@/types/enums";
 
 export default async function BookingSuccessPage({
@@ -31,28 +31,21 @@ export default async function BookingSuccessPage({
 
     if (metadata) {
         try {
-            // Prevent duplicate bookings
-            const bookings = await serverAction(`/api/bookings?tenantId=${metadata.tenantId}`);
-            const exists = Array.isArray(bookings)
-                ? bookings.some((b: any) => b.transactionId === session.payment_intent)
-                : false;
+            // Save booking — the backend deduplicates by transactionId (returns 409 if exists)
+            const bookingPayload = {
+                propertyId: metadata.propertyId,
+                tenantId: metadata.tenantId,
+                ownerId: metadata.ownerId,
+                moveInDate: metadata.moveInDate,
+                contactNumber: metadata.contactNumber,
+                notes: metadata.notes,
+                amount: Number(metadata.amount),
+                bookingStatus: BookingStatus.Pending,
+                paymentStatus: PaymentStatus.Paid,
+                transactionId: session.payment_intent as string,
+            };
 
-            if (!exists) {
-                const bookingPayload = {
-                    propertyId: metadata.propertyId,
-                    tenantId: metadata.tenantId,
-                    ownerId: metadata.ownerId,
-                    moveInDate: metadata.moveInDate,
-                    contactNumber: metadata.contactNumber,
-                    notes: metadata.notes,
-                    amount: Number(metadata.amount),
-          bookingStatus: BookingStatus.Pending,
-          paymentStatus: PaymentStatus.Paid,
-                    transactionId: session.payment_intent as string,
-                };
-
-                await serverMutation("/api/bookings", "POST", bookingPayload);
-            }
+            await serverMutation("/api/bookings", "POST", bookingPayload);
         } catch (dbError) {
             console.error("Error saving booking to DB:", dbError);
         }
