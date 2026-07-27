@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { OwnerProperty } from "@/lib/api/owner";
 import { deletePropertyAction } from "@/lib/action/owner";
+import { PropertyStatus } from "@/types/enums";
 
 const statusColorMap: Record<string, { badge: string; dot: string }> = {
   pending: { badge: "bg-amber-100 text-amber-700 border border-amber-200", dot: "bg-amber-500" },
@@ -87,7 +88,7 @@ export default function OwnerPropertiesPage({ initialProperties }: Props) {
                 </tr>
               ) : (
                 properties.map((property) => {
-                  const statusKey = property.status?.toLowerCase() || "pending";
+                  const statusKey = property.status?.toLowerCase() || PropertyStatus.Pending;
                   const colors = statusColorMap[statusKey] || {
                     badge: "bg-gray-100 text-gray-600 border border-gray-200",
                     dot: "bg-gray-400",
@@ -117,7 +118,7 @@ export default function OwnerPropertiesPage({ initialProperties }: Props) {
                             <p className="mt-0.5 text-xs text-gray-400">
                               {property.bedrooms} bed / {property.bathrooms} bath / {property.size} m2
                             </p>
-                            {property.status?.toLowerCase() === "rejected" && property.rejectionFeedback ? (
+                            {property.status?.toLowerCase() === PropertyStatus.Rejected && property.rejectionFeedback ? (
                               <p className="mt-2 max-w-md rounded-xl bg-red-50 px-3 py-2 text-xs font-medium leading-5 text-red-600">
                                 Admin feedback: {property.rejectionFeedback}
                               </p>
@@ -135,14 +136,14 @@ export default function OwnerPropertiesPage({ initialProperties }: Props) {
                       <td className="px-4 py-4">
                         <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold capitalize ${colors.badge}`}>
                           <span className={`h-1.5 w-1.5 rounded-full ${colors.dot}`} />
-                          {property.status || "pending"}
+                          {property.status || PropertyStatus.Pending}
                         </span>
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex items-center justify-end gap-2">
                           {/* <select
                             className="rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-all focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                            value={property.status?.toLowerCase() || "pending"}
+                            value={property.status?.toLowerCase() || PropertyStatus.Pending}
                             onChange={(event) => handleStatusChange(property._id, event.target.value)}
                             disabled={isLoading}
                             aria-label="Update status"

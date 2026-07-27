@@ -1,5 +1,6 @@
 import PropertyCard from "@/components/properties/PropertiesCard";
 import PropertyFilter from "@/components/properties/PropertyFilter";
+import { PropertyStatus } from "@/types/enums";
 import { getProperty } from "@/lib/api/properties";
 
 export interface Property {
@@ -57,7 +58,7 @@ export default async function AllPropertiesPage({
         {properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
             {properties
-              .filter((property) => property.status === "approved")
+              .filter((property) => property.status === PropertyStatus.Approved)
               .map((property) => (
                 <PropertyCard
                   key={property._id}

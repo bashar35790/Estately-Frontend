@@ -2,6 +2,7 @@
 
 import { serverAction, serverMutation } from "../core/server";
 import { revalidatePath } from "next/cache";
+import { BookingStatus } from "../../types/enums";
 
 export const deletePropertyAction = async (propertyId: string) => {
     try {
@@ -33,7 +34,7 @@ export const updatePropertyStatusAction = async (propertyId: string, status: str
  */
 export const approveBookingAction = async (bookingId: string) => {
     try {
-        const result = await serverMutation(`/api/bookings/${bookingId}/status`, "PATCH", { status: "confirmed" });
+        const result = await serverMutation(`/api/bookings/${bookingId}/status`, "PATCH", { status: BookingStatus.Confirmed });
         revalidatePath("/dashboard/owner/bookings");
         return result;
     } catch (error) {
@@ -47,7 +48,7 @@ export const approveBookingAction = async (bookingId: string) => {
  */
 export const rejectBookingAction = async (bookingId: string) => {
     try {
-        const result = await serverMutation(`/api/bookings/${bookingId}/status`, "PATCH", { status: "rejected" });
+        const result = await serverMutation(`/api/bookings/${bookingId}/status`, "PATCH", { status: BookingStatus.Rejected });
         revalidatePath("/dashboard/owner/bookings");
         return result;
     } catch (error) {

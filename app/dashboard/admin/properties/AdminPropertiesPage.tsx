@@ -7,6 +7,7 @@ import {
   updateAdminPropertyAction,
   updateAdminPropertyStatusAction,
 } from "@/lib/action/admin";
+import { PropertyStatus } from "@/types/enums";
 
 interface Props {
   initialProperties: AdminProperty[];
@@ -44,8 +45,8 @@ function AdminPropertiesPage({ initialProperties }: Props) {
   const handleApprove = (propertyId: string) => {
     setLoadingId(propertyId);
     startTransition(async () => {
-      await updateAdminPropertyStatusAction(propertyId, "approved");
-      updateLocalProperty(propertyId, { status: "approved", rejectionFeedback: "" });
+      await updateAdminPropertyStatusAction(propertyId, PropertyStatus.Approved);
+      updateLocalProperty(propertyId, { status: PropertyStatus.Approved, rejectionFeedback: "" });
       setLoadingId(null);
     });
   };
@@ -60,9 +61,9 @@ function AdminPropertiesPage({ initialProperties }: Props) {
     const propertyId = rejectingProperty._id;
     setLoadingId(propertyId);
     startTransition(async () => {
-      await updateAdminPropertyStatusAction(propertyId, "rejected", rejectionFeedback.trim());
+      await updateAdminPropertyStatusAction(propertyId, PropertyStatus.Rejected, rejectionFeedback.trim());
       updateLocalProperty(propertyId, {
-        status: "rejected",
+        status: PropertyStatus.Rejected,
         rejectionFeedback: rejectionFeedback.trim(),
       });
       setRejectingProperty(null);

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Home, CalendarCheck } from "lucide-react";
 import { serverAction, serverMutation } from "@/lib/core/server";
+import { BookingStatus, PaymentStatus } from "@/types/enums";
 
 export default async function BookingSuccessPage({
     searchParams,
@@ -22,7 +23,7 @@ export default async function BookingSuccessPage({
         console.error("Error retrieving session:", error);
     }
 
-    if (!session || session.payment_status !== "paid") {
+    if (!session || session.payment_status !== PaymentStatus.Paid) {
         redirect("/");
     }
 
@@ -45,8 +46,8 @@ export default async function BookingSuccessPage({
                     contactNumber: metadata.contactNumber,
                     notes: metadata.notes,
                     amount: Number(metadata.amount),
-                    bookingStatus: "pending",
-                    paymentStatus: "paid",
+          bookingStatus: BookingStatus.Pending,
+          paymentStatus: PaymentStatus.Paid,
                     transactionId: session.payment_intent as string,
                 };
 

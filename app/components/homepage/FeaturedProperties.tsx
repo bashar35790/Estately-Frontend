@@ -1,11 +1,12 @@
 import PropertyCard from "@/components/properties/PropertiesCard";
 import { getProperty } from "@/lib/api/properties";
 import Link from "next/link";
+import { PropertyStatus } from "@/types/enums";
 import { ArrowRight } from "lucide-react";
 import { FadeInUp, StaggerContainer, StaggerItem } from "./MotionWrapper";
 
 export default async function FeaturedProperties() {
-    const properties = await getProperty({ status: "approved", limit: "6" });
+    const properties = await getProperty({ status: PropertyStatus.Approved, limit: "6" });
 
     return (
         <section className="bg-black py-24 px-6 sm:px-12 border-t border-white/5 w-full overflow-hidden">

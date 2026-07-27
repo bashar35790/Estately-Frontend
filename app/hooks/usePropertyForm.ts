@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { addProperties } from "@/lib/action/properties";
+import { PropertyStatus } from "@/types/enums";
 
 interface FormErrors {
   title?: string;
@@ -88,7 +89,7 @@ export function usePropertyForm(owner: any) {
         amenities: (data.amenities as string).split(",").map(i => i.trim()),
         extraFeatures: data.extraFeatures ? (data.extraFeatures as string).split(",").map(i => i.trim()) : [],
         isFeatured,
-        status: "pending",
+        status: PropertyStatus.Pending,
         ownerId: owner?.id,
         ownerName: owner?.name,
         ownerEmail: owner?.email,

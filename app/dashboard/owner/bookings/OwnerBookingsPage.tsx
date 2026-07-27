@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import type { OwnerBooking } from "@/lib/api/owner";
 import { approveBookingAction, rejectBookingAction } from "@/lib/action/owner";
+import { BookingStatus } from "@/types/enums";
 
 const bookingStatusColors: Record<string, { badge: string; dot: string }> = {
     pending:   { badge: "bg-amber-100 text-amber-700 border border-amber-200",    dot: "bg-amber-500" },
@@ -25,7 +26,7 @@ export default function OwnerBookingsPage({ initialBookings }: Props) {
         startTransition(async () => {
             await approveBookingAction(bookingId);
             setBookings((prev) =>
-                prev.map((b) => (b._id === bookingId ? { ...b, bookingStatus: "confirmed" } : b))
+                prev.map((b) => (b._id === bookingId ? { ...b, bookingStatus: BookingStatus.Confirmed } : b))
             );
             setLoadingId(null);
         });
@@ -37,7 +38,7 @@ export default function OwnerBookingsPage({ initialBookings }: Props) {
         startTransition(async () => {
             await rejectBookingAction(bookingId);
             setBookings((prev) =>
-                prev.map((b) => (b._id === bookingId ? { ...b, bookingStatus: "rejected" } : b))
+                prev.map((b) => (b._id === bookingId ? { ...b, bookingStatus: BookingStatus.Rejected } : b))
             );
             setLoadingId(null);
         });
@@ -65,7 +66,7 @@ export default function OwnerBookingsPage({ initialBookings }: Props) {
                 </div>
                 <div className="flex gap-3">
                     <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">
-                        {bookings.filter(b => b.bookingStatus?.toLowerCase() === "pending").length} Pending
+                        {bookings.filter(b => b.bookingStatus?.toLowerCase() === BookingStatus.Pending).length} Pending
                     </span>
                     <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-600">
                         {bookings.length} Total
@@ -98,10 +99,10 @@ export default function OwnerBookingsPage({ initialBookings }: Props) {
                                 </tr>
                             ) : (
                                 bookings.map((booking) => {
-                                    const statusKey = booking.bookingStatus?.toLowerCase() || "pending";
+                                    const statusKey = booking.bookingStatus?.toLowerCase() || BookingStatus.Pending;
                                     const colors = bookingStatusColors[statusKey] || { badge: "bg-gray-100 text-gray-600 border border-gray-200", dot: "bg-gray-400" };
                                     const isLoading = loadingId === booking._id && isPending;
-                                    const isResolved = ["confirmed", "rejected", "approved"].includes(statusKey);
+                                    const isResolved = [BookingStatus.Confirmed, BookingStatus.Rejected, BookingStatus.Approved].includes(statusKey);
 
                                     return (
                                         <tr
@@ -147,7 +148,7 @@ export default function OwnerBookingsPage({ initialBookings }: Props) {
                                             <td className="px-4 py-4">
                                                 <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold capitalize ${colors.badge}`}>
                                                     <span className={`h-1.5 w-1.5 rounded-full ${colors.dot}`} />
-                                                    {booking.bookingStatus || "pending"}
+                                                    {booking.bookingStatus || BookingStatus.Pending}
                                                 </span>
                                             </td>
 
