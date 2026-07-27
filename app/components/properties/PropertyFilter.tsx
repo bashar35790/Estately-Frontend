@@ -31,6 +31,8 @@ export default function PropertyFilter() {
             params.delete("propertyType");
         }
 
+        params.delete("page");
+
         const query = params.toString();
 
         router.push(query ? `${pathname}?${query}` : pathname);

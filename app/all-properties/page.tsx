@@ -1,9 +1,10 @@
 import PropertyCard from "@/components/properties/PropertiesCard";
 import PropertyFilter from "@/components/properties/PropertyFilter";
+import { PaginationWrapper } from "@/components/properties/PaginationWrapper";
 import { PropertyStatus } from "@/types/enums";
 import { getProperty } from "@/lib/api/properties";
 
-export interface Property {
+interface Property {
   _id: string;
   title: string;
   description: string;
@@ -30,7 +31,17 @@ export default async function AllPropertiesPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const resolvedParams = await searchParams;
-  const properties: Property[] = await getProperty(resolvedParams);
+  const currentPage = parseInt((resolvedParams.page as string) || "1", 10);
+
+  const result = await getProperty({
+    ...resolvedParams,
+    page: String(currentPage),
+    limit: "6",
+    status: PropertyStatus.Approved,
+  });
+
+  const properties: Property[] = Array.isArray(result) ? result : (result as any)?.properties ?? [];
+  const totalPages: number = !Array.isArray(result) ? (result as any)?.totalPages ?? 1 : 1;
 
   return (
     <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-primary selection:text-black">
@@ -57,14 +68,12 @@ export default async function AllPropertiesPage({
         {/* Dynamic Card Layout Grid */}
         {properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
-            {properties
-              .filter((property) => property.status === PropertyStatus.Approved)
-              .map((property) => (
-                <PropertyCard
-                  key={property._id}
-                  property={property}
-                />
-              ))}
+            {properties.map((property: Property) => (
+              <PropertyCard
+                key={property._id}
+                property={property}
+              />
+            ))}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center py-32 border border-dashed border-white/10 rounded-sm bg-zinc-900/50">
@@ -74,6 +83,8 @@ export default async function AllPropertiesPage({
             </p>
           </div>
         )}
+
+        <PaginationWrapper currentPage={currentPage} totalPages={totalPages} />
 
       </div>
     </div>
