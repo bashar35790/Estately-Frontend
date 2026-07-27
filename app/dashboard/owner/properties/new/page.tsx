@@ -1,12 +1,21 @@
-import PostPropertyForm from './PostPropertyForm'
-import { getCurrentUser } from '@/lib/api/bookings'
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import PostPropertyForm from "./PostPropertyForm";
+
+export const dynamic = "force-dynamic";
+
 async function AddPropertyPage() {
-    const owner = await getCurrentUser()
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    const owner = session?.user || {};
+
     return (
         <div>
-            <PostPropertyForm owner={owner || {}} />
+            <PostPropertyForm owner={owner} />
         </div>
-    )
+    );
 }
 
 export default AddPropertyPage;
