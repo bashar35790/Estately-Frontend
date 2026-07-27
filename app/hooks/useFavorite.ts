@@ -1,73 +1,66 @@
-import { useState, useEffect } from "react";
+"use client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { addFavorite, removeFavorite, checkFavoriteStatus } from "@/lib/action/favorites";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 export function useFavorite(propertyId: string, initialFavorite: boolean = false) {
-    const { data: session } = authClient.useSession();
-    const [isFavorite, setIsFavorite] = useState(initialFavorite);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isChecking, setIsChecking] = useState(true);
-    const router = useRouter();
+  const { data: session } = authClient.useSession();
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
-    useEffect(() => {
-        const checkStatus = async () => {
-            if (!session?.user) {
-                setIsChecking(false);
-                return;
-            }
-            try {
-                const result = await checkFavoriteStatus(propertyId, session.user.id);
-                if (result?.isFavorite !== undefined) {
-                    setIsFavorite(result.isFavorite);
-                }
-            } catch (error) {
-                console.error("Failed to check favorite status", error);
-            } finally {
-                setIsChecking(false);
-            }
-        };
+  const { data: isFavorite = initialFavorite, isLoading: isChecking } = useQuery({
+    queryKey: ["favoriteStatus", propertyId, session?.user?.id],
+    queryFn: async () => {
+      if (!session?.user) return initialFavorite;
+      const result = await checkFavoriteStatus(propertyId, session.user.id);
+      return result?.isFavorite ?? initialFavorite;
+    },
+    enabled: !!session?.user,
+  });
 
-        checkStatus();
-    }, [propertyId, session?.user]);
+  const toggleMutation = useMutation({
+    mutationFn: async () => {
+      if (!session?.user) throw new Error("Not authenticated");
+      if (isFavorite) {
+        const res = await removeFavorite(propertyId, session.user.id);
+        if (res && res.message === "Failed to remove favorite") throw new Error("Failed");
+        return "removed";
+      } else {
+        const res = await addFavorite(propertyId, session.user.id);
+        if (res && res.message === "Failed to add favorite") throw new Error("Failed");
+        return "added";
+      }
+    },
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["favoriteStatus", propertyId, session?.user?.id] });
+      const previous = queryClient.getQueryData(["favoriteStatus", propertyId, session?.user?.id]);
+      queryClient.setQueryData(["favoriteStatus", propertyId, session?.user?.id], !isFavorite);
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      queryClient.setQueryData(["favoriteStatus", propertyId, session?.user?.id], context?.previous);
+      toast.error("Something went wrong.");
+    },
+    onSuccess: (result) => {
+      toast.success(result === "added" ? "Added to Favorites" : "Removed from Favorites");
+      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    },
+  });
 
-    const toggleFavorite = async () => {
-        if (!session?.user) {
-            router.push("/auth/sign-in");
-            return;
-        }
+  const toggleFavorite = () => {
+    if (!session?.user) {
+      router.push("/auth/sign-in");
+      return;
+    }
+    toggleMutation.mutate();
+  };
 
-        if (isLoading) return;
-
-        const previousState = isFavorite;
-        setIsFavorite(!previousState);
-        setIsLoading(true);
-
-        try {
-            if (previousState) {
-                const res = await removeFavorite(propertyId, session.user.id);
-                // Depending on how serverMutation wraps the response, you might need to check res.ok
-                if (res && res.message === "Failed to remove favorite") throw new Error("Failed");
-                toast.success("Removed from Favorites");
-            } else {
-                const res = await addFavorite(propertyId, session.user.id);
-                if (res && res.message === "Failed to add favorite") throw new Error("Failed");
-                toast.success("Added to Favorites");
-            }
-        } catch (error) {
-            console.error(error);
-            setIsFavorite(previousState);
-            toast.error("Something went wrong.");
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    return {
-        isFavorite,
-        isLoading,
-        isChecking,
-        toggleFavorite
-    };
+  return {
+    isFavorite,
+    isLoading: toggleMutation.isPending,
+    isChecking,
+    toggleFavorite,
+  };
 }
