@@ -37,7 +37,7 @@ export default async function AllPropertiesPage({
   const result = await getProperty({
     ...resolvedParams,
     page: String(currentPage),
-    limit: "3",
+    limit: "6",
     status: PropertyStatus.Approved,
   });
 
