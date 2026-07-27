@@ -102,7 +102,7 @@ export default function OwnerBookingsPage({ initialBookings }: Props) {
                                     const statusKey = booking.bookingStatus?.toLowerCase() || BookingStatus.Pending;
                                     const colors = bookingStatusColors[statusKey] || { badge: "bg-gray-100 text-gray-600 border border-gray-200", dot: "bg-gray-400" };
                                     const isLoading = loadingId === booking._id && isPending;
-                                    const isResolved = [BookingStatus.Confirmed, BookingStatus.Rejected, BookingStatus.Approved].includes(statusKey);
+                                    const isResolved = ([BookingStatus.Confirmed, BookingStatus.Rejected, BookingStatus.Approved] as string[]).includes(statusKey);
 
                                     return (
                                         <tr

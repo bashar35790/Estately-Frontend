@@ -41,7 +41,8 @@ export async function POST(req: Request) {
     }
 
     // 4. Backend uses the property's price dynamically.
-    const unitAmount = Math.round((property.price + 99) * 100);
+    const serviceFeeCents = Number(process.env.BOOKING_SERVICE_FEE_CENTS) || 0;
+    const unitAmount = Math.round((property.price * 100) + serviceFeeCents);
 
     // 7. Create the Stripe session dynamically
     const session: Stripe.Checkout.Session = await stripe.checkout.sessions.create({
@@ -68,7 +69,7 @@ export async function POST(req: Request) {
         moveInDate: moveInDate || "",
         contactNumber: contactNumber || "",
         notes: notes || "",
-        amount: (property.price + 99).toString(),
+        amount: (property.price + (serviceFeeCents / 100)).toString(),
       },
       success_url: `${origin}/booking-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/all-properties/${property._id}`,

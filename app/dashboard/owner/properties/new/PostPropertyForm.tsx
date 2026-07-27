@@ -13,7 +13,14 @@ const textInputClass = "w-full text-text bg-white border border-gray-200 hover:b
 const textAreaClass = "w-full text-text bg-white border border-gray-200 hover:border-primary/40 focus:border-primary rounded-xl p-4 text-sm outline-none transition-all shadow-[0_2px_4px_rgba(0,0,0,0.01)]";
 const triggerClass = "flex w-full items-center justify-between text-text bg-white border border-gray-200 hover:border-primary/40 data-[focus=true]:border-primary rounded-xl h-12 px-4 text-sm outline-none transition-all shadow-[0_2px_4px_rgba(0,0,0,0.01)] cursor-pointer";
 
-export default function AddPropertyForm({ owner }: any) {
+interface OwnerUser {
+  id?: string;
+  name?: string | null;
+  email?: string | null;
+  status?: string;
+}
+
+export default function AddPropertyForm({ owner }: { owner: OwnerUser }) {
   const router = useRouter();
   const {
     images, imagePreviews, isUploading, uploadError,

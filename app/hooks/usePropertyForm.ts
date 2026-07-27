@@ -6,6 +6,7 @@ import { addProperties } from "@/lib/action/properties";
 import { PropertyStatus } from "@/types/enums";
 
 interface FormErrors {
+  [key: string]: string | undefined;
   title?: string;
   description?: string;
   location?: string;
@@ -39,7 +40,13 @@ interface PropertyPayload {
   images: string[];
 }
 
-export function usePropertyForm(owner: any) {
+interface OwnerUser {
+  id?: string;
+  name?: string | null;
+  email?: string | null;
+}
+
+export function usePropertyForm(owner: OwnerUser) {
   const router = useRouter();
   const [isFeatured, setIsFeatured] = useState<boolean>(false);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -90,9 +97,9 @@ export function usePropertyForm(owner: any) {
         extraFeatures: data.extraFeatures ? (data.extraFeatures as string).split(",").map(i => i.trim()) : [],
         isFeatured,
         status: PropertyStatus.Pending,
-        ownerId: owner?.id,
-        ownerName: owner?.name,
-        ownerEmail: owner?.email,
+        ownerId: owner?.id || "",
+        ownerName: owner?.name || "",
+        ownerEmail: owner?.email || "",
         images,
       };
 

@@ -4,7 +4,7 @@ async function AddPropertyPage() {
     const owner = await getCurrentUser()
     return (
         <div>
-            <PostPropertyForm owner={owner} />
+            <PostPropertyForm owner={owner || {}} />
         </div>
     )
 }
