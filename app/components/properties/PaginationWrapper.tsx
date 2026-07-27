@@ -52,7 +52,7 @@ export function PaginationWrapper({ currentPage, totalPages }: Props) {
     return pages;
   };
 
-  const btnBase = "px-4 py-2 rounded-full text-sm font-light border transition-all";
+  const btnBase = "px-4 py-2 rounded-full text-sm font-light border transition-all cursor-pointer";
   const btnInactive = "border-white/10 text-zinc-400 hover:text-white hover:border-primary/50";
   const btnDisabled = "opacity-30 cursor-not-allowed";
 
@@ -73,7 +73,7 @@ export function PaginationWrapper({ currentPage, totalPages }: Props) {
           <button
             key={p}
             onClick={() => goToPage(p)}
-            className={`w-10 h-10 rounded-full text-sm font-light transition-all ${
+            className={`w-10 h-10 rounded-full text-sm font-light transition-all cursor-pointer ${
               p === currentPage
                 ? "bg-primary text-black font-medium"
                 : "text-zinc-400 hover:text-white hover:bg-zinc-800 border border-white/5"
