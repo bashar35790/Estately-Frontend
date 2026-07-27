@@ -2,6 +2,7 @@ import { stripe } from "@/lib/stripe";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Home, CalendarCheck } from "lucide-react";
+import { serverAction, serverMutation } from "@/lib/core/server";
 
 export default async function BookingSuccessPage({
     searchParams,
@@ -29,15 +30,11 @@ export default async function BookingSuccessPage({
 
     if (metadata) {
         try {
-            const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
-
             // Prevent duplicate bookings
-            const bookingsRes = await fetch(`${baseUrl}/api/bookings?tenantId=${metadata.tenantId}`);
-            let exists = false;
-            if (bookingsRes.ok) {
-                const bookings = await bookingsRes.json();
-                exists = bookings.some((b: any) => b.transactionId === session.payment_intent);
-            }
+            const bookings = await serverAction(`/api/bookings?tenantId=${metadata.tenantId}`);
+            const exists = Array.isArray(bookings)
+                ? bookings.some((b: any) => b.transactionId === session.payment_intent)
+                : false;
 
             if (!exists) {
                 const bookingPayload = {
@@ -53,16 +50,10 @@ export default async function BookingSuccessPage({
                     transactionId: session.payment_intent as string,
                 };
 
-                await fetch(`${baseUrl}/api/bookings`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(bookingPayload),
-                });
+                await serverMutation("/api/bookings", "POST", bookingPayload);
             }
         } catch (dbError) {
             console.error("Error saving booking to DB:", dbError);
-            // We still show the success page since payment went through, 
-            // but in a production app you'd want to queue this or alert an admin.
         }
     }
 
