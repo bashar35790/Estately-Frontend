@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import PropertyCard from "@/components/properties/PropertiesCard";
 import PropertyFilter from "@/components/properties/PropertyFilter";
 import { PaginationWrapper } from "@/components/properties/PaginationWrapper";
@@ -36,7 +37,7 @@ export default async function AllPropertiesPage({
   const result = await getProperty({
     ...resolvedParams,
     page: String(currentPage),
-    limit: "6",
+    limit: "3",
     status: PropertyStatus.Approved,
   });
 
@@ -84,7 +85,9 @@ export default async function AllPropertiesPage({
           </div>
         )}
 
-        <PaginationWrapper currentPage={currentPage} totalPages={totalPages} />
+        <Suspense fallback={null}>
+          <PaginationWrapper currentPage={currentPage} totalPages={totalPages} />
+        </Suspense>
 
       </div>
     </div>
