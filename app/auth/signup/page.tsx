@@ -314,13 +314,13 @@ export default function SignupForm() {
                 "rounded-[14px] border px-4 py-3.5",
                 "transition-all duration-200",
                 photoUrl
-                  ? "border-[#A3CF16]/50 bg-[#A3CF16]/[0.08]"
-                  : "border-dashed border-white/20 bg-white/[0.07] hover:border-white/35 hover:bg-white/[0.10]",
+                  ? "border-[#A3CF16]/50 bg-[#A3CF16]/8"
+                  : "border-dashed border-white/20 bg-white/[0.07] hover:border-white/35 hover:bg-white/10",
               ].join(" ")}
             >
               <span
                 className={[
-                  "text-[15px] font-normal truncate max-w-[300px]",
+                  "text-[15px] font-normal truncate max-w-75",
                   photoUrl ? "text-[#A3CF16]" : "text-white/35",
                 ].join(" ")}
               >
@@ -436,10 +436,10 @@ export default function SignupForm() {
                   type="button"
                   onClick={() => setRole(value)}
                   className={[
-                    "flex items-center justify-center gap-2 rounded-[12px] border",
+                    "flex items-center justify-center gap-2 rounded-3xl border cursor-pointer",
                     "py-3 text-[13.5px] font-medium transition-all duration-200",
                     role === value
-                      ? "border-[#A3CF16]/55 bg-[#A3CF16]/[0.12] text-[#A3CF16]"
+                      ? "border-[#A3CF16]/55 bg-[#A3CF16]/12 text-[#A3CF16]"
                       : "border-white/15 bg-white/[0.07] text-white/50 hover:border-white/30 hover:text-white/75",
                   ].join(" ")}
                 >
@@ -471,6 +471,7 @@ export default function SignupForm() {
             bg-linear-to-r from-[#A3CF16] to-[#7aad00]
             text-[15px] font-semibold text-[#1a2200]
             shadow-[0_2px_20px_rgba(163,207,22,0.3)]
+            cursor-pointer
             transition-all duration-200
             hover:opacity-90 active:scale-[0.99]
             disabled:cursor-not-allowed disabled:opacity-50
@@ -496,8 +497,9 @@ export default function SignupForm() {
             bg-white/[0.07] py-3.5
             text-[14px] font-medium text-white/80
             transition-all duration-200
-            hover:border-white/30 hover:bg-white/[0.12] hover:text-white
+            hover:border-white/30 hover:bg-white/12 hover:text-white
             active:scale-[0.99]
+            cursor-pointer
           "
         >
           <Icon icon="devicon:google" className="h-4 w-4 shrink-0" />

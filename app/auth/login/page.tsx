@@ -213,12 +213,12 @@ export default function GlassLoginForm() {
             className="
               w-full
               rounded-[15px]
-              bg-linear-to-r from-primary to-primary/80
               py-5
               text-xl
-              font-semibold
-              text-black
-              shadow-lg
+              bg-linear-to-r from-[#A3CF16] to-[#7aad00]
+            text-[15px] font-semibold text-[#1a2200]
+            shadow-[0_2px_20px_rgba(163,207,22,0.3)]
+            cursor-pointer
               transition-opacity
               hover:opacity-90
               disabled:opacity-50
