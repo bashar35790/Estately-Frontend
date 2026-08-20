@@ -27,15 +27,22 @@ export const serverAction = async (path: string, options?: RequestInit) => {
   const authHeaders = await getAuthHeaders();
 
   try {
-    const res = await fetch(fullUrl, {
-      cache: options?.cache ?? "no-store",
-      next: options?.next,
+    const fetchOptions: RequestInit = {
       ...options,
       headers: {
         ...authHeaders,
         ...options?.headers,
       },
-    });
+    };
+
+    if (options?.next) {
+      fetchOptions.next = options.next;
+      // Do not set cache: "no-store" if next options (like revalidate) are provided
+    } else {
+      fetchOptions.cache = options?.cache ?? "no-store";
+    }
+
+    const res = await fetch(fullUrl, fetchOptions);
 
     if (!res.ok) {
       console.error(`API Error (${res.status}) on URL:`, fullUrl);
