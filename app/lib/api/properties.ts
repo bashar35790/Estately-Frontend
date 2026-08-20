@@ -21,7 +21,7 @@ export const getProperty = async (searchParams?: Record<string, string | string[
         const queryStr = params.toString();
         if (queryStr) query = `?${queryStr}`;
     }
-    return serverAction(`/api/properties${query}`);
+    return serverAction(`/api/properties${query}`, { next: { revalidate: 60 } });
 }
 
 export const getPropertyById = async (id: string) => {

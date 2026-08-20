@@ -22,15 +22,18 @@ const getAuthHeaders = async (): Promise<Record<string, string>> => {
   return {};
 };
 
-export const serverAction = async (path: string) => {
+export const serverAction = async (path: string, options?: RequestInit) => {
   const fullUrl = buildUrl(path);
   const authHeaders = await getAuthHeaders();
 
   try {
     const res = await fetch(fullUrl, {
-      cache: "no-store",
+      cache: options?.cache ?? "no-store",
+      next: options?.next,
+      ...options,
       headers: {
         ...authHeaders,
+        ...options?.headers,
       },
     });
 

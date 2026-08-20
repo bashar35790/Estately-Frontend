@@ -26,14 +26,7 @@ interface Property {
   images: string[];
 }
 
-export default async function AllPropertiesPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-  const resolvedParams = await searchParams;
-  const currentPage = parseInt((resolvedParams.page as string) || "1", 10);
-
+async function PropertyList({ resolvedParams, currentPage }: { resolvedParams: any, currentPage: number }) {
   const result = await getProperty({
     ...resolvedParams,
     page: String(currentPage),
@@ -45,9 +38,41 @@ export default async function AllPropertiesPage({
   const totalPages: number = !Array.isArray(result) ? (result as any)?.totalPages ?? 1 : 1;
 
   return (
+    <>
+      {properties.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
+          {properties.map((property: Property) => (
+            <PropertyCard
+              key={property._id}
+              property={property}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center text-center py-32 border border-dashed border-white/10 rounded-sm bg-zinc-900/50">
+          <p className="text-primary font-light tracking-widest uppercase text-lg mb-2">No Properties Found</p>
+          <p className="text-zinc-500 text-sm font-light max-w-sm">
+            We couldn&apos;t find any estates matching your refined criteria. Please adjust your filters.
+          </p>
+        </div>
+      )}
+
+      <PaginationWrapper currentPage={currentPage} totalPages={totalPages} />
+    </>
+  );
+}
+
+export default async function AllPropertiesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const currentPage = parseInt((resolvedParams.page as string) || "1", 10);
+
+  return (
     <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-primary selection:text-black">
       <div className="container mx-auto space-y-16">
-
         {/* Luxury Brand Header Block */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-10">
           <div className="space-y-4">
@@ -66,29 +91,15 @@ export default async function AllPropertiesPage({
           } />
         </div>
 
-        {/* Dynamic Card Layout Grid */}
-        {properties.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
-            {properties.map((property: Property) => (
-              <PropertyCard
-                key={property._id}
-                property={property}
-              />
-            ))}
+        {/* Dynamic Card Layout Grid with Suspense */}
+        <Suspense fallback={
+          <div className="w-full py-32 flex justify-center items-center flex-col gap-4">
+            <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-zinc-500 tracking-widest uppercase text-xs">Loading Estates</p>
           </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center text-center py-32 border border-dashed border-white/10 rounded-sm bg-zinc-900/50">
-            <p className="text-primary font-light tracking-widest uppercase text-lg mb-2">No Properties Found</p>
-            <p className="text-zinc-500 text-sm font-light max-w-sm">
-              We couldn&apos;t find any estates matching your refined criteria. Please adjust your filters.
-            </p>
-          </div>
-        )}
-
-        <Suspense fallback={null}>
-          <PaginationWrapper currentPage={currentPage} totalPages={totalPages} />
+        }>
+          <PropertyList resolvedParams={resolvedParams} currentPage={currentPage} />
         </Suspense>
-
       </div>
     </div>
   );

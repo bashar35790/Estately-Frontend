@@ -56,7 +56,7 @@ export const getReviews = async (propertyId: string) => {
 
 export const getAllReviews = async () => {
   try {
-    const response = await serverAction(`/api/all-reviews`);
+    const response = await serverAction(`/api/all-reviews`, { next: { revalidate: 60 } });
     return Array.isArray(response) ? response : [];
   } catch (error) {
     console.error("Get all reviews error:", error);
