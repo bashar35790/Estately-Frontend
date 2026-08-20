@@ -33,6 +33,7 @@ export function PropertyGallery({ images }: Props) {
                     width={1000}
                     height={1000}
                     className="w-full h-[520px] object-cover"
+                    priority={true}
                 />
 
                 <div className="absolute top-6 left-6">
