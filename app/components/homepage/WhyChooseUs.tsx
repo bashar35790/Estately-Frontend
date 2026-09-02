@@ -7,22 +7,22 @@ import { Shield, Home, Clock, Star } from "lucide-react";
 export default function WhyChooseUs() {
     const features = [
         {
-            icon: <Shield className="w-8 h-8 text-primary" />,
+            icon: <Shield className="w-8 h-8 text-white" />,
             title: "Trusted by Thousands",
             description: "Every property and owner goes through our rigorous verification process to ensure absolute security and peace of mind."
         },
         {
-            icon: <Home className="w-8 h-8 text-primary" />,
+            icon: <Home className="w-8 h-8 text-white" />,
             title: "Premium Properties",
             description: "Access an exclusive collection of luxury villas, penthouses, and estates carefully curated for the most discerning guests."
         },
         {
-            icon: <Clock className="w-8 h-8 text-primary" />,
+            icon: <Clock className="w-8 h-8 text-white" />,
             title: "24/7 Concierge Support",
             description: "Our dedicated support team is available around the clock to assist you with everything from booking to your stay."
         },
         {
-            icon: <Star className="w-8 h-8 text-primary" />,
+            icon: <Star className="w-8 h-8 text-white" />,
             title: "Unforgettable Experiences",
             description: "We don't just offer homes; we offer curated experiences tailored to your lifestyle and highest expectations."
         }
@@ -51,8 +51,24 @@ export default function WhyChooseUs() {
     };
 
     return (
-        <section className="bg-white dark:bg-zinc-950 py-16 md:py-24 w-full border-t border-zinc-100 dark:border-white/5">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        <section className="relative overflow-hidden bg-background dark:bg-zinc-950 py-16 md:py-24 w-full border-t border-zinc-200 dark:border-white/5">
+            {/* Brand glow orbs */}
+            <div
+                className="absolute top-0 left-0 w-96 h-96 rounded-full opacity-15 pointer-events-none"
+                style={{
+                    background: "radial-gradient(circle, #1eac70 0%, transparent 70%)",
+                    transform: "translate(-25%, -25%)",
+                }}
+            />
+            <div
+                className="absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10 pointer-events-none"
+                style={{
+                    background: "radial-gradient(circle, #a3cf16 0%, transparent 70%)",
+                    transform: "translate(25%, 25%)",
+                }}
+            />
+
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -80,17 +96,22 @@ export default function WhyChooseUs() {
                             key={index}
                             variants={cardVariants}
                             whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                            className="bg-white dark:bg-zinc-900 p-8 rounded-2xl border border-zinc-100 dark:border-white/5 shadow-xl shadow-zinc-200/20 dark:shadow-none flex flex-col items-center text-center group transition-colors hover:border-primary/50"
+                            style={{ background: "linear-gradient(135deg, #1eac70 0%, #a3cf16 100%)" }}
+                            className="relative overflow-hidden p-8 rounded-2xl flex flex-col items-center text-center group transition-transform duration-300 shadow-xl shadow-primary/20 border border-white/20"
                         >
-                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                                {feature.icon}
+                            {/* White glass overlay for readability + hover tint */}
+                            <div className="absolute inset-0 bg-white/95 dark:bg-zinc-900/95 group-hover:bg-white/90 dark:group-hover:bg-zinc-900/90 transition-colors" />
+                            <div className="relative flex flex-col items-center text-center">
+                                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-6 shadow-lg shadow-primary/30">
+                                    {feature.icon}
+                                </div>
+                                <h3 className="text-xl font-medium text-zinc-900 dark:text-white mb-3 tracking-wide">
+                                    {feature.title}
+                                </h3>
+                                <p className="text-zinc-500 dark:text-zinc-400 font-light text-sm leading-relaxed">
+                                    {feature.description}
+                                </p>
                             </div>
-                            <h3 className="text-xl font-medium text-zinc-900 dark:text-white mb-3 tracking-wide">
-                                {feature.title}
-                            </h3>
-                            <p className="text-zinc-500 dark:text-zinc-400 font-light text-sm leading-relaxed">
-                                {feature.description}
-                            </p>
                         </motion.div>
                     ))}
                 </motion.div>
