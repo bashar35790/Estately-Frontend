@@ -53,53 +53,67 @@ export default async function PropertyDetailsPage({
     }
 
     return (
-        <div className="bg-default-50/50 dark:bg-zinc-950 min-h-screen pt-28 pb-16 md:pt-32 md:pb-24">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Navigation */}
-                <div className="mb-10">
+        <div
+            className="min-h-screen"
+            style={{
+                background: `linear-gradient(
+                    180deg,
+                    #0c1810 0%,
+                    #152a1c 5%,
+                    #1d3c28 11%,
+                    #2a5239 16%,
+                    #c8e4d0 22%,
+                    #e0efe4 28%,
+                    #edf4ef 35%,
+                    #f2f5f2 50%,
+                    #f5f5f4 100%
+                )`,
+            }}
+        >
+            {/* ── Back nav — sits in the dark zone at top ─── */}
+            <div className="w-full pt-28 pb-10 md:pt-32 md:pb-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <Link
                         href="/all-properties"
-                        className="group inline-flex items-center gap-2 text-primary font-body font-semibold transition-all hover:gap-3"
+                        className="group inline-flex items-center gap-2 text-white/70 hover:text-primary font-semibold transition-all hover:gap-3 text-sm"
                     >
-                        <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                         Back to Properties
                     </Link>
                 </div>
+            </div>
 
-                {/* Gallery */}
-                <PropertyGallery images={property.images} />
+            {/* ── Content — sits in the soft light zone ─── */}
+            <div className="pb-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Gallery */}
+                    <PropertyGallery images={property.images} />
 
-                {/* Content Grid */}
-                <div className="grid lg:grid-cols-[1fr_400px] gap-8 lg:gap-16 mt-16 items-start">
-                    {/* Left Column: Details */}
-                    <div className="space-y-12">
-                        <PropertyHeader property={property} />
+                    {/* Content Grid */}
+                    <div className="grid lg:grid-cols-[1fr_400px] gap-8 lg:gap-16 mt-16 items-start">
+                        {/* Left Column: Details */}
+                        <div className="space-y-12">
+                            <PropertyHeader property={property} />
+                            <hr className="border-zinc-200" />
+                            <PropertyInfoCards property={property} />
+                            <PropertyDescription description={property.description} />
+                            <PropertyAmenities property={property} />
+                            <hr className="border-zinc-200" />
+                            <PropertyReviews propertyId={property._id} />
+                        </div>
 
-                        <hr className="border-default-100 dark:border-white/5" />
-
-                        <PropertyInfoCards property={property} />
-
-                        <PropertyDescription description={property.description} />
-
-                        <PropertyAmenities property={property} />
-
-                        <hr className="border-default-100 dark:border-white/5" />
-
-                        <PropertyReviews propertyId={property._id} />
-                    </div>
-
-                    {/* Right Column: Sticky Booking & Owner */}
-                    <div
-                        className="sticky top-28 space-y-8 overflow-y-auto pb-4"
-                        style={{
-                            maxHeight: "calc(100vh - 8rem)",
-                            scrollbarWidth: "none",
-                            msOverflowStyle: "none",
-                        }}
-                    >
-                        <style>{`.sticky-right-col::-webkit-scrollbar { display: none; }`}</style>
-                        <PropertyBookingCard property={property} />
-                        <PropertyOwnerCard property={property} />
+                        {/* Right Column: Sticky Booking & Owner */}
+                        <div
+                            className="sticky top-28 space-y-8 overflow-y-auto pb-4"
+                            style={{
+                                maxHeight: "calc(100vh - 8rem)",
+                                scrollbarWidth: "none",
+                                msOverflowStyle: "none",
+                            }}
+                        >
+                            <PropertyBookingCard property={property} />
+                            <PropertyOwnerCard property={property} />
+                        </div>
                     </div>
                 </div>
             </div>

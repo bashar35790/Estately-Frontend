@@ -7,7 +7,7 @@ import { headers, cookies } from "next/headers";
 type Session = typeof auth.$Infer.Session;
 type User = Session["user"];
 
-const COOKIE_NAME = "better-auth.session_token";
+const COOKIE_NAME = "estately.session_token";
 
 const parseSessionCookie = (value: string): string | null => {
     const lastDot = value.lastIndexOf(".");

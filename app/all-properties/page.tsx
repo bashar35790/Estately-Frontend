@@ -76,7 +76,7 @@ export default async function AllPropertiesPage({
       <div
         className="w-full pt-28 pb-12 md:pt-32 md:pb-16"
         style={{
-          background: "linear-gradient(180deg, #0f1a14 0%, #1a2e20 50%, #243b28 80%, #eaf6f0 100%)",
+          background: "linear-gradient(180deg, #0f1a14 0%, #1a2e20 50%, #243b28 80%, #243b28 100%)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
