@@ -45,7 +45,7 @@ export function PropertyAmenities({ property }: { property: Property }) {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.4, delay: index * 0.05 }}
                     >
-                        <div className="flex items-center gap-3 p-4 bg-white dark:bg-zinc-900 rounded-2xl border border-default-100 dark:border-white/5 shadow-sm hover:border-primary/30 transition-colors group">
+                        <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-default-100 shadow-sm hover:border-primary/30 transition-colors group">
                             <div className="bg-primary/10 text-primary p-2 rounded-xl group-hover:bg-primary group-hover:text-white transition-colors">
                                 <Check size={16} />
                             </div>

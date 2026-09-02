@@ -33,7 +33,7 @@ export function PropertyHeader({ property }: { property: Property }) {
             className="space-y-4"
         >
             <div className="flex flex-wrap items-center gap-3">
-                <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold capitalize">
+                <div className="bg-primary/10 text-black px-3 py-1 rounded-full text-xs font-semibold capitalize">
                     {property.propertyType}
                 </div>
                 {property.isFeatured && (

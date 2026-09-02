@@ -83,18 +83,18 @@ export default function HeroSection() {
                     </motion.p>
 
                     {/* Search Bar Container */}
-                    <motion.div variants={itemVariants} className="mt-12 bg-white/10 dark:bg-black/40 backdrop-blur-xl border border-white/20 p-2 md:p-3 rounded-3xl shadow-2xl mx-auto max-w-5xl transition-all">
+                    <motion.div variants={itemVariants} className="mt-12 bg-white/10 backdrop-blur-xl border border-white/20 p-2 md:p-3 rounded-3xl shadow-2xl mx-auto max-w-5xl transition-all">
                         <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
                             
                             {/* Location */}
-                            <div className="flex-1 bg-white dark:bg-zinc-900 rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 group transition-colors">
+                            <div className="flex-1 bg-white rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 group transition-colors">
                                 <MapPin className="text-primary mr-3 w-5 h-5 shrink-0" />
                                 <div className="w-full text-left">
                                     <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block">Location</label>
                                     <input 
                                         type="text" 
                                         placeholder="Where do you want to live?" 
-                                        className="w-full bg-transparent text-black dark:text-white placeholder:text-gray-400 text-sm focus:outline-none font-medium"
+                                        className="w-full bg-transparent text-black placeholder:text-gray-400 text-sm focus:outline-none font-medium"
                                         value={searchData.location}
                                         onChange={(e) => setSearchData({...searchData, location: e.target.value})}
                                     />
@@ -102,12 +102,12 @@ export default function HeroSection() {
                             </div>
 
                             {/* Property Type */}
-                            <div className="flex-1 bg-white dark:bg-zinc-900 rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 transition-colors relative">
+                            <div className="flex-1 bg-white rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 transition-colors relative">
                                 <Home className="text-primary mr-3 w-5 h-5 shrink-0" />
                                 <div className="w-full text-left">
                                     <label className="text-[10px] font-bold uppercase tracking-wider text-gray-500 block">Property Type</label>
                                     <select 
-                                        className="w-full bg-transparent text-black dark:text-white placeholder:text-gray-400 text-sm focus:outline-none font-medium appearance-none cursor-pointer"
+                                        className="w-full bg-transparent text-black placeholder:text-gray-400 text-sm focus:outline-none font-medium appearance-none cursor-pointer"
                                         value={searchData.propertyType}
                                         onChange={(e) => setSearchData({...searchData, propertyType: e.target.value})}
                                     >
@@ -122,7 +122,7 @@ export default function HeroSection() {
                             </div>
 
                             {/* Price Range */}
-                            <div className="flex-1 bg-white dark:bg-zinc-900 rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 transition-colors">
+                            <div className="flex-1 bg-white rounded-2xl flex items-center px-4 py-3 md:py-0 h-14 md:h-16 transition-colors">
                                 <DollarSign className="text-primary mr-3 w-5 h-5 shrink-0" />
                                 <div className="w-full text-left flex items-center gap-2">
                                     <div className="flex-1">
@@ -130,7 +130,7 @@ export default function HeroSection() {
                                         <input 
                                             type="number" 
                                             placeholder="$0" 
-                                            className="w-full bg-transparent text-black dark:text-white placeholder:text-gray-400 text-sm focus:outline-none font-medium"
+                                            className="w-full bg-transparent text-black placeholder:text-gray-400 text-sm focus:outline-none font-medium"
                                             value={searchData.minPrice}
                                             onChange={(e) => setSearchData({...searchData, minPrice: e.target.value})}
                                         />
@@ -141,7 +141,7 @@ export default function HeroSection() {
                                         <input 
                                             type="number" 
                                             placeholder="Any" 
-                                            className="w-full bg-transparent text-black dark:text-white placeholder:text-gray-400 text-sm focus:outline-none font-medium"
+                                            className="w-full bg-transparent text-black placeholder:text-gray-400 text-sm focus:outline-none font-medium"
                                             value={searchData.maxPrice}
                                             onChange={(e) => setSearchData({...searchData, maxPrice: e.target.value})}
                                         />

@@ -51,7 +51,7 @@ export default function WhyChooseUs() {
     };
 
     return (
-        <section className="relative overflow-hidden bg-background dark:bg-zinc-950 py-16 md:py-24 w-full border-t border-zinc-200 dark:border-white/5">
+        <section className="relative overflow-hidden bg-background py-16 md:py-24 w-full border-t border-zinc-200">
             {/* Brand glow orbs */}
             <div
                 className="absolute top-0 left-0 w-96 h-96 rounded-full opacity-15 pointer-events-none"
@@ -76,10 +76,10 @@ export default function WhyChooseUs() {
                     transition={{ duration: 0.7 }}
                     className="text-center max-w-3xl mx-auto space-y-4"
                 >
-                    <h2 className="text-3xl md:text-5xl font-light tracking-wide text-zinc-900 dark:text-white">
+                    <h2 className="text-3xl md:text-5xl font-light tracking-wide text-zinc-900">
                         Why Choose <span className="text-primary font-normal">Estately</span>
                     </h2>
-                    <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-light leading-relaxed tracking-wide">
+                    <p className="text-sm md:text-base text-zinc-500 font-light leading-relaxed tracking-wide">
                         We redefine luxury living by offering unparalleled service, exclusive access, and a commitment to perfection. Here is why the world&apos;s elite choose us.
                     </p>
                 </motion.div>
@@ -100,15 +100,15 @@ export default function WhyChooseUs() {
                             className="relative overflow-hidden p-8 rounded-2xl flex flex-col items-center text-center group transition-transform duration-300 shadow-xl shadow-primary/20 border border-white/20"
                         >
                             {/* White glass overlay for readability + hover tint */}
-                            <div className="absolute inset-0 bg-white/95 dark:bg-zinc-900/95 group-hover:bg-white/90 dark:group-hover:bg-zinc-900/90 transition-colors" />
+                            <div className="absolute inset-0 bg-white/95 group-hover:bg-white/90 transition-colors" />
                             <div className="relative flex flex-col items-center text-center">
                                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-6 shadow-lg shadow-primary/30">
                                     {feature.icon}
                                 </div>
-                                <h3 className="text-xl font-medium text-zinc-900 dark:text-white mb-3 tracking-wide">
+                                <h3 className="text-xl font-medium text-zinc-900 mb-3 tracking-wide">
                                     {feature.title}
                                 </h3>
-                                <p className="text-zinc-500 dark:text-zinc-400 font-light text-sm leading-relaxed">
+                                <p className="text-zinc-500 font-light text-sm leading-relaxed">
                                     {feature.description}
                                 </p>
                             </div>

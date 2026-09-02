@@ -53,9 +53,9 @@ export default async function BookingSuccessPage({
 
     return (
         <div className="min-h-screen bg-default-50 flex items-center justify-center p-4 pt-28 md:pt-32">
-            <div className="max-w-md w-full bg-white dark:bg-zinc-900 rounded-3xl p-8 shadow-xl border border-default-100 text-center">
-                <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-500" />
+            <div className="max-w-md w-full bg-white rounded-3xl p-8 shadow-xl border border-default-100 text-center">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle className="w-10 h-10 text-green-600" />
                 </div>
                 
                 <h1 className="text-3xl font-heading font-bold text-default-900 mb-2">
@@ -66,7 +66,7 @@ export default async function BookingSuccessPage({
                     Your booking request has been sent to the property owner. You will be notified once it is approved.
                 </p>
 
-                <div className="bg-default-50 dark:bg-zinc-950 rounded-2xl p-4 mb-8 text-left space-y-3 border border-default-100">
+                <div className="bg-default-50 rounded-2xl p-4 mb-8 text-left space-y-3 border border-default-100">
                     <div className="flex items-center gap-3 text-sm text-default-700">
                         <CalendarCheck className="w-5 h-5 text-primary" />
                         <span>Status: <strong>Pending Approval</strong></span>

@@ -39,7 +39,7 @@ export function PropertyBookingCard({ property }: { property: Property }) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
             >
-                <div className="bg-white dark:bg-zinc-900 shadow-2xl rounded-[32px] p-8 space-y-6 border border-default-100 dark:border-white/5">
+                <div className="bg-white rounded-[20px] p-8 space-y-6 border border-default-100 ">
                     <div>
                         <p className="text-default-500 font-medium mb-1 font-body">Total Rent</p>
                         <div className="flex items-baseline gap-1">
@@ -50,16 +50,16 @@ export function PropertyBookingCard({ property }: { property: Property }) {
                         </div>
                     </div>
 
-                    <hr className="border-default-100 dark:border-white/5" />
+                    <hr className="border-default-100" />
 
                     <div className="space-y-4">
-                        <div className="flex items-center gap-4 text-default-600 font-medium bg-default-50 dark:bg-zinc-800 p-4 rounded-2xl">
+                        <div className="flex items-center gap-4 text-default-600 font-medium bg-default-50 p-4 rounded-2xl">
                             <div className="bg-primary/20 p-2 rounded-xl text-primary">
                                 <Calendar size={18} />
                             </div>
                             <span className="font-body">Immediate move-in</span>
                         </div>
-                        <div className="flex items-center gap-4 text-default-600 font-medium bg-default-50 dark:bg-zinc-800 p-4 rounded-2xl">
+                        <div className="flex items-center gap-4 text-default-600 font-medium bg-default-50 p-4 rounded-2xl">
                             <div className="bg-blue-500/20 p-2 rounded-xl text-blue-500">
                                 <Users size={18} />
                             </div>
@@ -90,10 +90,10 @@ export function PropertyBookingCard({ property }: { property: Property }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
-                className="bg-zinc-100 dark:bg-zinc-800 rounded-3xl p-6 border border-white/10"
+                className="bg-zinc-100 rounded-3xl p-6 border border-white/10"
             >
                 <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-white dark:bg-zinc-700 flex items-center justify-center shadow-sm">
+                    <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm">
                         <Users className="text-primary" />
                     </div>
                     <div>

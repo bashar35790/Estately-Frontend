@@ -30,7 +30,7 @@ export default function ClientReviews({ reviews }: ClientReviewsProps) {
   };
 
   return (
-    <section className="relative w-full py-16 md:py-24 overflow-hidden border-t border-zinc-200 dark:border-white/5">
+    <section className="relative w-full py-16 md:py-24 overflow-hidden border-t border-zinc-200">
       <div className="max-w-7xl relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <motion.div 
@@ -43,10 +43,10 @@ export default function ClientReviews({ reviews }: ClientReviewsProps) {
           <span className="inline-block px-3 py-1 mb-4 text-[11px] font-bold uppercase tracking-widest text-primary bg-primary/10 rounded-full">
             Testimonials
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white mb-6">
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-900 mb-6">
             Hear from our community
           </h2>
-          <p className="text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto text-lg leading-relaxed font-light">
+          <p className="text-zinc-600 max-w-xl mx-auto text-lg leading-relaxed font-light">
             Discover why thousands of homeowners and tenants trust Estately for their real estate journey.
           </p>
         </motion.div>
@@ -63,9 +63,9 @@ export default function ClientReviews({ reviews }: ClientReviewsProps) {
             <motion.div
               variants={itemVariants}
               key={review._id}
-              className="relative w-full group flex flex-col rounded-[28px] border border-zinc-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 p-8 sm:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_48_rgba(0,0,0,0.35)] backdrop-blur-[22px] transition-all duration-500 hover:translate-y-[-8px] hover:border-primary/30 dark:hover:border-primary/30"
+              className="relative w-full group flex flex-col rounded-[28px] border border-zinc-200/60 bg-white/70 p-8 sm:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.04)] backdrop-blur-[22px] transition-all duration-500 hover:translate-y-[-8px] hover:border-primary/30"
             >
-              <div className="absolute top-8 right-10 text-zinc-100 dark:text-white/5 group-hover:text-primary/10 transition-colors duration-500">
+              <div className="absolute top-8 right-10 text-zinc-100 group-hover:text-primary/10 transition-colors duration-500">
                 <Quote size={80} fill="currentColor" strokeWidth={0} />
               </div>
 
@@ -74,23 +74,23 @@ export default function ClientReviews({ reviews }: ClientReviewsProps) {
                   <Star
                     key={i}
                     size={18}
-                    className={i < review.rating ? "text-primary fill-primary" : "text-zinc-200 dark:text-white/10"}
+                    className={i < review.rating ? "text-primary fill-primary" : "text-zinc-200"}
                   />
                 ))}
               </div>
 
               <blockquote className="flex-1">
-                <p className="text-zinc-700 dark:text-white/80 text-[17px] leading-[1.6] italic font-medium relative z-10">
+                <p className="text-zinc-700 text-[17px] leading-[1.6] italic font-medium relative z-10">
                   &quot;{review?.comment}&quot;
                 </p>
               </blockquote>
 
-              <div className="my-8 h-px w-full bg-zinc-100 dark:bg-white/10" />
+              <div className="my-8 h-px w-full bg-zinc-100" />
 
               <div className="flex items-center gap-5">
                 <div className="relative h-14 w-14 shrink-0">
                   <div className="absolute inset-0 rounded-full bg-primary opacity-20 blur-sm" />
-                  <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white dark:border-white/10 shadow-sm bg-zinc-100 dark:bg-zinc-800">
+                  <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white shadow-sm bg-zinc-100">
                     <Image
                       src={review?.userMeta?.image || "/images/placeholder.jpg"}
                       alt={review?.userMeta?.name || "User Image"}
@@ -101,10 +101,10 @@ export default function ClientReviews({ reviews }: ClientReviewsProps) {
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-bold text-zinc-900 dark:text-white text-lg leading-tight mb-1">
+                  <h4 className="font-bold text-zinc-900 text-lg leading-tight mb-1">
                     {review?.userMeta?.name || "User"}
                   </h4>
-                  <p className="text-[11px] text-zinc-500 dark:text-white/50 uppercase tracking-[0.15em] font-bold">
+                  <p className="text-[11px] text-zinc-500 uppercase tracking-[0.15em] font-bold">
                     {review?.createdAt ? new Date(review.createdAt).toLocaleDateString() : "Date Unknown"}
                   </p>
                 </div>

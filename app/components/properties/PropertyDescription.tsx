@@ -12,10 +12,10 @@ export function PropertyDescription({ description }: PropertyDescriptionProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white dark:bg-zinc-900 rounded-3xl p-8 border border-default-100 dark:border-white/5 shadow-sm"
+            className="bg-white rounded-3xl p-8 border border-default-100 shadow-sm"
         >
             <h2 className="text-2xl font-heading text-foreground mb-6">About this property</h2>
-            <div className="prose prose-slate dark:prose-invert max-w-none">
+            <div className="prose prose-slate max-w-none">
                 <p className="text-default-600 font-body leading-relaxed text-lg">
                     {description}
                 </p>

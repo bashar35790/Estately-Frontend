@@ -54,8 +54,8 @@ export function PropertyInfoCards({ property }: PropertyInfoCardsProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
-                    <div className="p-4 flex flex-col items-center text-center space-y-2 bg-white dark:bg-zinc-900 rounded-3xl shadow-sm border border-default-100 dark:border-white/5">
-                        <div className={`${item.color} bg-default-100 dark:bg-zinc-800 p-2 rounded-xl`}>
+                    <div className="p-4 flex flex-col items-center text-center space-y-2 bg-white rounded-3xl shadow-sm border border-default-100">
+                        <div className={`${item.color} bg-default-100 p-2 rounded-xl`}>
                             <item.icon size={20} />
                         </div>
                         <div>

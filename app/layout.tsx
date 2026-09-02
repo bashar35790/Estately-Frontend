@@ -36,9 +36,8 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${playfair.variable} ${manrope.variable} h-full antialiased`}
-      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-body" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col font-body">
         <Navbar
           brand={
             <Link href="/" className="flex items-center gap-3 rounded-full transition hover:opacity-90">

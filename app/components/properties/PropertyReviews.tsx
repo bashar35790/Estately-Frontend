@@ -69,7 +69,7 @@ export function PropertyReviews({ propertyId }: { propertyId: string }) {
     <section className="space-y-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div>
-          <h2 className="text-3xl font-heading font-bold text-default-950 dark:text-white">Tenant Reviews</h2>
+          <h2 className="text-3xl font-heading font-bold text-default-950">Tenant Reviews</h2>
           <p className="text-default-500 font-body">See what people are saying about this luxury home</p>
         </div>
         <div className="flex items-center gap-4 bg-primary/10 px-6 py-3 rounded-2xl self-start sm:self-center">
@@ -86,8 +86,8 @@ export function PropertyReviews({ propertyId }: { propertyId: string }) {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 border border-default-100 dark:border-white/5 rounded-[32px] p-8 space-y-6 shadow-sm">
-        <h3 className="text-xl font-heading font-bold text-default-900 dark:text-white">Write a Review</h3>
+      <div className="bg-white border border-default-100 rounded-[32px] p-8 space-y-6 shadow-sm">
+        <h3 className="text-xl font-heading font-bold text-default-900">Write a Review</h3>
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <span className="text-sm font-semibold text-default-700 font-body">Your Rating:</span>
@@ -106,14 +106,14 @@ export function PropertyReviews({ propertyId }: { propertyId: string }) {
           </div>
 
           <div className="flex flex-col gap-2 w-full">
-            <label className="text-sm font-body font-semibold text-default-600 dark:text-default-400">
+            <label className="text-sm font-body font-semibold text-default-600">
               Review Message
             </label>
             <textarea
               placeholder="Share your experience about this property..."
               value={newReview}
               onChange={(e) => setNewReview(e.target.value)}
-              className="w-full min-h-[120px] p-4 rounded-2xl bg-default-50 dark:bg-zinc-800 border border-transparent outline-none focus:ring-2 focus:ring-primary/50 transition-all font-body text-base text-default-900 dark:text-white hover:bg-default-100/70 dark:hover:bg-zinc-800/70"
+              className="w-full min-h-[120px] p-4 rounded-2xl bg-default-50 border border-transparent outline-none focus:ring-2 focus:ring-primary/50 transition-all font-body text-base text-default-900 hover:bg-default-100/70"
             />
           </div>
 
@@ -153,10 +153,10 @@ export function PropertyReviews({ propertyId }: { propertyId: string }) {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
-                  <div className="bg-white dark:bg-zinc-900 border border-default-100 dark:border-white/5 rounded-[32px] p-8 shadow-sm group">
+                  <div className="bg-white border border-default-100 rounded-[32px] p-8 shadow-sm group">
                     <div className="flex flex-col md:flex-row gap-6">
                       <div className="shrink-0">
-                        <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-default-100 border border-default-200/50 dark:border-zinc-800">
+                        <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-default-100 border border-default-200/50">
                           <Image
                             src={reviewerImage}
                             alt={reviewerName}
@@ -168,7 +168,7 @@ export function PropertyReviews({ propertyId }: { propertyId: string }) {
                       <div className="grow space-y-4">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                           <div>
-                            <h4 className="text-xl font-bold text-default-900 dark:text-white font-heading">
+                            <h4 className="text-xl font-bold text-default-900 font-heading">
                               {reviewerName}
                             </h4>
                             <p className="text-sm text-default-400 font-body">
@@ -183,7 +183,7 @@ export function PropertyReviews({ propertyId }: { propertyId: string }) {
                         </div>
                         <div className="relative">
                           <Quote className="absolute -top-2 -left-2 text-primary/10 w-12 h-12 z-0" />
-                          <p className="relative z-1 text-default-600 dark:text-default-300 font-body italic leading-relaxed text-lg pl-6">
+                          <p className="relative z-1 text-default-600 font-body italic leading-relaxed text-lg pl-6">
                             {review.comment}
                           </p>
                         </div>

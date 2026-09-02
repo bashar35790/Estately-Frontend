@@ -59,9 +59,9 @@ export default function TopLocations() {
     };
 
     return (
-        <section className="bg-white dark:bg-zinc-950 py-16 md:py-24 w-full border-t border-zinc-100 dark:border-white/5">
+        <section className="bg-white py-16 md:py-24 w-full border-t border-zinc-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-zinc-200 dark:border-white/10 pb-10">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-zinc-200 pb-10">
                     <motion.div 
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -69,10 +69,10 @@ export default function TopLocations() {
                         transition={{ duration: 0.6 }}
                         className="space-y-4"
                     >
-                        <h2 className="text-3xl md:text-5xl font-light tracking-wide text-zinc-900 dark:text-white">
+                        <h2 className="text-3xl md:text-5xl font-light tracking-wide text-zinc-900">
                             Top <span className="text-primary font-normal">Destinations</span>
                         </h2>
-                        <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 max-w-xl font-light leading-relaxed tracking-wide">
+                        <p className="text-sm md:text-base text-zinc-500 max-w-xl font-light leading-relaxed tracking-wide">
                             Explore our most sought-after locations offering the finest luxury living experiences across the globe.
                         </p>
                     </motion.div>

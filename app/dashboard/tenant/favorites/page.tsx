@@ -77,7 +77,7 @@ export default function TenantFavoritesPage() {
       </div>
 
       {favorites.length === 0 ? (
-        <div className="bg-default-50 dark:bg-zinc-900 border border-default-200 dark:border-zinc-800 rounded-3xl p-12 text-center flex flex-col items-center justify-center h-80">
+        <div className="bg-default-50 border border-default-200 rounded-3xl p-12 text-center flex flex-col items-center justify-center h-80">
           <Home className="w-16 h-16 text-default-300 mb-4" />
           <h3 className="text-xl font-semibold text-default-800">No favorites yet</h3>
           <p className="text-default-500 mt-2 mb-6">Explore properties and save the ones you love.</p>
@@ -99,7 +99,7 @@ export default function TenantFavoritesPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.2 }}
-                className="group relative bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-sm border border-default-200 dark:border-zinc-800 hover:shadow-xl transition-all flex flex-col"
+                className="group relative bg-white rounded-3xl overflow-hidden shadow-sm border border-default-200 hover:shadow-xl transition-all flex flex-col"
               >
                 <div className="relative h-48 w-full overflow-hidden">
                   {property.images && property.images.length > 0 ? (
@@ -117,14 +117,14 @@ export default function TenantFavoritesPage() {
                   <div className="absolute top-3 right-3">
                     <button
                       onClick={() => removeMutation.mutate(property._id)}
-                      className="p-2.5 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors shadow-sm"
+                      className="p-2.5 bg-white/90 backdrop-blur-sm rounded-full text-rose-500 hover:bg-rose-50 transition-colors shadow-sm"
                       aria-label="Remove favorite"
                     >
                       <HeartOff size={18} />
                     </button>
                   </div>
                   <div className="absolute bottom-3 left-3 flex gap-2">
-                    <span className="px-3 py-1 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md rounded-full text-xs font-semibold capitalize text-default-700 shadow-sm">
+                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-xs font-semibold capitalize text-default-700 shadow-sm">
                       {property.propertyType}
                     </span>
                   </div>
@@ -140,7 +140,7 @@ export default function TenantFavoritesPage() {
                     <span className="line-clamp-1">{property.location}</span>
                   </div>
 
-                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-default-100 dark:border-zinc-800">
+                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-default-100">
                     <div className="flex flex-col">
                       <span className="text-xs text-default-500 uppercase tracking-wider font-semibold mb-0.5">Price</span>
                       <div className="flex items-baseline gap-1 text-primary">
