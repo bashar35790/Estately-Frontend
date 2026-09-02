@@ -80,7 +80,7 @@ export default function PropertyFilter() {
             {/* Search button */}
             <button
                 type="submit"
-                className="h-12 px-6 bg-zinc-900 text-white rounded-xl text-sm font-semibold hover:bg-primary transition-all duration-300 shadow-sm whitespace-nowrap"
+                className="h-12 px-6 bg-primary text-white rounded-full text-sm font-semibold hover:bg-secondary hover:text-black transition-all duration-300 shadow-sm whitespace-nowrap"
             >
                 Search
             </button>

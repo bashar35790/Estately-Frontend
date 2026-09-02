@@ -33,7 +33,7 @@ export default async function FeaturedProperties() {
                     <div className="shrink-0">
                         <Link
                             href="/all-properties"
-                            className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 text-white text-sm font-semibold hover:bg-primary transition-all duration-300 shadow-md hover:shadow-primary/30"
+                            className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white text-sm font-semibold hover:bg-secondary hover:text-black transition-all duration-300 shadow-md hover:shadow-primary/30"
                         >
                             See All Properties
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

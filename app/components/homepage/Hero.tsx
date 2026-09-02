@@ -152,7 +152,7 @@ export default function HeroSection() {
                             {/* Submit Button */}
                             <button 
                                 type="submit"
-                                className="h-14 md:h-16 bg-primary hover:bg-primary/90 text-white font-bold px-8 rounded-2xl transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 shrink-0 md:min-w-[140px]"
+                                className="h-14 md:h-16 bg-primary hover:bg-secondary hover:text-black text-white font-bold px-8 rounded-full transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 shrink-0 md:min-w-[140px]"
                             >
                                 <Search className="w-5 h-5" />
                                 <span>Search</span>
