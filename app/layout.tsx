@@ -9,6 +9,7 @@ import { Playfair_Display, Manrope } from "next/font/google";
 import { ToastContainer } from "react-toastify/unstyled";
 import Footer from "./components/footer/Footer";
 import Providers from "./providers";
+import { MainLayoutWrapper } from "./components/MainLayoutWrapper";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -60,9 +61,9 @@ export default function RootLayout({
             </>
           }
         />
-        <main>
+        <MainLayoutWrapper>
           <Providers>{children}</Providers>
-        </main>
+        </MainLayoutWrapper>
         <Footer></Footer>
         <ToastContainer />
       </body>

@@ -30,8 +30,8 @@ export default function ClientReviews({ reviews }: ClientReviewsProps) {
   };
 
   return (
-    <section className="relative w-full py-24 overflow-hidden border-t border-zinc-200 dark:border-white/5">
-      <div className="container relative z-10 mx-auto px-4 max-w-7xl">
+    <section className="relative w-full py-16 md:py-24 overflow-hidden border-t border-zinc-200 dark:border-white/5">
+      <div className="max-w-7xl relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

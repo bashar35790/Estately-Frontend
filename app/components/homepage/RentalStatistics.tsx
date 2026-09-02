@@ -53,11 +53,11 @@ const Counter = ({ value, label, suffix = "" }: { value: number, label: string, 
 
 export default function RentalStatistics() {
     return (
-        <section className="bg-zinc-50 dark:bg-zinc-950 py-24 px-6 sm:px-12 w-full border-t border-zinc-200 dark:border-white/5 relative overflow-hidden">
+        <section className="bg-zinc-50 dark:bg-zinc-950 py-16 md:py-24 w-full border-t border-zinc-200 dark:border-white/5 relative overflow-hidden">
             {/* Subtle background decoration */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
             
-            <div className="max-w-7xl mx-auto relative z-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}

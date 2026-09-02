@@ -246,7 +246,7 @@ export default function SignupForm() {
 
   return (
     <div
-      className="relative flex min-h-screen w-full items-center justify-center p-4 py-12"
+      className="relative flex min-h-screen w-full items-center justify-center p-4 py-12 pt-28 md:pt-32"
       style={{
         backgroundImage: `url('https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop')`,
         backgroundSize: "cover",

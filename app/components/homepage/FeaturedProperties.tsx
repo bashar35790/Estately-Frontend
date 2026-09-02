@@ -9,8 +9,8 @@ export default async function FeaturedProperties() {
     const properties = await getProperty({ status: PropertyStatus.Approved, limit: "6" });
 
     return (
-        <section className="bg-black py-24 px-6 sm:px-12 border-t border-white/5 w-full overflow-hidden">
-            <div className="w-full container mx-auto space-y-16">
+        <section className="bg-black py-16 md:py-24 w-full overflow-hidden border-t border-white/5">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
                 <FadeInUp className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-10">
                     <div className="space-y-4">
                         <h2 className="text-3xl md:text-5xl font-light tracking-wide text-white">

@@ -67,7 +67,7 @@ export default function HeroSection() {
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 flex flex-col items-center justify-center container mx-auto px-4 mt-16 md:mt-0 text-center">
+            <div className="relative z-10 flex flex-col items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center h-full">
                 {/* Main Hero Body */}
                 <motion.div 
                     className="max-w-4xl mx-auto w-full"

@@ -59,8 +59,8 @@ export default function TopLocations() {
     };
 
     return (
-        <section className="bg-white dark:bg-zinc-950 py-24 px-6 sm:px-12 w-full border-t border-zinc-100 dark:border-white/5">
-            <div className="max-w-7xl mx-auto space-y-16">
+        <section className="bg-white dark:bg-zinc-950 py-16 md:py-24 w-full border-t border-zinc-100 dark:border-white/5">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-zinc-200 dark:border-white/10 pb-10">
                     <motion.div 
                         initial={{ opacity: 0, x: -30 }}

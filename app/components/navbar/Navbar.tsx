@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
@@ -33,7 +33,7 @@ export function Navbar({
   items,
   rightContent,
   className,
-  position = "sticky",
+  position = "fixed",
 }: NavbarProps) {
   // Better Auth Session Hook
   const {
@@ -43,8 +43,16 @@ export function Navbar({
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (pathname.includes("dashboard")) {
     return null;
@@ -73,14 +81,17 @@ export function Navbar({
   return (
     <nav
       className={cn(
-        "w-full border-b border-white/10 bg-slate-950/90 text-white backdrop-blur-xl z-50",
+        "w-full text-white z-50 bg-transparent transition-all duration-300",
+        isScrolled
+          ? "backdrop-blur-xl bg-black/80 shadow-lg shadow-black/20 border-b border-white/10"
+          : "backdrop-blur-0 bg-transparent border-b border-transparent",
         position === "sticky" && "sticky top-0",
-        position === "fixed" && "fixed top-0",
+        position === "fixed" && "fixed top-0 inset-x-0",
         position === "static" && "relative",
         className
       )}
     >
-      <header className="flex items-center justify-between gap-4 px-4 py-3 container mx-auto">
+      <header className="flex items-center justify-between gap-4 py-3 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-4">
           {/* Mobile Menu Toggle */}
           <button
@@ -204,7 +215,7 @@ export function Navbar({
 
       {/* Mobile Sidebar/Menu */}
       {isMenuOpen && (
-        <div className="border-t border-white/5 bg-slate-950 px-4 py-6 md:hidden animate-in slide-in-from-top duration-300">
+        <div className="border-t border-white/10 bg-black/10 backdrop-blur-xl px-4 py-6 md:hidden animate-in slide-in-from-top duration-300 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <ul className="flex flex-col gap-1">
             {filteredItems.map((item) => (
               <li key={item.href}>

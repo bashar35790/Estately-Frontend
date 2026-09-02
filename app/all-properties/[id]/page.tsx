@@ -53,8 +53,8 @@ export default async function PropertyDetailsPage({
     }
 
     return (
-        <div className="bg-default-50/50 dark:bg-zinc-950 min-h-screen pb-20 pt-32">
-            <div className="max-w-7xl mx-auto px-5 lg:px-8">
+        <div className="bg-default-50/50 dark:bg-zinc-950 min-h-screen pt-28 pb-16 md:pt-32 md:pb-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Navigation */}
                 <div className="mb-10">
                     <Link

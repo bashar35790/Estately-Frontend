@@ -51,9 +51,8 @@ export default function WhyChooseUs() {
     };
 
     return (
-        // Fixed typo: changed "bg-whaite" to "bg-white"
-        <section className="bg-white dark:bg-zinc-950 py-24 px-6 sm:px-12 w-full">
-            <div className="max-w-7xl mx-auto space-y-16">
+        <section className="bg-white dark:bg-zinc-950 py-16 md:py-24 w-full border-t border-zinc-100 dark:border-white/5">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}

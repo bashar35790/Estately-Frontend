@@ -133,7 +133,7 @@ const PricingPage = () => {
     ];
 
     return (
-        <div className="w-full min-h-screen bg-zinc-50 text-zinc-800 py-16 px-4 sm:px-6 lg:px-8">
+        <div className="w-full min-h-screen bg-zinc-50 text-zinc-800 pt-28 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
 
                 {/* Header Title Typography */}

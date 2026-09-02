@@ -71,8 +71,8 @@ export default async function AllPropertiesPage({
   const currentPage = parseInt((resolvedParams.page as string) || "1", 10);
 
   return (
-    <div className="min-h-screen bg-black text-zinc-300 p-6 sm:p-12 font-sans selection:bg-primary selection:text-black">
-      <div className="container mx-auto space-y-16">
+    <div className="min-h-screen bg-black text-zinc-300 pt-28 pb-16 md:pt-32 md:pb-24 font-sans selection:bg-primary selection:text-black">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Luxury Brand Header Block */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-10">
           <div className="space-y-4">

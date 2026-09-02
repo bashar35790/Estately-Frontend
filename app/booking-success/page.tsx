@@ -52,7 +52,7 @@ export default async function BookingSuccessPage({
     }
 
     return (
-        <div className="min-h-screen bg-default-50 flex items-center justify-center p-4 pt-32">
+        <div className="min-h-screen bg-default-50 flex items-center justify-center p-4 pt-28 md:pt-32">
             <div className="max-w-md w-full bg-white dark:bg-zinc-900 rounded-3xl p-8 shadow-xl border border-default-100 text-center">
                 <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                     <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-500" />
