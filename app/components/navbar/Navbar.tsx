@@ -165,7 +165,7 @@ export function Navbar({
               {/* Dropdown Menu on Hover */}
               {isProfileOpen && (
                 <div className="absolute right-0 top-full pt-2 w-60 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#1eac70] shadow-2xl backdrop-blur-xl">
+                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-primary/50 shadow-2xl backdrop-blur-xl">
                     {/* User Profile Summary */}
                     <div className="px-4 py-3 bg-white/3 border-b border-white/5">
                       <p className="text-sm font-bold text-white truncate">{session.user.name}</p>
