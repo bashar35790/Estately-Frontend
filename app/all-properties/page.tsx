@@ -40,7 +40,7 @@ async function PropertyList({ resolvedParams, currentPage }: { resolvedParams: a
   return (
     <>
       {properties.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-stretch">
           {properties.map((property: Property) => (
             <PropertyCard
               key={property._id}
@@ -49,10 +49,10 @@ async function PropertyList({ resolvedParams, currentPage }: { resolvedParams: a
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center text-center py-32 border border-dashed border-white/10 rounded-sm bg-zinc-900/50">
-          <p className="text-primary font-light tracking-widest uppercase text-lg mb-2">No Properties Found</p>
-          <p className="text-zinc-500 text-sm font-light max-w-sm">
-            We couldn&apos;t find any estates matching your refined criteria. Please adjust your filters.
+        <div className="flex flex-col items-center justify-center text-center py-32 rounded-2xl border border-dashed border-primary/20 bg-white/60">
+          <p className="text-primary font-semibold tracking-widest uppercase text-sm mb-2">No Properties Found</p>
+          <p className="text-zinc-500 text-sm max-w-xs">
+            We couldn&apos;t find any estates matching your criteria. Try adjusting your filters.
           </p>
         </div>
       )}
@@ -71,35 +71,57 @@ export default async function AllPropertiesPage({
   const currentPage = parseInt((resolvedParams.page as string) || "1", 10);
 
   return (
-    <div className="min-h-screen bg-black text-zinc-300 pt-28 pb-16 md:pt-32 md:pb-24 font-sans selection:bg-primary selection:text-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Luxury Brand Header Block */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-10">
-          <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-light tracking-wide text-white">
-              Exclusive <span className="text-primary font-normal">Estates</span>
-            </h1>
-            <p className="text-sm md:text-base text-zinc-400 max-w-xl font-light leading-relaxed tracking-wide">
-              Discover our curated collection of premium architectural masterpieces.
-              Extraordinary residences for those who seek the exceptional.
-            </p>
-          </div>
+    <div className="min-h-screen">
+      {/* ── Dark top banner — makes fixed white navbar readable ─── */}
+      <div
+        className="w-full pt-28 pb-12 md:pt-32 md:pb-16"
+        style={{
+          background: "linear-gradient(180deg, #0f1a14 0%, #1a2e20 50%, #243b28 80%, #eaf6f0 100%)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
 
-          {/* Real-time Filters */}
-          <PropertyFilter key={
-            `${resolvedParams.location ?? ""}-${resolvedParams.propertyType ?? ""}`
-          } />
+            <div className="space-y-3 max-w-lg">
+              <h1 className="text-4xl md:text-5xl font-semibold text-white leading-tight">
+                Explore our premier{" "}
+                <span className="text-primary italic">estates</span>
+              </h1>
+              <p className="text-sm text-white/60 leading-relaxed max-w-sm">
+                Each listing offers unique features, exceptional quality, and prime
+                locations, ensuring an exclusive living experience.
+              </p>
+            </div>
+
+            {/* Real-time Filters */}
+            <PropertyFilter key={
+              `${resolvedParams.location ?? ""}-${resolvedParams.propertyType ?? ""}`
+            } />
+          </div>
         </div>
+      </div>
 
-        {/* Dynamic Card Layout Grid with Suspense */}
-        <Suspense fallback={
-          <div className="w-full py-32 flex justify-center items-center flex-col gap-4">
-            <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-zinc-500 tracking-widest uppercase text-xs">Loading Estates</p>
-          </div>
-        }>
-          <PropertyList resolvedParams={resolvedParams} currentPage={currentPage} />
-        </Suspense>
+      {/* ── Light gradient body ───────────────────────────────────── */}
+      <div
+        className="pb-20"
+        style={{
+          background: "linear-gradient(160deg, #f0f0f0 0%, #eaf6f0 40%, #f0f7e8 75%, #f0f0f0 100%)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 space-y-8">
+          {/* Divider */}
+          <div className="h-px bg-zinc-300/60" />
+
+          {/* Dynamic Card Layout Grid with Suspense */}
+          <Suspense fallback={
+            <div className="w-full py-32 flex flex-col justify-center items-center gap-4">
+              <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+              <p className="text-zinc-400 text-xs uppercase tracking-widest font-medium">Loading Estates...</p>
+            </div>
+          }>
+            <PropertyList resolvedParams={resolvedParams} currentPage={currentPage} />
+          </Suspense>
+        </div>
       </div>
     </div>
   );
