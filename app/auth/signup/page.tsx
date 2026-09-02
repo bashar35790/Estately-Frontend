@@ -280,6 +280,39 @@ export default function SignupForm() {
 
         <div className="flex flex-col gap-4">
 
+          {/* Role Toggle */}
+          <div className="grid grid-cols-2 gap-3 mb-2">
+            {(
+              [
+                { value: "tenant", label: "Tenant", Icon: Search },
+                { value: "owner", label: "Owner", Icon: Users },
+              ] as { value: Role; label: string; Icon: React.ElementType }[]
+            ).map(({ value, label, Icon }) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setRole(value)}
+                className={[
+                  "flex flex-col items-center justify-center gap-3 rounded-[18px] border-2 cursor-pointer py-6 px-4",
+                  "transition-all duration-300 relative",
+                  role === value
+                    ? "border-[#A3CF16] bg-[#A3CF16]/10 text-[#A3CF16] shadow-[0_0_20px_rgba(163,207,22,0.15)]"
+                    : "border-white/10 bg-white/5 text-white/50 hover:border-white/30 hover:bg-white/10 hover:text-white",
+                ].join(" ")}
+              >
+                {role === value && (
+                  <div className="absolute top-3 right-3 h-4 w-4 rounded-full bg-[#A3CF16] flex items-center justify-center">
+                    <Check size={10} className="text-[#1a2200] font-bold" />
+                  </div>
+                )}
+                <div className={`p-3 rounded-full ${role === value ? 'bg-[#A3CF16]/20' : 'bg-white/5'}`}>
+                  <Icon size={26} className={role === value ? "text-[#A3CF16]" : "text-white/40"} />
+                </div>
+                <span className="text-[15px] font-bold">{label}</span>
+              </button>
+            ))}
+          </div>
+
           {/* Full Name */}
           <FieldWrapper label="Full name" error={errors.name}>
             <GlassInput
@@ -422,37 +455,7 @@ export default function SignupForm() {
             />
           </FieldWrapper>
 
-          {/* Role Toggle */}
-          <FieldWrapper label="I am a">
-            <div className="grid grid-cols-2 gap-2">
-              {(
-                [
-                  { value: "tenant", label: "Tenant", Icon: Search },
-                  { value: "owner", label: "Owner", Icon: Users },
-                ] as { value: Role; label: string; Icon: React.ElementType }[]
-              ).map(({ value, label, Icon }) => (
-                <button
-                  key={value}
-                  type="button"
-                  onClick={() => setRole(value)}
-                  className={[
-                    "flex items-center justify-center gap-2 rounded-3xl border cursor-pointer",
-                    "py-3 text-[13.5px] font-medium transition-all duration-200",
-                    role === value
-                      ? "border-[#A3CF16]/55 bg-[#A3CF16]/12 text-[#A3CF16]"
-                      : "border-white/15 bg-white/[0.07] text-white/50 hover:border-white/30 hover:text-white/75",
-                  ].join(" ")}
-                >
-                  <Icon
-                    size={15}
-                    className={role === value ? "text-[#A3CF16]" : "text-white/40"}
-                  />
-                  {label}
-                  {role === value && <Check size={13} className="text-[#A3CF16]" />}
-                </button>
-              ))}
-            </div>
-          </FieldWrapper>
+          {/* Role selection was moved to the top */}
         </div>
 
         {/* Form-level error */}

@@ -114,19 +114,28 @@ export function Navbar({
 
         {/* Desktop Navigation Links */}
         <ul className="hidden items-center gap-8 md:flex">
-          {filteredItems.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={cn(
-                  "text-sm font-medium transition hover:text-white",
-                  pathname === item.href ? "text-[#A3CF16] border-b-2 border-[#A3CF16] pb-1" : "text-slate-300"
-                )}
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
+          {filteredItems.map((item) => {
+            const actualHref = item.label === "Dashboard" && session
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              ? `/dashboard/${(session.user as any).userRole || 'tenant'}`
+              : item.href;
+
+            return (
+              <li key={item.label}>
+                <Link
+                  href={actualHref}
+                  className={cn(
+                    "text-sm font-medium transition hover:text-white",
+                    pathname.startsWith("/dashboard") && item.label === "Dashboard" || pathname === item.href
+                      ? "text-[#A3CF16] border-b-2 border-[#A3CF16] pb-1"
+                      : "text-slate-300"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         {/* Right Section: Auth Action or User Profile */}
@@ -156,7 +165,7 @@ export function Navbar({
               {/* Dropdown Menu on Hover */}
               {isProfileOpen && (
                 <div className="absolute right-0 top-full pt-2 w-60 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-2xl backdrop-blur-xl">
+                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#1eac70] shadow-2xl backdrop-blur-xl">
                     {/* User Profile Summary */}
                     <div className="px-4 py-3 bg-white/3 border-b border-white/5">
                       <p className="text-sm font-bold text-white truncate">{session.user.name}</p>
@@ -217,20 +226,29 @@ export function Navbar({
       {isMenuOpen && (
         <div className="border-t border-white/10 bg-black/10 backdrop-blur-xl px-4 py-6 md:hidden animate-in slide-in-from-top duration-300 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <ul className="flex flex-col gap-1">
-            {filteredItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "block rounded-xl px-4 py-3 text-[15px] font-medium transition",
-                    pathname === item.href ? "bg-[#A3CF16]/10 text-[#A3CF16]" : "text-slate-300 hover:bg-white/5"
-                  )}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {filteredItems.map((item) => {
+              const actualHref = item.label === "Dashboard" && session
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ? `/dashboard/${(session.user as any).userRole || 'tenant'}`
+                : item.href;
+
+              return (
+                <li key={item.label}>
+                  <Link
+                    href={actualHref}
+                    className={cn(
+                      "block rounded-xl px-4 py-3 text-[15px] font-medium transition",
+                      pathname.startsWith("/dashboard") && item.label === "Dashboard" || pathname === item.href
+                        ? "bg-[#A3CF16]/10 text-[#A3CF16]"
+                        : "text-slate-300 hover:bg-white/5"
+                    )}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="mt-6 pt-6 border-t border-white/5">

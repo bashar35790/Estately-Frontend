@@ -56,10 +56,10 @@ const BrandAvatar = ({
     size?: number;
 }) => (
     <div
-        className="relative shrink-0 rounded-full bg-gradient-to-br from-primary to-secondary p-[2px]"
+        className="relative shrink-0 rounded-full bg-white/20 p-[2px]"
         style={{ height: size, width: size }}
     >
-        <div className="relative h-full w-full overflow-hidden rounded-full bg-[#0b0f0d]">
+        <div className="relative h-full w-full overflow-hidden rounded-full bg-[#1a4a40]">
             <Image
                 src={src || "https://api.dicebear.com/7.x/avataaars/svg?seed=Lucky"}
                 alt={alt || "User profile"}
@@ -96,24 +96,23 @@ const NavList = ({
                     href={item.href}
                     onClick={onNavigate}
                     className={cn(
-                        "group relative flex items-center gap-4 rounded-2xl border font-body font-semibold transition-all duration-300",
+                        "group relative flex items-center gap-4 rounded-xl font-body font-semibold transition-all duration-300",
                         density === "comfortable"
-                            ? "px-4 py-3.5 text-[13.5px]"
-                            : "px-4 py-4 text-[15px]",
+                            ? "px-5 py-3 text-[14px]"
+                            : "px-5 py-3.5 text-[15px]",
                         isActive
-                            ? "border-primary/20 bg-gradient-to-r from-primary/15 via-primary/5 to-transparent text-secondary shadow-[0_0_24px_-8px_rgba(30,172,112,0.35)]"
-                            : "border-transparent text-white/45 hover:border-white/5 hover:bg-white/5 hover:text-white"
+                            ? "bg-secondary text-[#1a4a40]"
+                            : "text-white/60 hover:bg-white/10 hover:text-white"
                     )}
                 >
                     <Icon
                         size={18}
                         className={cn(
                             "shrink-0 transition-colors duration-300",
-                            isActive ? "text-secondary" : "text-white/25 group-hover:text-white"
+                            isActive ? "text-[#1a4a40]" : "text-white/40 group-hover:text-white"
                         )}
                     />
                     <span className="flex-1">{item.label}</span>
-                    {isActive && <ChevronRight size={14} className="text-secondary" />}
                 </Link>
             );
         })}
@@ -133,34 +132,28 @@ const DesktopSidebar = ({
     session: SessionShape | null;
     userRole: string;
 }) => (
-    <aside className="hidden w-72 shrink-0 lg:sticky lg:top-0 lg:z-40 lg:flex lg:h-screen lg:flex-col border-r border-white/5 bg-[#0b0f0d]">
+    <aside className="hidden w-64 shrink-0 lg:sticky lg:top-0 lg:z-40 lg:flex lg:h-screen lg:flex-col bg-[#245b53] rounded-r-3xl my-3 ml-3 shadow-lg overflow-hidden border-none" style={{ height: 'calc(100vh - 24px)' }}>
         {/* Header / wordmark */}
-        <div className="border-b border-white/5 p-8">
+        <div className="p-8 pb-4">
             <Link href="/" className="flex items-center gap-3 transition hover:opacity-80">
-                <Logo />
-                <span className="font-heading text-2xl font-bold tracking-tight text-white">
-                    Estate<span className="text-secondary">ly</span>
-                </span>
+                <div className="text-white text-3xl font-bold tracking-tight">Estate<span className="text-secondary">ly</span></div>
             </Link>
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 py-6">
-            <p className="mb-4 px-4 font-body text-[10px] font-bold uppercase tracking-[0.25em] text-white/20">
-                Navigation
-            </p>
             <NavList navItems={navItems} pathname={pathname} />
         </div>
 
         {/* Profile summary */}
         {session?.user && (
-            <div className="border-t border-white/5 p-6">
-                <div className="flex items-center gap-4 rounded-[22px] border border-white/5 bg-white/[0.03] px-3 py-4 transition-all hover:bg-white/[0.05]">
-                    <BrandAvatar src={session.user.image} alt={session.user.name} size={44} />
+            <div className="p-6">
+                <div className="flex items-center gap-4 rounded-[14px] bg-white/10 px-3 py-3.5 transition-all hover:bg-white/20">
+                    <BrandAvatar src={session.user.image} alt={session.user.name} size={36} />
                     <div className="min-w-0 flex-1">
-                        <p className="mb-1 truncate font-body text-sm font-bold leading-none text-white">
+                        <p className="mb-1 truncate font-body text-[13px] font-semibold leading-none text-white">
                             {session.user.name}
                         </p>
-                        <p className="font-body text-[10px] font-extrabold uppercase tracking-widest text-secondary">
+                        <p className="font-body text-[10px] font-medium capitalize text-white/70">
                             {userRole}
                         </p>
                     </div>
